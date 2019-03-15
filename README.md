@@ -11,7 +11,7 @@ Please use https://google.github.io/styleguide/javaguide.html as the coding stan
 ***
 CafeBeepKiosk-0.1:
 
-To run the code in PYTHON_Code directory complete the following steps:
+To run the code in CafeBeepKiosk-0.1 directory complete the following steps:
 1. Download this FULL git repo onto a Raspberry Pi 3 B+  
 2. Use "cd CafeBeep/CafeBeepKiosk-0.1" linux terminal command to navigate to the CafeBeepKiosk-0.1 directory 
 3. Next run the command "python  CafeBeep_Driver.py" to start kiosk software running
