@@ -5,7 +5,7 @@ __email__ =   "b@cafebeep.com"
 __company__ = "Robotic Beverage Technologies Inc"
 __status__ =  "Development"
 __date__ =    "Late Updated: 2019-03-13"
-__doc__ =     "Highest level driver file to run CafeBEEP kiosk"
+__doc__ =     "Highest level driver file to run cafeBEEP kiosk"
 
 # @link https://docs.python.org/3/library/subprocess.html#replacing-os-popen-os-popen2-os-popen3
 # @link http://codeandlife.com/2012/07/29/arduino-and-raspberry-pi-serial-communication/
@@ -16,6 +16,23 @@ import sys, time, traceback, argparse
 
 # Allow control of GPIO pins on Raspberry Pi 3 and Pi Zero (i.e. I2C, SPI, TTL)
 import RPi.GPIO as GPIO
+
+# Allow for the creation of QR codes locally on Pi using camera for upload to user database
+import MyQR.mylibs
+from MyQR.mylibs import theqrmodule as GenerateQRcode
+
+from MyQR import myqr #TODO Correct way fro README.md?
+version, level, qr_name = myqr.run(
+    words,
+    version=1,
+    level='H',
+    picture=None,
+    colorized=False,
+    contrast=1.0,
+    brightness=1.0,
+    save_name=None,
+    save_dir=os.getcwd()
+        			  )
 
 # Allow use of both serial ports on the Pi 3 /ttyS0 and /AAMM??
 #import serial
@@ -32,11 +49,18 @@ from subprocess import check_call
 # Allow demo to talk
 import Text2Speech
 import AWS_Polly
+import HeyGoogle
 
 PRODUCT_MODE = "PRODUCT"        # Final product configuration
 FIELD_MODE  = "FIELD"		# Non-Techanical repair person configuration
 TESTING_MODE = "TESTING"        # Internal developer configuration
 DEBUG_STATEMENTS_ON = True      # Toogle debug statements on and off for this python file
+
+VEND_SCREEN = 0			# Front screen to display ready orders and direct users on steps to vend
+ORDER_SCREEN_1 = 1		# Right side order screen use to order beverage on kiosk (i.e. Not on phone)
+ORDER_SCREEN_2 = 2 		# Left side order screen use to order beverage on kiosk (i.e. Not on phone)
+
+NONE = 0
 
 #Pin value constants
 LOW =  0
@@ -84,13 +108,13 @@ EMIC2 = 222
 POLLY = 333
 
 # Create a command line parser
-parser = argparse.ArgumentParser(prog = "BARISTO V1", description = __doc__, add_help=True)
-parser.add_argument("-i", "--piIP_Address", type=str, default="192.168.1.218", help="IPv4 address of the Saturn Pi.")
+parser = argparse.ArgumentParser(prog = "cafeBBEP V0", description = __doc__, add_help=True)
+parser.add_argument("-i", "--piIP_Address", type=str, default="192.168.1.218", help="IPv4 address of the cafeBEEP V0 ID1 Raspberry Pi.")
 parser.add_argument("-r", "--rx_Socket", type=int, default=30000, help="UDP port / socket number for connected Ethernet device.")
 parser.add_argument("-s", "--tx_Socket", type=int, default=30100, help="UDP port / socket number for connected Ethernet device.")
 parser.add_argument("-u", "--unit", type=str, default= FIELD_MODE, choices=[TESTING_MODE, FIELD_MODE, PRODUCT_MODE], help="Select boot up mode for BARISTO kiosk.")
 parser.add_argument("-t", "--trace", type=int, default=0, help="Program trace level.")
-parser.add_argument("-f", "--filename", type=str, default="BARISTO.spin", help="Parallax firmware to be flashed.")
+parser.add_argument("-f", "--filename", type=str, default="Update.py", help="Local or cloud software to be loaded on kiosk.")
 parser.add_argument("-l", "--loop", type=int, default=0, help="Set to 1 to loop this driver program.")
 args = parser.parse_args()
 
@@ -130,7 +154,7 @@ def say(interfaceName, audioClipNum):
 	if (interfaceName == POLLY):
 		Text2Speech.awsPollyInterface(audioClipNum)
 ##
-#  @brief Configure GPIO pin on a Pi 3 using BCM pin mode
+#  @brief Configure GPIO pin on a Pi 3 using BCM pin mode to control schematic V0.1
 #
 #  @param NONE
 #
@@ -208,14 +232,43 @@ if __name__ == "__main__":
 	setupGPIO()
 	check_call("clear",shell=True) #Clear warnings from terminal
 
-	keyboard.type('ROBO BEV BARISTO demo starting now...')
+	keyboard.type('ROBO BEV cafeBEEP demo starting using schematic V0.1...')
 	time.sleep(DRAMATIC_DELAY)
 
 	#Clear demo starting now text
 	check_call("clear",shell=True)
 	check_call("clear",shell=True)
 
+
+
+	#TODO User object needed
+
 	try:
+		if(ORDER_SCREEN_1 or ORDER_SCREEN_2 )
+			vendID = currentVendID + 1		#vendID and not userID is generated for orders place on kiosks 
+			coffeeType = currentCoffeeTypeSelected
+			if(kioskVersion <= 0.1)			#TODO What is the cut off point?
+				iceAmount = NONE
+			else
+				iceAmount = currentIceAmountSelected
+			milkType = currentMilkTypeSelected
+			sugarAmount = currentSugarAmountSelected
+			
+
+		elif(VEND_SCREEN)
+			userID = checkForQRcode()
+			coffeeType = getCoffeeType(userID)
+			iceAmount = getIceAmount(userID)
+			milkType = getMilkType(userID)
+			sugarAmount = getSugarAmount(userID)
+			isOrdered = checkOrderStatus(userID)
+			isPaid = checkPayment(userID, discountCode)
+			orderPercentage = getOrderPercentage(userID)
+
+		while(userID != NO_QR_CODE)
+
+		if(isOrdered and isPaid)
+			orderPercentage = 0
 
 		while True:
 			for i in range(2):
