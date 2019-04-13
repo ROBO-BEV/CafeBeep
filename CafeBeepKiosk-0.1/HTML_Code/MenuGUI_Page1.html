@@ -10,30 +10,70 @@
  * @section DESCRIPTION
  *
  * TODO: Red (0xB8191D), Tan (0xFEDFB3), White (0xFDFDFD) and/or Black (0x010306)
- *
+ * https://www.brunildo.org/test/space-chars.html [　] ideographic space U+3000
+ * <a href="http://www.htmldog.com" <(/a)
+ * https://htmldog.com/guides/html/beginner/forms/
+ *  	
  ->
+<html>
+  <head>
+  	<title>Menu GUI Page 1</title>
 
-<img src="http://" alt="">
-<img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/cafeBEEP_Logo.png"  alt=""> 
-<h1 style="color: #000000;"> Welcome <username>! </h1>
-<br>
-<h3 style="color: #000000;"> 
-	Most Popular: <br>
-	Coffee <br>
-	Tea <br>
-	Hot <br>
-	Cold <br>
-</h3>
-<br><br> 
-<button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; font-weight: bold; border-radius: 20px;" type="/Cold_Brew\" value="/Cold_Brew\"> Cold Brew
-</button>
-<button style="background-color: #B8191D; color: #000; display: inline-block; padding: 20px 30px; font-weight: bold; border-radius: 20px;" type="/Hot_Brew\" value="/Hot_Brew\"> Hot Brew
-</button>
+    <!CSS STUFF HERE>
+    
 
+  </head>
+  <body>
+  	<table>
+  	  <tr>
+        <td>
+          <center><img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/cafeBEEP_Logo.png" width="153" height="35" alt="cafeBEEP logo"> </center>
+        </td> <!END ROW 1, CELL 1 >
 
-<!- TO DO ACCESS USER DATABASE USING LOGIN TOKEN, REMOVE 420, AND DISPLAY BOX ID ->
-<label for="name">Box ID: 420 </label>
+        <td>
+ 		  <center><h1 style="color: #000000;"> Welcome <userID.firstName>! </h1></center>
+        </td> <!END ROW 1, CELL 2 >
+      </tr>
 
-<center>
- 
-</center>
+      <tr>
+        <td width="200">
+          <h3 style="color: #000000;"> Most Popular:
+            <ul> 
+      		  <li>Coffee</li>
+      		  <li>Tea</li>
+      		  <li>Hot</li>
+      		  <li>Cold</li>
+    	  </h3>
+    	  <!- TO DO ACCESS USER DATABASE USING LOGIN TOKEN, REMOVE 420, AND DISPLAY BOX ID ->
+    	  <label for="userID"> UserID: 15105139110 </label> 
+        </td> <!END ROW 2, CELL 1 >
+        
+        <td>
+          <table>
+            <tr>
+        	  <td width="200"> 
+          	    <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; font-weight: bold; border-radius: 20px;" type="/Cold_Brew\" value="/Cold_Brew\"> 
+          	    	<br>
+          	    	<center>
+          	    	  <img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/Cup.png" width="100" height="100" alt="Cup">
+          	    	</center>
+          	    	<br>　　Cold Brew　　<!Two [　] ideographic spaces U+3000>
+          	    </button>
+          	  </td> <!INTERNAL END ROW 1, CELL 1 >
+          
+      		  <td width="200"> 
+				<button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; font-weight: bold; border-radius: 20px;" type="/Hot_Brew\" value="/Hot_Brew\">   
+					<br>
+					<center>
+          	    	  <img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/Cup.png" width="100" height="100" alt="Cup">
+          	    	</center>
+					<br>　　Hot Brew 　　<!Two [　] ideographic spaces U+3000>
+         		</button>
+        	  </td> <!INTERNAL END ROW 1, CELL 2 >
+      	    </tr>	
+          </table>
+        </td><!END ROW 2, CELL 2 >
+      </tr> 
+  	</table>
+  </body>
+</html>
