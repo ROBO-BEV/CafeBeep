@@ -14,10 +14,14 @@ __doc__ =     "Highest level driver file to run cafeBEEP kiosk"
 # Useful system jazz
 import sys, time, traceback, argparse
 
-# Allow control of GPIO pins on Raspberry Pi 3 and Pi Zero (i.e. I2C, SPI, TTL)
+# Allows for the control of GPIO pins on Raspberry Pi 3 and Pi Zero (i.e. I2C, SPI, TTL)
 import RPi.GPIO as GPIO
 
-# Allow for the creation of QR codes locally on Pi using camera for upload to user database
+# Allows for the creation of a GUI web app that communicates with python backend code 
+# Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)
+from flask import Flask
+
+# Allows for the creation of QR codes locally on Pi using camera for upload to user database
 import MyQR.mylibs
 from MyQR.mylibs import theqrmodule as GenerateQRcode
 
@@ -235,6 +239,8 @@ if __name__ == "__main__":
 	keyboard.type('ROBO BEV cafeBEEP demo starting using schematic V0.1...')
 	time.sleep(DRAMATIC_DELAY)
 
+	print('Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)')
+
 	#Clear demo starting now text
 	check_call("clear",shell=True)
 	check_call("clear",shell=True)
@@ -244,7 +250,7 @@ if __name__ == "__main__":
 	#TODO User object needed
 
 	try:
-		if(ORDER_SCREEN_1 or ORDER_SCREEN_2 )
+		if(ORDER_SCREEN_1 || ORDER_SCREEN_2)
 			vendID = currentVendID + 1		#vendID and not userID is generated for orders place on kiosks 
 			coffeeType = currentCoffeeTypeSelected
 			if(kioskVersion <= 0.1)			#TODO What is the cut off point?
