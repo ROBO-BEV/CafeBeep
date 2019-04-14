@@ -13,61 +13,68 @@
  * https://www.brunildo.org/test/space-chars.html [　] ideographic space U+3000
  * <a href="http://www.htmldog.com" <(/a)
  * https://htmldog.com/guides/html/beginner/forms/
+ * https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
+ * https://docs.google.com/presentation/d/1k3KfbtSabTe1aBXNeYydRW-ElHDFg9CbhrUZAfb_Uhg/edit#slide=id.g30aea89634_0_121
  *  	
  ->
-<html>
+<html lang="en">
   <head>
   	<title>Menu GUI Page 1</title>
 
-    <!CSS STUFF HERE>
-    
+    <!TODO CSS STUFF HERE>
+    <style type="text/css">
+      
+      table {
+      	font-family: Source Sans Pro, Arial, Courier New; /* Try Source San PRo typeface first and Courier New last */ 
+      }
+      
+      button {
+      	outline: 0;  /* Turn off annoying blue highlight around button during click> */ 
+      }
+    </style>
 
   </head>
+
   <body>
   	<table>
   	  <tr>
         <td>
-          <center><img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/cafeBEEP_Logo.png" width="153" height="35" alt="cafeBEEP logo"> </center>
+          <center><img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/cafeBEEP_Logo.png" width="153" height="35" alt="cafeBEEP Logo"> </center>
         </td> <!END ROW 1, CELL 1 >
 
         <td>
- 		  <center><h1 style="color: #000000;"> Welcome <userID.firstName>! </h1></center>
+ 		  <center><h1 style="color: #B8191D;"> Welcome to BEEP BEEP </h1></center>
         </td> <!END ROW 1, CELL 2 >
       </tr>
 
       <tr>
-        <td width="200">
-          <h3 style="color: #000000;"> Most Popular:
-            <ul> 
-      		  <li>Coffee</li>
-      		  <li>Tea</li>
-      		  <li>Hot</li>
-      		  <li>Cold</li>
-    	  </h3>
-    	  <!- TO DO ACCESS USER DATABASE USING LOGIN TOKEN, REMOVE 420, AND DISPLAY BOX ID ->
-    	  <label for="userID"> UserID: 15105139110 </label> 
+        <td width="200" height="200">
+          <center> <h2 style="color: #000000;"> Most Popular </h2></center> 
+          <center> <h4 style="color: #000000;"> Hot Brew {{ config[0][1] }} </h4></center> 
+          <center> <h4 style="color: #000000;"> Cold Brew (27%)</h4></center> 
+    	  <center><img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/userAvatar.png" width="153" height="70" alt="User Avatar UserID: 15105139110"> </center>
         </td> <!END ROW 2, CELL 1 >
         
         <td>
           <table>
             <tr>
-        	  <td width="200"> 
-          	    <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; font-weight: bold; border-radius: 20px;" type="/Cold_Brew\" value="/Cold_Brew\"> 
+        	  <td width="210"> 
+          	    <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; width: 200px; font-weight: bold; border-radius: 20px;" type="/Config1_Drink1\" value="/Config1_Drink1\"> 
           	    	<br>
           	    	<center>
           	    	  <img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/Cup.png" width="100" height="100" alt="Cup">
           	    	</center>
-          	    	<br>　　Cold Brew　　<!Two [　] ideographic spaces U+3000>
-          	    </button>
+          	    	<br> <center> {{ config[0][0] }} </center> <!Two [　] ideographic spaces U+3000>
+          	    </button>	
           	  </td> <!INTERNAL END ROW 1, CELL 1 >
           
-      		  <td width="200"> 
-				<button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; font-weight: bold; border-radius: 20px;" type="/Hot_Brew\" value="/Hot_Brew\">   
+      		  <td width="210"> 
+				<button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; width: 200px; font-weight: bold; border-radius: 20px;" type="/Cold_Brew\" value="/Cold_Brew\">   
 					<br>
 					<center>
           	    	  <img src="http://github.com/ROBO-BEV/CafeBeep/CafeBeepKiosk-0.1/Images/Cup.png" width="100" height="100" alt="Cup">
           	    	</center>
-					<br>　　Hot Brew 　　<!Two [　] ideographic spaces U+3000>
+					<br><center> Cold Brew </center><!Two [　] ideographic spaces U+3000>
          		</button>
         	  </td> <!INTERNAL END ROW 1, CELL 2 >
       	    </tr>	
