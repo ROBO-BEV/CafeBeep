@@ -36,7 +36,10 @@
   </head>
 
   <body>
-  	<table>
+  	<script language ="JavaScript">
+ 	  var kioskConfig = new Array()();
+	</script>
+	<table>
   	  <tr>
         <td>
           <center><img src="https://github.com/ROBO-BEV/CafeBeep/blob/master/CafeBeepKiosk-0.1/Images/cafeBEEP_Menu_Logo.png" width="153" height="35" alt="cafeBEEP Logo"> </center>
@@ -50,7 +53,7 @@
       <tr>
         <td width="200" height="200">
           <center> <h2 style="color: #000000;"> Most Popular </h2></center> 
-          <center> <h4 style="color: #000000;"> Hot Brew {{ config[0][1] }} </h4></center> 
+          <center> <h4 style="color: #000000;"> Hot Brew {{ kioskConfig[0][1] }} </h4></center> 
           <center> <h4 style="color: #000000;"> Cold Brew (27%)</h4></center> 
     	  <center><img src="https://github.com/ROBO-BEV/CafeBeep/blob/master/CafeBeepKiosk-0.1/Images/userAvatar.png" width="153" height="70" alt="User Avatar UserID: 15105139110"> </center>
         </td> <!END ROW 2, CELL 1 >
@@ -64,7 +67,7 @@
           	    	<center>
           	    	  <img src="https://github.com/ROBO-BEV/CafeBeep/blob/master/CafeBeepKiosk-0.1/Images/Cup.png" width="100" height="100" alt="Cup">
           	    	</center>
-          	    	<br> <center> {{ config[0][0] }} </center> <!Two [　] ideographic spaces U+3000>
+          	    	<br> <center> {{ kioskConfig[0][0] }} </center> <!Two [　] ideographic spaces U+3000>
           	    </button>	
           	  </td> <!INTERNAL END ROW 1, CELL 1 >
           

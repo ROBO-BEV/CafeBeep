@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-04-13"
+__date__ =    "Late Updated: 2019-04-14"
 __doc__ =     "Test Flask program to run cafeBEEP kiosk GUI"
 
 #Useful web IDE to test Flask programs on https://repl.it/
@@ -17,6 +17,14 @@ from flask import Flask
 
 # Save HTML file in a folder called "templates" in the same folder as your Flask code.
 from flask import render_template
+
+# Useful Constants
+
+# Current plan for cafeBEEP is to build 4 different kiosk
+MAX_CONFIG_NUM = 4
+
+# No kiosk should sell more then 5 different drink type https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864034/
+MAX_DRINK_NUM = 5
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
@@ -35,6 +43,7 @@ def HomeScreen():
 # GUI for front facing vend screen that shows logo and location of cup pick up
 #
 # @userID - 10 digit integer variable assign to each user (North America phone number)
+#
 # @return String variable to display to user on kiosk touchscreen
 ###
 @app.route('/VendScreen/<int:userID>')
@@ -44,7 +53,9 @@ def VendScreen(userID):
 
 ###
 # Private function to lookup username using python dictionary
+#
 # @userID - 10 digit integer variable assign to each user (North America phone number)
+#
 # @return String variable with users first name as shown on credit card on file 
 ###
 def GetUserFirstName(userID):
@@ -64,46 +75,58 @@ def GetUserFirstName(userID):
 # Search user database (python Dictionary) to find user data
 # Jump table / switch statement is much faster than an if-else-if ladder
 # TODO https://jaxenter.com/implement-switch-case-statement-python-138315.html
+# @userIdNum - ID number of user you are searching for
+#
+# @return - String variable with first name (only) of user. (PRIVACY MATTERS!)
 ###
-def SearchUserDatabase(var):
+def SearchUserDatabase(userIdNum):
 	userDatabase = {
 		0: "Blaze",
 		1: "David",
 		15105139110: "Blaze's CellPhone"
 	}
-	return userDatabase.get(var, "USER PHONE NUMBER NOT FOUND")
+	return userDatabase.get(userIdNum, "USER PHONE NUMBER NOT FOUND")
 
 ###
-# GUI for two side facing menu screens that shows coffee options available 
-# @drinkConfiguration - Franchise congfig #1 is two drinks; 1 Hot Brew & 1 Cold Brew)
-# @TODO
-# @return String variable to suggest most popular drink of day to user
+# GUI for two side facing menu screens that display coffee options available for order
+#
+# @drinkConfiguration - Setup config to use from franchise database. (e.g. Congfig #0 is two drinks; 1 Hot Brew & 1 Cold Brew)
+#
+# @return HTML template to display with dymanic variables loaded
 ###
-#TypeError: MenuScreen() got an unexpected keyword argument 'drinkConfiguration'
+#TODO: TypeError: MenuScreen() got an unexpected keyword argument 'drinkConfiguration'
 @app.route('/MenuScreen/<int:drinkConfiguration>')
 def MenuScreen(drinkConfiguration):
-#	return 'The most popular drink today is cold brew with sugar and Oatly milk substitute.'
+#TODO REMOVE AFTER TESTING	return 'The most popular drink today is cold brew with sugar and Oatly milk substitute.'
+	if(drinkConfiguration > MAX_CONFIG_NUM):
+		print("INVALID DRINK CONFIGURATION SELECTED - TRY A NUMBER LESS THAN 4.")
+		return
+	kioskConfig = [[0]*3 for _ in range(MAX_DRINK_NUM)] 		# Initialise 2D array with all ZEROs
+	for colNum in range(len(kioskConfig[drinkConfiguration])):	# Load 2D array with data from Configuration Database dictionary
+        	kioskConfig[drinkConfiguration][colNum] = SearchConfigurationDatabase(drinkConfiguration, colNum)
+	
 	return render_template(
-		"MenuGUI_Page1.html",
-		#TODO 2D array to hold config (row) and drink name (column) config1_Drink2_Percent = 
-		
-		#for i in 0 to (config[drinkConfiguration].length - 1)
-                	#config[drinkConfiguration][i] = SearchConfigurationDatabase(drinkConfiguration, i)
+		"MenuGUI_Page1.html", # Name of HTML template to use
+		# Load 2D array that holds current kiosk configuration (row) and drink name (column) to set HTML GUI variables
+		drinkID1 = kioskConfig[drinkConfiguration][1]
 	)
 
-def SearchConfigurationDatabase(var):
-	configurationDatabase0 = {
-		0: "Cold Brew",
-		1: "Hot Brew"
-	}
+def SearchConfigurationDatabase(configNum, drinkNum):
+	if(configNum == 0):
+		configurationDatabase = {
+			0: "Cold Brew",
+			1: "Hot Brew"
+		}
+	elif(configNum == 1): #TODO: Can we have two dictionaries with same name in same function?
+		configurationDatabase = {
+			0: "Espresso",
+			1: "Hot Brew",
+			2: "Cold Brew"
+		}
+	else:
+		print("PRINT CONFIGURATION /#" + configNum + " DOES NOT EXIST IN BEEP BEEP FRANCHISE SYSTEM")
 
-	configurationDatabase1 = {
-		0: "Espresso",
-		1: "Hot Brew",
-		2: "Cold Brew"
-	}
-
-	return configurationDatabase0.get(var, "INVALID DRINK CONFIGURATION")
+	return configurationDatabase.get(drinkNum, "INVALID DRINK CONFIGURATION")
 
 
 
