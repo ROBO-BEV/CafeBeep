@@ -23,8 +23,8 @@ from flask import render_template
 # Current plan for cafeBEEP is to build 4 different kiosk
 MAX_CONFIG_NUM = 4
 
-# No kiosk should sell more then 5 different drink type https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864034/
-MAX_DRINK_NUM = 5
+# No kiosk should sell more then 4 different drink type https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864034/
+MAX_DRINK_NUM = 4
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
@@ -97,18 +97,26 @@ def SearchUserDatabase(userIdNum):
 #TODO: TypeError: MenuScreen() got an unexpected keyword argument 'drinkConfiguration'
 @app.route('/MenuScreen/<int:drinkConfiguration>')
 def MenuScreen(drinkConfiguration):
-#TODO REMOVE AFTER TESTING	return 'The most popular drink today is cold brew with sugar and Oatly milk substitute.'
 	if(drinkConfiguration > MAX_CONFIG_NUM):
 		print("INVALID DRINK CONFIGURATION SELECTED - TRY A NUMBER LESS THAN 4.")
 		return
-	kioskConfig = [[0]*3 for _ in range(MAX_DRINK_NUM)] 		# Initialise 2D array with all ZEROs
-	for colNum in range(len(kioskConfig[drinkConfiguration])):	# Load 2D array with data from Configuration Database dictionary
+	kioskConfig = [[0]*MAX_DRINK_NUM for _ in range(MAX_DRINK_NUM-1)] # Initialise 2D array with all ZEROs
+	for colNum in range(len(kioskConfig[drinkConfiguration])):	  # Load 2D array with data from Configuration Database dictionary
         	kioskConfig[drinkConfiguration][colNum] = SearchConfigurationDatabase(drinkConfiguration, colNum)
-	
+
 	return render_template(
 		"MenuGUI_Page1.html", # Name of HTML template to use
 		# Load 2D array that holds current kiosk configuration (row) and drink name (column) to set HTML GUI variables
-		drinkID1 = kioskConfig[drinkConfiguration][1]
+		# TODO: Add global variable to track drink percentage for each drinkID "drinkPercentage0"
+		drinkID0 = kioskConfig[drinkConfiguration][0],
+		drinkPercentage0 = 100,
+		drinkID1 = kioskConfig[drinkConfiguration][1],
+		drinkPercentage1 = 100,
+		drinkID2 = kioskConfig[drinkConfiguration][2],
+		drinkPercentage2 = 100,
+		drinkID3 = kioskConfig[drinkConfiguration][3],  # NOTE: drinkID? = MAX_DRINK_NUM - 1 = 3
+		drinkPercentage3 = 100
+
 	)
 
 def SearchConfigurationDatabase(configNum, drinkNum):
