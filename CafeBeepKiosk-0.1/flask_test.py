@@ -27,7 +27,7 @@ MAX_DRINK_NUM = 4
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
-app.secret_key = 'your secret'            #TODO: Select STRONG key for production
+app.secret_key = 'BeepBeep@42'            #TODO: Select STRONG key for production code
 app.config['SESSION_TYPE'] = 'filesystem' #
 
 ###
@@ -37,6 +37,8 @@ app.config['SESSION_TYPE'] = 'filesystem' #
 ###
 @app.route('/')
 def HomeScreen():
+	drinkID0_VendCount = session.get('drinkID0_VendCount', None)
+
 	return 'Hello World, this is the cafeBEEP robotic coffee kiosk!'
 
 ###
