@@ -13,10 +13,9 @@ __doc__ =     "Test Flask program to run cafeBEEP kiosk GUI"
 import sys, time, traceback, argparse, string
 
 # Allows for the creation of a GUI web app that communicates with python backend code
-from flask import Flask
-
 # Save HTML file in a folder called "templates" in the same folder as your Flask code.
-from flask import render_template
+# Save user state / data across page refreshes and crashes, by using browser cookies.
+from flask import Flask, render_template, session
 
 # Useful Constants
 
@@ -28,7 +27,8 @@ MAX_DRINK_NUM = 4
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
-
+app.secret_key = 'your secret'            #TODO: Select STRONG key for production
+app.config['SESSION_TYPE'] = 'filesystem' #
 
 ###
 # Adding @app.route('/') line on top of a function definition turns it into a “route.”
@@ -125,7 +125,7 @@ def SearchConfigurationDatabase(configNum, drinkNum):
 			0: "Cold Brew",
 			1: "Hot Brew"
 		}
-	elif(configNum == 1): #TODO: Can we have two dictionaries with same name in same function?
+	elif(configNum == 1): #TODO: Can we have two dictionaries with same name in same function? YES each local to if statement
 		configurationDatabase = {
 			0: "Espresso",
 			1: "Hot Brew",
