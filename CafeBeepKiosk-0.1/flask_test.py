@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-04-14"
+__date__ =    "Late Updated: 2019-04-23"
 __doc__ =     "Test Flask program to run cafeBEEP kiosk GUI"
 
 #Useful web IDE to test Flask programs on https://repl.it/
@@ -49,43 +49,8 @@ def HomeScreen():
 @app.route('/VendScreen/<int:userID>')
 def VendScreen(userID):
 	firstName = GetUserFirstName(userID)
+	drinkName = GetUserDrinkName(userID)
 	return 'Morning ' + firstName + ', one cold brew coffee with half & half coming right up.'
-
-###
-# Private function to lookup username using python dictionary
-#
-# @userID - 10 digit integer variable assign to each user (North America phone number)
-#
-# @return String variable with users first name as shown on credit card on file 
-###
-def GetUserFirstName(userID):
-#TODO: Fix  "TypeError: 'str' object is not callable" error message
-#	return SearchDatabase(userID)
-
-	if(userID == 0):
-		return "Blaze"
-	elif(userID == 1):
-		return "David"
-	elif(userID == 15105139110):
-		return "Blaze's Cell Phone"
-	else:
-		return "USER NOT FOUND"
-
-###
-# Search user database (python Dictionary) to find user data
-# Jump table / switch statement is much faster than an if-else-if ladder
-# TODO https://jaxenter.com/implement-switch-case-statement-python-138315.html
-# @userIdNum - ID number of user you are searching for
-#
-# @return - String variable with first name (only) of user. (PRIVACY MATTERS!)
-###
-def SearchUserDatabase(userIdNum):
-	userDatabase = {
-		0: "Blaze",
-		1: "David",
-		15105139110: "Blaze's CellPhone"
-	}
-	return userDatabase.get(userIdNum, "USER PHONE NUMBER NOT FOUND")
 
 ###
 # GUI for two side facing menu screens that display coffee options available for order
@@ -95,17 +60,30 @@ def SearchUserDatabase(userIdNum):
 # @return HTML template to display with dymanic variables loaded
 ###
 #TODO: TypeError: MenuScreen() got an unexpected keyword argument 'drinkConfiguration'
-@app.route('/MenuScreen/<int:drinkConfiguration>')
-def MenuScreen(drinkConfiguration):
+@app.route('/MenuScreen/<int:pageNum>/<int:drinkConfiguration>')
+def MenuScreen(pageNum, drinkConfiguration):
 	if(drinkConfiguration > MAX_CONFIG_NUM):
 		print("INVALID DRINK CONFIGURATION SELECTED - TRY A NUMBER LESS THAN 4.")
 		return
+	
 	kioskConfig = [[0]*MAX_DRINK_NUM for _ in range(MAX_DRINK_NUM-1)] # Initialise 2D array with all ZEROs
 	for colNum in range(len(kioskConfig[drinkConfiguration])):	  # Load 2D array with data from Configuration Database dictionary
         	kioskConfig[drinkConfiguration][colNum] = SearchConfigurationDatabase(drinkConfiguration, colNum)
 
+	HTMLtoDisplay = "INVALID"
+	if (pageNum ==  1):
+		HTMLtoDisplay = "MenuGUI_Page1.html"
+	elif (pageNum ==  2):
+		HTMLtoDisplay = "MenuGUI_Page2.html"
+	elif (pageNum ==  3):
+		HTMLtoDisplay = "MenuGUI_Page3.html"
+	elif (pageNum ==  4):
+		HTMLtoDisplay = "MenuGUI_Page4.html"
+	elif (pageNum ==  5):
+		HTMLtoDisplay = "MenuGUI_Page5.html"
+
 	return render_template(
-		"MenuGUI_Page1.html", # Name of HTML template to use
+		HTMLtoDisplay, # Name of HTML template to use
 		# Load 2D array that holds current kiosk configuration (row) and drink name (column) to set HTML GUI variables
 		# TODO: Add global variable to track drink percentage for each drinkID "drinkPercentage0"
 		drinkID0 = kioskConfig[drinkConfiguration][0],

@@ -1,0 +1,142 @@
+<!--
+ * @file MenuGUI_Page2.html
+ * @author Blaze Sanders BEEP BEEP Technologies Inc(TM)
+ * @date 2019-04-16
+ * @link https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
+ * TODO: DESIGN TO MATCH - https://docs.google.com/presentation/d/1k3KfbtSabTe1aBXNeYydRW-ElHDFg9CbhrUZAfb_Uhg/edit#slide=id.g30aea89634_0_121
+ * @version 1.0
+ *
+ * @brief HTML code to render Web 1.0 highest level menu screen for cafeBEEP robotic coffee kiosk
+ *	
+ * @section DESCRIPTION
+ *
+ * Page #2 of Menu Screen displays buttons for user to enter their telephone number  <a href="tel:555-123-4567">
+ * https://html-cleaner.com/html-table-generator/
+ * TODO: Red (0xB8191D), Tan (0xFEDFB3), White (0xFDFDFD) and/or Black (0x010306)
+ * https://www.brunildo.org/test/space-chars.html [　] ideographic space U+3000
+ * <a href="http://www.htmldog.com" <(/a)
+ * https://htmldog.com/guides/html/beginner/forms/
+ *  	
+ -->
+<html lang="en">
+  <head>
+  	<title>Menu GUI Page 2</title>
+
+    <!--TODO CSS STUFF HERE-->
+    <style type="text/css">
+      
+      table {
+      	font-family: Source Sans Pro, Arial, Courier New; /* Try Source San PRo typeface first and Courier New last */ 
+      }
+      
+      button {
+      	outline: 0;  /* Turn off annoying blue highlight around button during click> */ 
+      }
+    </style>
+
+  </head>
+
+  <body>
+  	<!--TODO: FIX SCRIPT TO ALLOW USE OF ARRAYS-->
+	<script language ="JavaScript">
+ 	  var drinkID = new Array();
+	  drinkID[0] = TODO;
+	</script>
+	<table style="width: 700px;"  cellpadding = "2">
+		<tr>
+			<td width="153" height="75">
+	          <center> <img src="../Images/cafeBEEP_Menu_Logo.png" width="153" height="35" align="center" alt="cafeBEEP Logo"> </center>
+       		</td> <!-- END ROW 1, CELL 1 -->
+			<td width="1000" height="75">
+ 		      <center><h2 style="color: #B8191D; margin-top:22px"> <b> Please enter your phone number </b> </h2></center> <!-- MAKE THIS IMAGE OR PADD BETTER-->
+        	</td> <!-- END ROW 1, CELL 2 -->
+		</tr>
+		<tr>
+			<td> 
+			  <center>
+			  	<img src="../Images/USA_Flag.png" width="30" height="30" align="center" alt="USA Flag">
+  				<input type="text" name="phoneNumber" size="12" value="+1(555)555-5555" style="color: #D3D3D3;" autofocus>  </input>  
+  				<h5 style="color: #010306;"> We’ll send you a text when your drink is ready. Just walk up and grab it, no pin needed. </h5>
+			 </center> 
+			</td> 
+			<td> 
+	<center>			
+	<table style="width: 160px;"  cellpadding = "2"> <!-- SPACE BETWEEN THE BUTTONS -->
+		<tr>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> <b> 1 </b> </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 2 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 3 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+		</tr>
+		<tr>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 4 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 5 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 6 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+		</tr>
+		<tr>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 7 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 8 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 9 </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+		</tr>
+		<tr>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> ◀ </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center> 0</center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+			<td> 
+			  <button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 15px 5px; height: 60px; width: 60px; font-weight: bold; border-radius: 5px;" type="/One_Digit\" value="/One_Digit\"> 
+          	    	<center>  </center> <!-- Source Image is  1600 x 1116 -->
+          	  </button>	
+			</td>
+		</tr>
+	</table>
+			</td>
+		</tr>
+  	</table>
+  	</center>
+
+
+
+  </body>
+</html>
