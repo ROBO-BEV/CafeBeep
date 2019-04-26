@@ -26,6 +26,21 @@ from time import sleep
 
 from signal import pause          # Allow control of program execution with pasues
 
+class ServoControl:
+        MAX_NUM_OF_SERVOS =  8 
+
+        def __init__(self, pins[], servoID, partNumber, direction):
+                for ???
+		self.servoID = servoID
+                self.partNumber = servoPartNumber
+                self.direction = direction
+
+
+	def Run(duration, direction):
+
+	def SetAngle(angle):
+
+
 if __name__ == "__main__":
 
 	led = LED("GPIO17") #OR LED("BCM17"), since all GPIO pin numbers use Broadcom (BCM) numbering by default

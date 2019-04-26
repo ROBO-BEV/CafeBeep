@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 
 __author__ =  "Blaze Sanders"
@@ -41,7 +42,7 @@ class UserData:
 			1: "David",
 			15105139110: "Blaze's CellPhone"
 		}
-		return userDatabase.get(userIdNum, "USER PHONE NUMBER NOT FOUND")
+		return userDatabase.get(userIdNum, " ")
 
 ###
 
