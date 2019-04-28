@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-04-23"
+__date__ =    "Late Updated: 2019-04-26"
 __doc__ =     "Test Flask program to run cafeBEEP kiosk GUI"
 
 #Useful web IDE to test Flask programs on https://repl.it/
@@ -60,32 +60,33 @@ def VendScreen(userID):
 # @return HTML template to display with dymanic variables loaded
 ###
 #TODO: TypeError: MenuScreen() got an unexpected keyword argument 'drinkConfiguration'
-@app.route('/MenuScreen/<int:pageNum>/<int:drinkConfiguration>')
-def MenuScreen(pageNum, drinkConfiguration):
+@app.route('/MenuScreen/<int:pageNum>/<int:drinkConfiguration>/<int:userID>')
+def MenuScreen(pageNum, drinkConfiguration, userID):
 	if(drinkConfiguration > MAX_CONFIG_NUM):
 		print("INVALID DRINK CONFIGURATION SELECTED - TRY A NUMBER LESS THAN 4.")
 		return
-	
+
 	kioskConfig = [[0]*MAX_DRINK_NUM for _ in range(MAX_DRINK_NUM-1)] # Initialise 2D array with all ZEROs
 	for colNum in range(len(kioskConfig[drinkConfiguration])):	  # Load 2D array with data from Configuration Database dictionary
         	kioskConfig[drinkConfiguration][colNum] = SearchConfigurationDatabase(drinkConfiguration, colNum)
 
 	HTMLtoDisplay = "INVALID"
-	if (pageNum ==  1):
-		HTMLtoDisplay = "MenuGUI_Page1.html"
-	elif (pageNum ==  2):
-		HTMLtoDisplay = "MenuGUI_Page2.html"
-	elif (pageNum ==  3):
-		HTMLtoDisplay = "MenuGUI_Page3.html"
-	elif (pageNum ==  4):
-		HTMLtoDisplay = "MenuGUI_Page4.html"
-	elif (pageNum ==  5):
-		HTMLtoDisplay = "MenuGUI_Page5.html"
+	if (pageNum ==  -1):
+		HTMLtoDisplay = "MenuGUI_DrinkPage.html"
+	elif (pageNum == -2):
+		HTMLtoDisplay = "MenuGUI_PhoneDialerPage.html"
+	elif (pageNum ==  -3):
+		HTMLtoDisplay = "MenuGUI_CustomizePage.html"
+	elif (pageNum ==  -4):
+		HTMLtoDisplay = "MenuGUI_HomePage.html"
+	elif (pageNum ==  -5):
+		HTMLtoDisplay = "MenuGUI_???Page.html"
 
 	return render_template(
 		HTMLtoDisplay, # Name of HTML template to use
 		# Load 2D array that holds current kiosk configuration (row) and drink name (column) to set HTML GUI variables
 		# TODO: Add global variable to track drink percentage for each drinkID "drinkPercentage0"
+		userFirstName = UserData.GetUserFirstName(userID),
 		drinkID0 = kioskConfig[drinkConfiguration][0],
 		drinkPercentage0 = 100,
 		drinkID1 = kioskConfig[drinkConfiguration][1],

@@ -26,6 +26,23 @@ from time import sleep
 
 from signal import pause          # Allow control of program execution with pasues
 
+class ServoControl:
+	MAX_NUM_OF_SERVOS =  8
+
+	def __init__(self, pins, servoID, partNumber, direction):
+		for i in pins:
+			self.pins[i] = pins[i] #TODO: How do I make sure self.pins[] is the correct size before using
+		self.servoID = servoID
+		self.partNumber = servoPartNumber
+		self.direction = direction
+
+
+	def Run(duration, direction):
+		print("TEST")
+	def SetAngle(angle):
+		print("TEST")
+
+
 if __name__ == "__main__":
 
 	led = LED("GPIO17") #OR LED("BCM17"), since all GPIO pin numbers use Broadcom (BCM) numbering by default
@@ -35,7 +52,7 @@ if __name__ == "__main__":
 	kiosk0.source = onTime
 
 
-	cupSepServo1 = Servo(1, ?, 0.3, 1, 2, 20)
+	#TODO: How to use optional & skipped paramaters? cupSepServo1 = Servo(1, ?, 0.3, 1, 2, 20)
 	cupSepServo1.isActive
 	posCupSepServo1 = cupSepServo1.value
 
@@ -71,4 +88,4 @@ if __name__ == "__main__":
 	relay4 = OutputDevice(6)
 
 	#TODO: Motor #2
-	cupConveyorMotor2 = Motor(?, ?)
+	#cupConveyorMotor2 = Motor(?, ?)

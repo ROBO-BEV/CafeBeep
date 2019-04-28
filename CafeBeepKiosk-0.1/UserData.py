@@ -14,8 +14,7 @@ import sys, time, traceback, argparse, string
 
 
 class UserData:
-
-	MAX_USERS_PER KIOSK =  4000 # Determine this limit via testing
+	MAX_USERS_PER_KIOSK = 4000 # Determine this limit via testing
 
 	userDatabase = {
 		0: "Blaze",
@@ -41,9 +40,9 @@ class UserData:
 			1: "David",
 			15105139110: "Blaze's CellPhone"
 		}
-		return userDatabase.get(userIdNum, "USER PHONE NUMBER NOT FOUND")
+		return userDatabase.get(userIdNum, " ")
 
 ###
-
-if __name__ =  main:
+if __name__ == "__main__":
+	print("TEST")
 
