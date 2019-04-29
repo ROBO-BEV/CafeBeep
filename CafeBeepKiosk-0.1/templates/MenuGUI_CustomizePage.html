@@ -45,7 +45,7 @@
 	<table>
   	  <tr>
         <td width="153" height="75">
-	        <center> <img src="../Images/cafeBEEP_Menu_Logo.png" width="153" height="35" alt="cafeBEEP Logo"> </center>
+	        <center> <img src="{{ url_for('static', filename='Images/cafeBEEP_Menu_Logo.png') }}" width="153" height="35" alt="cafeBEEP Logo"> </center>
         </td> <!-- END ROW 1, CELL 1 -->
 
         <td>
@@ -55,7 +55,7 @@
 
       <tr>
         <td width="200" height="200"> 
-    	    <center> <img src="../Images/CustomCup.png" width="200" height="256" alt="CustomCup"> </center> <!-- Source Image is  597 x 597 -->
+    	    <center> <img src="{{ url_for('static', filename='Images/CustomCup.png') }}" width="200" height="256" alt="CustomCup"> </center> <!-- Source Image is  597 x 597 -->
           <center> <h4 style="color: #000000;"> {{ selectedDrinkName }} </h4></center> 
         </td> <!--END ROW 2, CELL 1-->
         
