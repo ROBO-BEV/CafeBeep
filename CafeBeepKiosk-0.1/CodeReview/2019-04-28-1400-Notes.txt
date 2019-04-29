@@ -1,0 +1,34 @@
+Humans In Meeting: Blaze, Murali
+
+Agenda:
+1) Security Warning in GitHub
+	Bootstrap is causing security warnings - Murali will reseach and fix
+		Should we write our own custom CSS?
+			Murali suggested CSS FlexBox
+			https://www.w3schools.com/css/css3_flexbox.asp
+
+2) static/Image directory changes to all HTML files
+	Murali will update the other 3 HTML pages
+
+3) GitHub branches after meeeting shall be 
+	Blaze_ServoCode, Murali_GUI, and David_CSS
+	Turn flask_tesy.py into CafeBEEPGUI.py
+
+4) Use on GitHub Issue tracker
+	First place to check if code is not working
+	https://github.com/ROBO-BEV/CafeBeep/issues
+
+5) Pi 3 Ubuntu MATE 18.04.02 or TX2 Ubuntu L4T Docker enviroment running Python3
+	https://ubuntu-mate.org/raspberry-pi/
+	https://developer.nvidia.com/embedded/linux-tegra
+	https://docs.docker.com/install/linux/docker-ce/ubuntu/
+	https://hub.docker.com/_/python
+	https://hub.docker.com/r/fnndsc/ubuntu-python3/dockerfile/
+	SSH into Pi 3?
+	One file in GitHub repo and makes growing team easier!	
+	Walk Blaze through setting up Docker on Windows
+
+6) Code each person is most interested in writting
+	Blaze - ServoControl.py
+	Murali - QR code or Facial Rec or Self Driving? 
+	David -   

@@ -9,6 +9,9 @@ __doc__ =     "Test Flask program to run cafeBEEP kiosk GUI"
 
 #Useful web IDE to test Flask programs on https://repl.it/
 
+#BEEP BEEP Code
+import UserData
+
 # Useful system jazz
 import sys, time, traceback, argparse, string
 
@@ -27,7 +30,7 @@ MAX_DRINK_NUM = 4
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
-app.secret_key = 'your secret'            #TODO: Select STRONG key for production
+app.secret_key = 'BeepBeep@42'            #TODO: Select STRONG key for production code
 app.config['SESSION_TYPE'] = 'filesystem' #
 
 ###
@@ -37,6 +40,8 @@ app.config['SESSION_TYPE'] = 'filesystem' #
 ###
 @app.route('/')
 def HomeScreen():
+	drinkID0_VendCount = session.get('drinkID0_VendCount', None)
+
 	return 'Hello World, this is the cafeBEEP robotic coffee kiosk!'
 
 ###
@@ -82,11 +87,13 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 	elif (pageNum ==  -5):
 		HTMLtoDisplay = "MenuGUI_???Page.html"
 
+	menuUser = UserData("TBD", "TBD", userID)
+
 	return render_template(
 		HTMLtoDisplay, # Name of HTML template to use
 		# Load 2D array that holds current kiosk configuration (row) and drink name (column) to set HTML GUI variables
 		# TODO: Add global variable to track drink percentage for each drinkID "drinkPercentage0"
-		userFirstName = UserData.GetUserFirstName(userID),
+		userFirstName = menuUser.GetUserFirstName(userID),
 		drinkID0 = kioskConfig[drinkConfiguration][0],
 		drinkPercentage0 = 100,
 		drinkID1 = kioskConfig[drinkConfiguration][1],

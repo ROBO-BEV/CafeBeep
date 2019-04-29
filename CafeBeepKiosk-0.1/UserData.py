@@ -34,7 +34,7 @@ class UserData:
 	#
 	# @return - String variable with first name (only) of user. (PRIVACY MATTERS!)
 	###
-	def SearchUserDatabase(userIdNum):
+	def GetUserFirstName(userIdNum):
 		userDatabase = {
 			0: "Blaze",
 			1: "David",
@@ -42,7 +42,7 @@ class UserData:
 		}
 		return userDatabase.get(userIdNum, " ")
 
-###
-if __name__ == "__main__":
-	print("TEST")
+
+	if __name__ == "__main__":
+		print("TEST")
 
