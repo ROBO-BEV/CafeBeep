@@ -128,6 +128,5 @@ def SearchConfigurationDatabase(configNum, drinkNum):
 # Code starts execution from here
 ###
 if __name__ == '__main__':
-	print('Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)')
 	app.run(host='0.0.0.0')
 
