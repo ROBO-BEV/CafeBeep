@@ -17,6 +17,14 @@ To run the code in CafeBeepKiosk-0.1 directory complete the following steps:
 3. Next run the command "python  CafeBeep_Driver.py" to start kiosk software running
 4. Enter terminal input as prompted and have fun
 
+To Run the application on Docker, follow the steps.
+1. Download the docker for Desktop [Windows, *x, MAC OSX etc]
+2. Login to the docker hub, if not create an account.
+3. Use "cd CafeBeep/CafeBeepKiosk-0.1" linux terminal command to navigate to the CafeBeepKiosk-0.1 directory
+4. Build the docker using "docker build -t cafe-beep:latest . "
+5. Run the docker image that you have built in step 4, i.e cafe-beep using this command. "docker run -d -p 5000:5000 cafe-beep "
+6. make sure, yor process is running by "docker ps".
+7. Navigate to localhost at the port that you specified in step 5.
 ***
 MyQR-160906-2019.03.14: 
 
