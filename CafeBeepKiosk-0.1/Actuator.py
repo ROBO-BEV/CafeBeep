@@ -75,7 +75,7 @@ class Actuator:
 	##
 	# Constructor to initialize an Actutator object, which can be a Servo(), Motor(), or Relay()
 	#
-	# @self - TODO
+	# @self - Newly created object
 	# @type - Single String character to select type of actuator to create (S=Servo, M=Motor, R=Relay)
 	# @wires[] - Array to document wires / pins being used by Pi 3 to control an actuator
 	# @partNumber - Vendor part number string variable (e.g. Seamuing MG996R)
@@ -83,9 +83,9 @@ class Actuator:
 	#
 	# return NOTHING
 	##
-	def __init__(self, type, wires, partNumber, direction):
-		for i in wires:
-			self.wires[i] = wires[i]
+	def __init__(self, type, pins, partNumber, direction):
+		for i in pins:
+			self.wires[i] = pins[i]
 		self.type = type
 		self.actuatorID = currentNumOfActuators	# Auto-incremented interger Class variable
 		self.partNumber = partNumber
@@ -97,7 +97,7 @@ class Actuator:
 		# https://stackoverflow.com/questions/14301967/bare-asterisk-in-function-arguments/14302007#14302007
 		if(type == "S"):
 			#self.actuatorType = Servo(wires[0], initial_value=0, min_pulse_width=1/1000, max_pulse_width=2/1000, frame_width=20/1000, pin_factory=None)
-			self.actuatorObject = gpiozero.Servo(wires[0])
+			self.actuatorObject = gpiozero.AngularServo(wires[0])
 		elif(type == "M"):
 			#self.actuatorType = Motor(wires[0], wires[1], pwm=true, pin_factory=None)
 			self.actuatorObject = gpiozero.Motor(wires[0], wires[1])
@@ -105,7 +105,7 @@ class Actuator:
 			#self.actuatorObject = gpiozero.OutputDevice(wired[0], active_high=False, initial_value=False)
 			self.actuatorObject = gpiozero.OutputDevice(wires[0])
 		else:
-			DebugPrint("INVALID Actutator Type, please use S, M, R as first parameter to Actuator() Object")
+			DebugPrint("INVALID Actutator Type in __init__ method, please use S, M, R as first parameter to Actuator() Object")
 
 	##
 	# Calls standard Python 3 print("X") statement if DEBUG global variable is TRUE
@@ -120,17 +120,18 @@ class Actuator:
 
 
 	##
-	# Run an actuator for a given number of milliseconds at percentage of max speed in FORWARD or BACKWARDS direction
+	# Run an actuator for a given number of milliseconds to a given position at percentage of max speed in FORWARD or BACKWARDS direction
 	#
-	# @duration - TODO
+	# @self - Instance of object being called
+	# @duration - Time actuator is in motion, for Servo() objects this can be used to control speed of movement
 	# @newPosition - New position between -1 and 1 that  actuator should move to
-	# @speed - TODO
+	# @speed - Speed at which actuator moves at, for Servo() objects this parameter is NOT used
 	# @direction - Set counter-clockwise (CCW) or clockwise (CW) as the forward direction
 	#
 	# return NOTHING
 	##
-	def Run(duration, newPosition, speed, direction):
-		print("Run function started!")
+	def Run(self, duration, newPosition, speed, direction):
+		DebugPrint("Run function started!")
 
 		if(type == "S"):
 			currentPosition = self.value
@@ -157,36 +158,47 @@ class Actuator:
 			self.disable()
 
 		elif(type == "R"):
-			DebugPrint("Write relay control code")
+			self.on()
+			time.sleep(duration)
+			self.off()
 		else:
-			DebugPrint("INVALID Actutator Type, please use S, M, R as first parameter to Actuator() Object")
+			DebugPrint("INVALID Actutator Type sent to Run method, please use S, M, R as first parameter to Actuator() Object")
 
-		print("Run function completed!")
+		DebugPrint("Run function completed!")
 
-	def SetPosition(percentage):
-		if(percentage == 0):
-			print("TEST")
-		elif(percentage == 10):
-			print("TEST")
-		elif(percentage == 25):
-			print("TEST")
-		elif(percentage == 50):
-			print("TEST")
-		elif(percentage == 75):
-			print("TEST")
-		elif(percentage == 100):
-			print("TEST")
+	##
+	# Set the rotational position of a AngularServo() or Motor() object
+	#
+	# @self - Instance of object being called
+	# @newAngle - Rotational angle to set actuator to, more exact for Servo() objects then Motor() objects
+	#
+	# return NOTHING
+	##
+	def SetAngularPosition(self, newAngle):
+		if(actuatorType == "S"):
+			self.angle = newAngle
+		elif(actuatorType == "M"):
+			DebbugPrint("THIS CODE IS GOING TO BE HARD") TODO
+		elif(actuatorType == "R"):
+			print("Relays do not have rotational positions. Are you sure you called the correct object?")
 		else:
-			print("TEST")
+			DebugPrint("INVALID Actutator Type sent to SetAngularPosition method, please use S, M, R as first parameter to Actuator() Object")
+	##
+	# Read the linear or rotational positon on an actuator
+	#
+	# @self - Instance of object being called
+	#
+	# return The position of actuator, with value between -1 and 1 inclusively
+	##
+	def GetPosition(self):
+		if(actuatorType == "S"):
+			return self.value
 
-	def GetPosition():
-		return self.value
-
-	def isActive():
+	def isActive(self):
 		return self.isActive
 
 
-	def SetAngle(angle):
+	def SetAngle(self, angle):
 		print("TEST")
 
 
