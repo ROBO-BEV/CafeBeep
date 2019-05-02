@@ -114,3 +114,6 @@ venv.bak/
 
 # IDE
 .idea/
+
+#node modules
+node_modules/
