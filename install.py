@@ -1,8 +1,16 @@
+# Check and update your system
 sudo apt update
+sudo apt upgrade
 
+# Easy to read and use man pages
+pip install tldr
+
+# Follow these steps to get cafeBEEP running
+
+# Flask requires Python 3 to work
 sudo apt install python3-pip
-#Follow these steps to get cafeBEEP running
 
+# Text to voice synthesizer for V+1
 #https://elinux.org/RPi_Text_to_Speech_(Speech_Synthesis)
 sudo apt-get install espeak
 
@@ -11,12 +19,14 @@ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt-get install -y nodejs
 npm install bootstrap
 
-#https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
-#Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)
+# Flask is the GUI frontend to that runs in parallel with python backend controling pumps
+# Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)
+# https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
 pip3 install flask
 
-#https://gpiozero.readthedocs.io/en/stable/installing.html
-#Python 3 install of GPIO and servo to match Flask
+# Low level control on GPIO pins to drive Servo, Motor, Relays, LED, etc
+# Python 3 install of GPIO and servo to match Flask
+# https://gpiozero.readthedocs.io/en/stable/installing.html
 sudo apt install python3-gpiozero  #FOR PI INSTALLS RUNNING PYTHON 3
 sudo pip3 install gpiozero         #FOR NON PI INSTALLS LIKE UBUNTU ON WINDOWS
 
