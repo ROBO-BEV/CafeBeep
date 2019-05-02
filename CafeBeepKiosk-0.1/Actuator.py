@@ -16,18 +16,22 @@ __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once wi
 # https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/circuitpython-raspi
 # https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi
 
-#TODO
-#from gpiozero import Motor, Servo, pi_info
+# Allow control of input devices such as Buttons
+from gpiozero import Button
 
-# Allow control of GPIO pins and check status on IP address on network
-#from gpiozero import LED, Button, PingServer
+# Allow control of output devices such as Motors, Servos, LEDs, and Relays
+from gpiozero import Motor, Servo, OutputDevice, LED
 
-#TODO
-#from gpiozero.tools import all_values, negated, sin_values
+# Check status of network / new device IP addresses and pi hardware
+from gpiozero import PingServer, pi_info
 
-#TODO
-#from gpiozero import Energenie, TimeOfDay
+# Useful pin status tools and math tools
+from gpiozero.tools import all_values, negated, sin_values
 
+# TODO
+from gpiozero import Energenie, TimeOfDay
+
+# 
 from datetime import time	# TODO
 from time import sleep		# TODO
 
@@ -97,7 +101,7 @@ class Actuator:
 		# https://stackoverflow.com/questions/14301967/bare-asterisk-in-function-arguments/14302007#14302007
 		if(type == "S"):
 			#self.actuatorType = Servo(wires[0], initial_value=0, min_pulse_width=1/1000, max_pulse_width=2/1000, frame_width=20/1000, pin_factory=None)
-			self.actuatorObject = gpiozero.Servo(wires[0])
+			self.actuatorObject = Servo(wires[0])
 		elif(type == "M"):
 			#self.actuatorType = Motor(wires[0], wires[1], pwm=true, pin_factory=None)
 			self.actuatorObject = gpiozero.Motor(wires[0], wires[1])
