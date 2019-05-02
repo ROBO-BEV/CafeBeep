@@ -78,32 +78,32 @@ class Actuator:
 	# @self - TODO
 	# @type - Single String character to select type of actuator to create (S=Servo, M=Motor, R=Relay)
 	# @wires[] - Array to document wires / pins being used by Pi 3 to control an actuator
-	# @actuatorID - Assigned ID number via incremented interger currentNumOfActuators Class variable
 	# @partNumber - Vendor part number string variable (e.g. Seamuing MG996R)
 	# @direction - Set counter-clockwise (CCW) or clockwise (CW) as the forward direction
 	#
 	# return NOTHING
 	##
-	def __init__(self, type, wires, actuatorID, partNumber, direction):
+	def __init__(self, type, wires, partNumber, direction):
 		for i in wires:
 			self.wires[i] = wires[i]
 		self.type = type
-		self.actuatorID = actuatorID
+		self.actuatorID = currentNumOfActuators	# Auto-incremented interger Class variable
 		self.partNumber = partNumber
 		self.direction = direction
 		self.currentNumOfActuators += 1
 
+		#https://gist.github.com/johnwargo/ea5edc8516b24e0658784ae116628277
 		# https://gpiozero.readthedocs.io/en/stable/api_output.html
 		# https://stackoverflow.com/questions/14301967/bare-asterisk-in-function-arguments/14302007#14302007
 		if(type == "S"):
-			#self.actuatorType = Servo(wires[0], *, initial_value="0", min_pulse_width="1/1000", max_pulse_width="2/1000", frame_width="20/1000", pin_factory="None")
-			self.actuatorType = Servo(wires[0])
+			#self.actuatorType = Servo(wires[0], initial_value=0, min_pulse_width=1/1000, max_pulse_width=2/1000, frame_width=20/1000, pin_factory=None)
+			self.actuatorObject = gpiozero.Servo(wires[0])
 		elif(type == "M"):
-			#self.actuatorType = Motor(wires[0], wires[1], *, pwm="true", pin_factory="None")
-			self.actuatorType = Motor(wires[0], wires[1])
+			#self.actuatorType = Motor(wires[0], wires[1], pwm=true, pin_factory=None)
+			self.actuatorObject = gpiozero.Motor(wires[0], wires[1])
 		elif(type == "R"):
-			#self.actuatorType = Relay()
-			DebugPrint("Relay(wires[0])")
+			#self.actuatorObject = gpiozero.OutputDevice(wired[0], active_high=False, initial_value=False)
+			self.actuatorObject = gpiozero.OutputDevice(wires[0])
 		else:
 			DebugPrint("INVALID Actutator Type, please use S, M, R as first parameter to Actuator() Object")
 
@@ -194,6 +194,6 @@ if __name__ == "__main__":
 
 	currentNumOfActuators = 0
 	pins = [PWR, GND, 1, GND, SIG_1, SIG_2]
-	cupSepServo1 = Actuator("S", pins, currentNumOfActuators, "MG996R", CW)
+	cupSepServo1 = Actuator("S", pins, "MG996R", CW)
 
 	print("END MAIN")
