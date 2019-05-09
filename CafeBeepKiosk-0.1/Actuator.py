@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-01"
+__date__ =    "Late Updated: 2019-05-07"
 __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once with latency less then 100 ms"
 
 # https://gpiozero.readthedocs.io/en/stable/installing.html
@@ -20,7 +20,7 @@ __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once wi
 from gpiozero import Button
 
 # Allow control of output devices such as Motors, Servos, LEDs, and Relays
-from gpiozero import Motor, Servo, OutputDevice, LED
+from gpiozero import Motor, Servo, OutputDevice, LED, Energenie
 
 # Check status of network / new device IP addresses and pi hardware
 from gpiozero import PingServer, pi_info
@@ -28,14 +28,15 @@ from gpiozero import PingServer, pi_info
 # Useful pin status tools and math tools
 from gpiozero.tools import all_values, negated, sin_values
 
-# TODO
-from gpiozero import Energenie, TimeOfDay
+# Useful for controlling devices based on date and time
+from gpiozero import TimeOfDay
+import datetime
+import time
+#from time import sleep		# TODO I THINK I CAN REMOVE THIS
 
-# 
-from datetime import time	# TODO
-from time import sleep		# TODO
+# Allow asynchrous event to occur in parallel pause as needed
+from signal import pause
 
-from signal import pause       	# Allow control of program execution with pasues
 
 # Constant to use to toggle debug print statements ON and OFF
 DEBUG = True
@@ -101,7 +102,7 @@ class Actuator:
 		# https://stackoverflow.com/questions/14301967/bare-asterisk-in-function-arguments/14302007#14302007
 		if(type == "S"):
 			#self.actuatorType = Servo(wires[0], initial_value=0, min_pulse_width=1/1000, max_pulse_width=2/1000, frame_width=20/1000, pin_factory=None)
-			self.actuatorObject = gpiozero.AngularServo(wires[0])
+			self.actuatorObject = AngularServo(wires[0])
 		elif(type == "M"):
 			#self.actuatorType = Motor(wires[0], wires[1], pwm=true, pin_factory=None)
 			self.actuatorObject = gpiozero.Motor(wires[0], wires[1])
@@ -182,7 +183,7 @@ class Actuator:
 		if(actuatorType == "S"):
 			self.angle = newAngle
 		elif(actuatorType == "M"):
-			DebbugPrint("THIS CODE IS GOING TO BE HARD") TODO
+			DebbugPrint("THIS CODE IS GOING TO BE HARD") #TODO
 		elif(actuatorType == "R"):
 			print("Relays do not have rotational positions. Are you sure you called the correct object?")
 		else:
@@ -210,6 +211,7 @@ if __name__ == "__main__":
 
 	currentNumOfActuators = 0
 	pins = [PWR, GND, 1, GND, SIG_1, SIG_2]
-	cupSepServo1 = Actuator("S", pins, "MG996R", CW)
-
+	#cupSepServo1 = Actuator("S", pins, "MG996R", CW)
+	relay = gpiozero.OutputDevice(8) #B8
+ 
 	print("END MAIN")

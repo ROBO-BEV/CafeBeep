@@ -10,6 +10,9 @@ pip install tldr
 # Flask requires Python 3 to work
 sudo apt install python3-pip
 
+# CSS framework to make Flask HTML pretty (Slider especially)
+npm install bulma
+
 # Text to voice synthesizer for V+1
 #https://elinux.org/RPi_Text_to_Speech_(Speech_Synthesis)
 sudo apt-get install espeak
