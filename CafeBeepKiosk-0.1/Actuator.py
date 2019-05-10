@@ -4,13 +4,16 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-07"
+__date__ =    "Late Updated: 2019-05-10"
 __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once with latency less then 100 ms"
 
+# Useful documentation:
 # https://gpiozero.readthedocs.io/en/stable/installing.html
 # https://gpiozero.readthedocs.io/en/stable/
 # https://gpiozero.readthedocs.io/en/stable/api_output.html
 # https://gpiozero.readthedocs.io/en/stable/api_input.html
+
+# Replacement code if GPIOzero doesn't work...
 # https://www.adafruit.com/product/2348
 # https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi/installing-software
 # https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/circuitpython-raspi
@@ -20,9 +23,9 @@ __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once wi
 from gpiozero import Button
 
 # Allow control of output devices such as Motors, Servos, LEDs, and Relays
-from gpiozero import Motor, Servo, OutputDevice, LED, Energenie
+from gpiozero import Motor, Servo, LED, Energenie, OutputDevice
 
-# Check status of network / new device IP addresses and pi hardware
+# Check status of network / new device IP addresses and Pi hardware
 from gpiozero import PingServer, pi_info
 
 # Useful pin status tools and math tools
@@ -183,7 +186,7 @@ class Actuator:
 		if(actuatorType == "S"):
 			self.angle = newAngle
 		elif(actuatorType == "M"):
-			DebbugPrint("THIS CODE IS GOING TO BE HARD") #TODO
+			DebbugPrint("THIS CODE IS GOING TO BE HARD") #TODO global variable with dead recoking
 		elif(actuatorType == "R"):
 			print("Relays do not have rotational positions. Are you sure you called the correct object?")
 		else:
@@ -193,12 +196,19 @@ class Actuator:
 	#
 	# @self - Instance of object being called
 	#
-	# return The position of actuator, with value between -1 and 1 inclusively
+	# return The position of actuator, with value between -1.0 and 1.0 inclusively
 	##
 	def GetPosition(self):
 		if(actuatorType == "S"):
 			return self.value
 
+	##
+	# Determine if actuator is moving
+	#
+	# @self - Instance of object being called
+	#
+	# return TRUE if actuator is powered on and moving, FALSE otherwise
+	##
 	def isActive(self):
 		return self.isActive
 
@@ -208,10 +218,11 @@ class Actuator:
 
 
 if __name__ == "__main__":
-
-	currentNumOfActuators = 0
-	pins = [PWR, GND, 1, GND, SIG_1, SIG_2]
+	#DELETE currentNumOfActuators = 0
+	#pins = [PWR, GND, 1, GND, SIG_1, SIG_2]
 	#cupSepServo1 = Actuator("S", pins, "MG996R", CW)
-	relay = gpiozero.OutputDevice(8) #B8
- 
+	relay = gpiozero.OutputDevice(8) #BCM-8
+	relay.on()
+	time.sleep(20) #seconds of milliseconds?
+	relay.off()
 	print("END MAIN")
