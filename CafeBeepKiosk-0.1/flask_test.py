@@ -105,6 +105,11 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 
 	)
 
+@app.route('/Bulma_Sample')
+def MenuScreen_Murali():
+	HTMLtoDisplay = "Bulma_Sample.html"
+	return render_template(HTMLtoDisplay)
+
 def SearchConfigurationDatabase(configNum, drinkNum):
 	if(configNum == 0):
 		configurationDatabase = {
