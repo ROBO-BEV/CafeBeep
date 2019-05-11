@@ -4,28 +4,38 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-10"
+__date__ =    "Late Updated: 2019-05-11"
 __doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
-
-#Useful web IDE to test Flask programs on https://repl.it/
 
 # Useful system jazz
 import sys, time, traceback, argparse, string
 
-
+#BEEP BEEP code that defines valid drink configurtions for each kiosk
+import Drink
 
 class UserData:
 	MAX_USERS_PER_KIOSK = 4000 # Determine this limit via testing
 	AWS = -1
 	USB = -2
 
-	#TODO: What variable type should go in default database and how do I update the self.drinkObject?
+	#TODO Can you replace string form Drink() object
 	userDatabase = {
-		0: UserData("Blaze", 0),
+		0: "Blaze",
 		1: "David",
 		2: "Murali"
 	}
 
+        ###
+        # Constructor to initialize an UserData object, which holds Drink() object
+        #
+        # @self - Newly created object
+        # @firstName -First name of user. Last name not require to protect privacy
+	# @userID - Internal BEEP BEEP Technology Inc ID number to ??? upto 32bit users
+	#
+	# drinkObject - Drink() object that holds drinkName, addOnType, and addOnLevels
+	# lastDrink - Last drink ordered from ANY cafeBEEP on Earth
+	# favoritrDrinks - Array that holds your five favorite drink configurations
+	###
 	def __init__(self, firstName, userID):
 		self.firstName = firstName
 		self.userID = userID
@@ -42,15 +52,29 @@ class UserData:
 	# @return - String variable with first name (only) of user. (PRIVACY MATTERS!)
 	###
 	def getUserFirstName(userIdNum):
-		return self.userDatabase.get(userIdNum, " ").firstName
+		return userDatabase.get(userIdNum, " ").firstName
 
-	def updateUserDatabase(source):
+	###
+	# Copy user database (python Dictionary) from non-local source
+	# Jump table / switch statement is much faster than an if-else-if ladder
+	# TODO https://jaxenter.com/implement-switch-case-statement-python-138315.html
+	#
+	# @currentLocalUserDatabase - 
+	# @source - 
+	#
+	# return NOTHING
+	###
+	def updateUserDatabase(currentLocalUserDatabase, source):
+		# TODO COPY DATA FROM SOURCE INTO / OVER currentLocalUserDatabase
+
 		if(source == AWS):
+			print("TODO AWS API CALLS")
 		elif(source == USB):
+			print("TODO READ TEXT FILE FROM USB")
 		else:
 			print("INVLAID SOURCE FOR USER DATABASE UPDATE: USE AWS OR USB FLASHDRIVE")
 
 if __name__ == "__main__":
 
-	print("END USERDATA MAIN")
+	print("END USERDATA.PY MAIN")
 

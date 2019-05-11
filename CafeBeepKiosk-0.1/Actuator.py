@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-10"
+__date__ =    "Late Updated: 2019-05-11"
 __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once with latency less then 100 ms"
 
 # Useful documentation:
@@ -80,7 +80,7 @@ class Actuator:
 
 	wires = [NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE]
 
-	##
+	###
 	# Constructor to initialize an Actutator object, which can be a Servo(), Motor(), or Relay()
 	#
 	# @self - Newly created object
@@ -90,7 +90,7 @@ class Actuator:
 	# @direction - Set counter-clockwise (CCW) or clockwise (CW) as the forward direction
 	#
 	# return NOTHING
-	##
+	###
 	def __init__(self, type, pins, partNumber, direction):
 		for i in pins:
 			self.wires[i] = pins[i]
@@ -115,19 +115,19 @@ class Actuator:
 		else:
 			DebugPrint("INVALID Actutator Type in __init__ method, please use S, M, R as first parameter to Actuator() Object")
 
-	##
+	###
 	# Calls standard Python 3 print("X") statement if DEBUG global variable is TRUE
 	#
 	# return NOTHING
-	##
-	def DebugPrint(stringToPrint):
+	###
+	def debugPrint(stringToPrint):
 		if(DEBUG):
 			print(stringToPrint)
 		else:
 			print("/n") # PRINT NEW LINE
 
 
-	##
+	###
 	# Run an actuator for a given number of milliseconds to a given position at percentage of max speed in FORWARD or BACKWARDS direction
 	#
 	# @self - Instance of object being called
@@ -137,8 +137,8 @@ class Actuator:
 	# @direction - Set counter-clockwise (CCW) or clockwise (CW) as the forward direction
 	#
 	# return NOTHING
-	##
-	def Run(self, duration, newPosition, speed, direction):
+	###
+	def run(self, duration, newPosition, speed, direction):
 		DebugPrint("Run function started!")
 
 		if(type == "S"):
@@ -174,15 +174,15 @@ class Actuator:
 
 		DebugPrint("Run function completed!")
 
-	##
+	###
 	# Set the rotational position of a AngularServo() or Motor() object
 	#
 	# @self - Instance of object being called
 	# @newAngle - Rotational angle to set actuator to, more exact for Servo() objects then Motor() objects
 	#
 	# return NOTHING
-	##
-	def SetAngularPosition(self, newAngle):
+	###
+	def setAngularPosition(self, newAngle):
 		if(actuatorType == "S"):
 			self.angle = newAngle
 		elif(actuatorType == "M"):
@@ -191,29 +191,29 @@ class Actuator:
 			print("Relays do not have rotational positions. Are you sure you called the correct object?")
 		else:
 			DebugPrint("INVALID Actutator Type sent to SetAngularPosition method, please use S, M, R as first parameter to Actuator() Object")
-	##
+	###
 	# Read the linear or rotational positon on an actuator
 	#
 	# @self - Instance of object being called
 	#
 	# return The position of actuator, with value between -1.0 and 1.0 inclusively
-	##
-	def GetPosition(self):
+	###
+	def getPosition(self):
 		if(actuatorType == "S"):
 			return self.value
 
-	##
+	###
 	# Determine if actuator is moving
 	#
 	# @self - Instance of object being called
 	#
 	# return TRUE if actuator is powered on and moving, FALSE otherwise
-	##
+	###
 	def isActive(self):
 		return self.isActive
 
 
-	def SetAngle(self, angle):
+	def setAngle(self, angle):
 		print("TEST")
 
 
