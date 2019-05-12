@@ -22,9 +22,9 @@ if __name__ == "__main__":
 	check_call("sudo apt upgrade", shell=True)
 
 	# Allow other computers to SSH into cafeBeep Pi (SSH not installed on Ubuntu)
-	check_call(sudo raspi-congig, shell=True) # Option 3 - Interfacing Options > Option P2 SSH Enable
-	check_call(sudo apt install openssh-server, shell=True)
-	check_call(sudo apt install sshguard, shell=True)
+	check_call("sudo raspi-congig", shell=True) # Option 3 - Interfacing Options > Option P2 SSH Enable
+	check_call("sudo apt install openssh-server", shell=True)
+	check_call("sudo apt install sshguard", shell=True)
 
 	# Easy to read and use man pages
 	check_call("pip install tldr", shell=True)
