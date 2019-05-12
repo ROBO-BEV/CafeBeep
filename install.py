@@ -4,12 +4,12 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEPP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-08"
+__date__ =    "Late Updated: 2019-05-11"
 __doc__ =     "Instsall script to setup run and dev enviroment"
 
 CONFIG = "Pi3B+" # or "UnbuntuOnWindows"
 
-# Allow BASH command to be run  inside  Python 2.7 code like this file
+# Allow BASH command to be run inside Python3 code like this file
 import subprocess
 from subprocess import Popen, PIPE
 from subprocess import check_call
@@ -20,6 +20,11 @@ if __name__ == "__main__":
 	# Check and update your system TODO: Only do "upgrade" since it also run update
 	check_call("sudo apt update", shell=True)
 	check_call("sudo apt upgrade", shell=True)
+
+	# Allow other computers to SSH into cafeBeep Pi (SSH not installed on Ubuntu)
+	check_call(sudo raspi-congig, shell=True) # Option 3 - Interfacing Options > Option P2 SSH Enable
+	check_call(sudo apt install openssh-server, shell=True)
+	check_call(sudo apt install sshguard)
 
 	# Easy to read and use man pages
 	check_call("pip install tldr", shell=True)
