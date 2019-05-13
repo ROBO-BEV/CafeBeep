@@ -4,15 +4,15 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-11"
+__date__ =    "Late Updated: 2019-05-12"
 __doc__ =     "Class to define valid drink configurtions for each kioks"
 
 # Useful system jazz
 import sys, time, traceback, argparse, string
 
-DEBUG = True
-
 class Drink:
+	DEBUG = True
+
 	# Drink Name Constants
 	COLD_BREW = 0
 	HEATED_COLD_BREW = 1
@@ -32,25 +32,25 @@ class Drink:
 
 	MILK_TYPE = -2
 	HALF_HALF = -21
-	SOY = -22
-	OATLY_XXX = -23
+	SOY_MILF = -22
+	OATLY_MILF = -23
 
 	ART_TYPE = -3
 	NO_ART = -31
 	BEEP_LOGO = -32
 	LEAF = -33
 	ROBOT = -34
-	N_A = -35
+
 
         ##
         # Constructor to initialize an Drink object
         #
         # @self - Newly created object
-	# @drinkName - Human readable name of drink (e.g. Cold Brew,  Espresso, etc)
+	# @drinkName - CONSTANT product name of drink (e.g. COLD_BREW, ESPRESSO, etc)
 	# @addOnTypes - Array holding product names to be added to a drink
-	#		addOnTypes[0] is name of milk being added toi drink
-	#		addOnTypes[1] is name of sugar being added to drink
-	#		addOnTypes[0] is filename of art being added to drink
+	#		addOnTypes[0] is CONSTANT product name of milk being added to drink
+	#		addOnTypes[1] is CONSTANT product name of sugar being added to drink
+	#		addOnTypes[2] is .png filename of art being added on top of drink
 	# @addOnLevels - Array holding amount / level of product to be added to a drink
 	#
         # return NOTHING
@@ -72,7 +72,7 @@ class Drink:
         #
         # return String variable of product name
         ###
-	def getSugarType(addOnTypes):
+	def getSugarType():
 		return self.addOnTypes[0]
 
         ###
@@ -100,7 +100,7 @@ class Drink:
         #
         # @self - Instance of object being called
         #
-        # return Integer variable of product level 
+        # return Integer variable of product level
         ###
 	def getSugarLevel(addOnTypes):
 		return self.addOnLevel[0]
@@ -141,18 +141,21 @@ class Drink:
 	###
 	# Calls standard Python 3 print("X") statement if DEBUG global variable is TRUE
 	#
-	# return NOTHING
+	# return String variable passed as input parameter
 	###
 	def debugPrint(stringToPrint):
 		if(DEBUG):
-			print(stringToPrint)
+			print("Drink.py DEBUG STATEMENT: " + stringToPrint)
 		else:
-			print("/n") # PRINT NEW LINE
+			print("/n") # PRINT NEW LINE / DO NOTHING
 
 if __name__ == "__main":
-	addOnTypes = [NONE, HALF_HALF, "NO_ART.png"]
-	addOnLevels = [NONE, 3, N_A]
+	print("START MAIN IN DRINK CLASS")
+
+	addOnTypes = [NONE, HALF_HALF, NO_ART]
+	addOnLevels = [NONE, 3]
 	drinkForBlaze = Drink(COLD_BREW, addOnTypes, addOnLevels)
+	#drinkForBlaze.getSugarType()
 	#drinkID = 1.0109039
 	#drinkForDavid = Drink(drinkID)
 
