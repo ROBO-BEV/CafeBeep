@@ -4,10 +4,10 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEPP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-11"
+__date__ =    "Late Updated: 2019-05-13"
 __doc__ =     "Instsall script to setup run and dev enviroment"
 
-CONFIG = "Pi3B+" # or "UnbuntuOnWindows"
+CONFIG = "Pi3B+" # or "UnbuntuOnWindows" of "UbuntuMate"
 
 # Allow BASH command to be run inside Python3 code like this file
 import subprocess
@@ -35,6 +35,8 @@ if __name__ == "__main__":
 # CSS framework to make Flask HTML look pretty :)
 #curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 #npm install bootstrap
+#TODO URL???
+#npm install bulma
 
 	### Follow these steps to get initial cafeBEEP software running
 
@@ -60,6 +62,8 @@ if __name__ == "__main__":
 		check_call("sudo apt install python3-gpiozero", shell=True)  # Clear terminal
 	elif(CONFIG == "UbuntuOnWindows"):
 		check_call("sudo pip install gpiozero", shell=True)  # Clear terminal
+	elif(CONFIG == "UbuntuMate"):
+		#TODO After $25 USB arrives check_call("sudo ???", shell=True)
 	else:
 		print("INVALID CONFIG SELECTED")
 
