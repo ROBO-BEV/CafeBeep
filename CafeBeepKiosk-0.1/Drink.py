@@ -41,6 +41,15 @@ class Drink:
 	LEAF = -33
 	ROBOT = -34
 
+	# Lid Color Constants
+	BLACK = -4
+	WHITE = -5
+	RED = -6
+	ORANGE = -7
+	PINK = -8
+	GREEN = -9
+	BLUE = -10
+	PURPLE = -11
 
         ##
         # Constructor to initialize an Drink object
@@ -53,17 +62,48 @@ class Drink:
 	#		addOnTypes[2] is .png filename of art being added on top of drink
 	# @addOnLevels - Array holding amount / level of product to be added to a drink
 	#
+	# lidColor - For v2019.0 lid color defaults to black
+	#	     v2019.1 web app with allow user to select personalized color
+	# size - For v2019.0 size defaults to 10 ounces
+	#            v2019.1 and later may default larger or smaller, depending on user feedback
         # return NOTHING
         ##
-	def __init__(self, drinkName, addOnTypes, addOnLevels): 	#def __init__(self, drinkID):
+	def __init__(self, drinkName, addOnTypes, addOnLevels):
 		for i in addOnLevels:
 			if(addOnLevels[i] > 5):
 				debugPrint("ERROR: You created a Drink() object with add-on level greater then 5")
-				#TODO EXIT CONSTRUCTOR
+				__exit__() #TODO EXIT CONSTRUCTOR
 			else:
-				self.drinkName = drinkName		#getDrinkName(int(drinkID))
+				self.drinkName = drinkName
 				self.addOnTypes = addOnTypes
 				self.addOnLevles = addOnLevels
+
+		self.lidColor = BLACK 	# Default to black in constructor and update via web app
+		self.size = 10		# Units are ounces
+
+	###
+	#
+	#
+        # @self - Instance of object being called
+	#
+	# return object that created exception
+	####
+
+	def __enter__(self):
+		print("in __enter__")
+		return self
+
+	###
+	#
+	#
+        # @self - Instance of object being called
+	#
+	#
+	#
+	####
+	def __exit__(self, exception_type, exception_value, traceback):
+		print("in __exit__")
+
 
         ###
         # Get product name of sugar in drink
@@ -115,6 +155,39 @@ class Drink:
 	def getMilkLevel(addOnTypes):
 		return self.addOnTypes[1]
 
+        ###
+        # Set color of drink lid
+        #
+        # @color - New lid color selected by user (Conctrutor defaults lid to black)
+	#
+	# self - Instance of object being called
+        #
+        # return NOTHING
+        ###
+	def setLidColor(color):
+		self.lidColor = color
+
+
+        ###
+        # Get current color of drink lid
+        #
+	# self - Instance of object being called
+        #
+        # return Lid color constant (e.g. BLACK, PINK, BLUE, etc)
+        ###
+	def getLidColor():
+		return self.lidColor
+
+        ###
+        # Get current size of drink
+        #
+	# self - Instance of object being called
+        #
+        # return Drink size in ounces
+        ###
+	def getSize():
+		return self.size
+
 
 	def createDrinkID():
 		print("TODO")
@@ -155,6 +228,9 @@ if __name__ == "__main":
 	addOnTypes = [NONE, HALF_HALF, NO_ART]
 	addOnLevels = [NONE, 3]
 	drinkForBlaze = Drink(COLD_BREW, addOnTypes, addOnLevels)
+	drinkForBlaze.setLidColor(RED)
+	print(drinkForBlaze.getSize() + " oz drink coming right up!")
+
 	#drinkForBlaze.getSugarType()
 	#drinkID = 1.0109039
 	#drinkForDavid = Drink(drinkID)
