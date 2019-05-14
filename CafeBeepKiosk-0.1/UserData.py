@@ -4,13 +4,16 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-12"
+__date__ =    "Late Updated: 2019-05-14"
 __doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
 
 # Useful system jazz
 import sys, time, traceback, argparse, string
 
-#BEEP BEEP code that defines valid drink configurtions for each kiosk
+# Read Comma Separated Value (CSV) files from external storage
+import csv
+
+# BEEP BEEP code that defines valid drink configurtions for each kiosk
 import Drink
 
 class UserData:
@@ -74,9 +77,45 @@ class UserData:
 		if(source == AWS):
 			print("TODO AWS DYNAMO DB API CALLS")
 		elif(source == USB):
-			print("TODO READ TEXT FILE FROM USB")
+			debugPrint("START READING TEXT FILE FROM USB")
+			with open('E:/UserData_database_1.csv', newline = '') as csvfile:
+				userDataReader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
+				lineCount = 0
+			for row in userDataReader:
+				for i in range(2, 10):	# 2 to 9
+					tempPhoneNumbers[i] = row[i]
+				for j in range(10, 14): # 11 to 13
+					tempAddOnTypes[j] = row[j]
+				for k in range(14, 16): # 14 to 15
+					tempAddOnLevels[k] = row[k]
+
+			tempUser = UserData(row[0], row[1], tempPhoneNumbers)
+			tempDrink = Drink(row[10], tempAddOnTypes, tempAddOnLevels)
+			tempUser.setDrink(tempDrink)
+			tempUser.setLastDrink(row[16])
+			tempUser.setFavoriteDrinks(row[17], row[18], row[19], row[20], row[21])
+
+			#print(', '.join(row))
+
+			for userID in range(0, MAX_USERS_PER_KIOSK+1):
+				setDictionary(userID)
+
+			debugPrint("END READING TEXT FILE FROM USB")
+
 		else:
 			print("INVLAID SOURCE FOR USER DATABASE UPDATE: USE AWS OR USB FLASHDRIVE")
+
+
+	###
+	# Calls standard Python 3 print("X") statement if DEBUG global variable is TRUE
+	#
+	# return String variable passed as input parameter
+	###
+	def debugPrint(stringToPrint):
+		if(DEBUG):
+			print("Drink.py DEBUG STATEMENT: " + stringToPrint)
+		else:
+			print("/n") # PRINT NEW LINE / DO NOTHING
 
 if __name__ == "__main__":
 
