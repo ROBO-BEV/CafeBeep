@@ -153,8 +153,8 @@ def MenuScreen_Murali():
 def phonepage():
     form = PhoneForm()
     if form.validate_on_submit():
-        print(form.phone_number.data)
-        send_confirmation_code(form.phone_number.data)
+        print(repr(form.phone_number.data))
+        send_confirmation_code(repr(form.phone_number.data))
         return redirect(url_for('confirmation'))
     return render_template('Phone_Page.html', form=form)
 
