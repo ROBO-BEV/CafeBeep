@@ -5,7 +5,7 @@ __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
 __date__ =    "Late Updated: 2019-05-12"
-__doc__ =     "Test Flask program to run cafeBEEP kiosk GUI"
+__doc__ =     "Logic to run cafeBEEP Flask kiosk GUI front-end"
 
 # Useful web IDE to test Flask programs on https://repl.it/
 # OLD DRIVER CODE https://github.com/ROBO-BEV/CafeBeep/blob/2d04e4e298290e4dc736326b1a889be227587155/CafeBeepKiosk-0.1/CafeBeepDriver.py

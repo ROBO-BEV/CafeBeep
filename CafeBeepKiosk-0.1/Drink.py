@@ -29,11 +29,13 @@ class Drink:
 	SIMPLE_SYRUP = -11
 	CARMEL = -12
 	CHOCOLATE = -13
+	MAX_SUGAR_LEVEL = 8 	# 0 to 8 sugar "packets"
 
 	MILK_TYPE = -2
 	HALF_HALF = -21
 	SOY_MILF = -22
 	OATLY_MILF = -23
+	MAX_MILK_LEVEL = 8 	# 0 to 8 0.25 oz of milk shots
 
 	ART_TYPE = -3
 	NO_ART = -31
