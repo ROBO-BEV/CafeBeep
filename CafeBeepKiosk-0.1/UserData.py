@@ -17,6 +17,8 @@ import csv
 import Drink
 
 class UserData:
+	DEBUG_STATEMENTS_ON = True
+
 	MAX_USERS_PER_KIOSK = 4000 # Determine this limit via testing
 	AWS = -1
 	USB = -2
@@ -112,8 +114,8 @@ class UserData:
 	# return String variable passed as input parameter
 	###
 	def debugPrint(stringToPrint):
-		if(DEBUG):
-			print("Drink.py DEBUG STATEMENT: " + stringToPrint)
+		if(DEBUG_STATEMENTS_ON):
+			print("UserData.py DEBUG STATEMENT: " + stringToPrint)
 		else:
 			print("/n") # PRINT NEW LINE / DO NOTHING
 

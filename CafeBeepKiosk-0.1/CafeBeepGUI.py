@@ -11,9 +11,10 @@ __doc__ =     "Logic to run cafeBEEP Flask kiosk GUI front-end"
 # OLD DRIVER CODE https://github.com/ROBO-BEV/CafeBeep/blob/2d04e4e298290e4dc736326b1a889be227587155/CafeBeepKiosk-0.1/CafeBeepDriver.py
 
 # BEEP BEEP Technologies Inc code
-import UserData 	# Store user name, ID, and drink preferences
 import Drink		# Store valid BEEP BEEP drink configurations
+import UserData 	# Store user name, ID, and drink preferences
 import Actuator		# Modular plug and play control of motors, servos, and relays
+import CafeBeepDriver	# Back-end logic connected to GUI
 
 # Useful system jazz
 import sys, time, traceback, argparse, string
@@ -34,6 +35,12 @@ MAX_CONFIG_NUM = 4
 
 # No kiosk should sell more then 4 different drink type https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864034/
 MAX_DRINK_NUM = 4
+
+
+VEND_SCREEN = 0                 # Front screen to display ready orders and direct users on steps to vend
+ORDER_SCREEN_1 = 1              # Right side order screen use to order beverage on kiosk (i.e. Not on phone)
+ORDER_SCREEN_2 = 2              # Left side order screen use to order beverage on kiosk (i.e. Not on phone)
+
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)

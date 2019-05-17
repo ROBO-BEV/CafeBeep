@@ -11,7 +11,7 @@ __doc__ =     "Class to define valid drink configurtions for each kioks"
 import sys, time, traceback, argparse, string
 
 class Drink:
-	DEBUG = True
+	DEBUG_STATEMENTS_ON = True
 
 	# Drink Name Constants
 	COLD_BREW = 0
@@ -28,14 +28,17 @@ class Drink:
 	SUGAR_TYPE = -1
 	SIMPLE_SYRUP = -11
 	CARMEL = -12
-	CHOCOLATE = -13
+	VANILLA = -13
+	CHOCOLATE = -14
 	MAX_SUGAR_LEVEL = 8 	# 0 to 8 sugar "packets"
+	SUGAR_FLOW_RATE = 10 # Units of sugar level / sec = oz / sugar level / sec
 
 	MILK_TYPE = -2
 	HALF_HALF = -21
 	SOY_MILF = -22
 	OATLY_MILF = -23
 	MAX_MILK_LEVEL = 8 	# 0 to 8 0.25 oz of milk shots
+	MILK_FLOW_RATE = 10 # Units of sugar level / sec = oz / sugar level / sec
 
 	ART_TYPE = -3
 	NO_ART = -31
@@ -219,7 +222,7 @@ class Drink:
 	# return String variable passed as input parameter
 	###
 	def debugPrint(stringToPrint):
-		if(DEBUG):
+		if(DEBUG_STATEMENTS_ON):
 			print("Drink.py DEBUG STATEMENT: " + stringToPrint)
 		else:
 			print("/n") # PRINT NEW LINE / DO NOTHING

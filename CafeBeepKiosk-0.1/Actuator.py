@@ -41,34 +41,6 @@ import time
 from signal import pause
 
 
-# Constant to use to toggle debug print statements ON and OFF
-DEBUG = True
-
-# Actuator "forward" direction constants
-CCW = -1  		# Counter-Clockwise
-CW = 1    		# Clockwise
-SERVO_SLACK = 0.2	# Positional accuaracy slack for servo so that control system does not go crazy
-
-# Pin value constants
-LOW =  0
-HIGH = 1
-
-# Wire value constants (interger values don't really matter, but are easy to loop thru)
-NO_PIN = 0  #TODO This constant may not be needed :)
-NO_WIRE = -1
-VCC = -2
-GND = -3
-PWR = -4
-SIG_1 = -5
-SIG_2 = -6
-
-# Raspberry Pi B+ refernce pin constants as defined in ???rc.local script???
-NUM_GPIO_PINS = 8                       # Outputs: GPO0 to GPO3 Inputs: GPI0 to GPI3
-MAX_NUM_A_OR_B_PLUS_GPIO_PINS = 40      # Pins 1 to 40 on Raspberry Pi A+ or B+ or ZERO W
-MAX_NUM_A_OR_B_GPIO_PINS = 26           # Pins 1 to 26 on Raspberry Pi A or B
-NUM_OUTPUT_PINS = 4                     # This software instance of Raspberry Pi can have up to four output pins
-NUM_INPUT_PINS = 4                      # This software instance of Raspberry Pi can have up to four input pins
-
 class Actuator:
 
 	# Class attributes that can be accessed using ActuatorControl.X (not actuatorcontrol.X)
@@ -76,6 +48,37 @@ class Actuator:
 	MAX_NUM_OF_MOTORS = 2		# Circular motors
 	MAX_NUM_OF_LINEAR_ACT = 4  	# Linear actuators
 
+	# Constant to use to toggle debug print statements ON and OFF
+	DEBUG_STATEMENTS_ON = True
+
+	# Actuator "forward" direction constants
+	CCW = -1  		# Counter-Clockwise
+	CW = 1    		# Clockwise
+	SERVO_SLACK = 0.2	# Positional accuaracy slack for servo so that control system does not go crazy
+	FORWARD = 1
+	BACKWARD = -1
+
+	# Pin value constants
+	LOW =  0
+	HIGH = 1
+
+	# Wire value constants (interger values don't really matter, but are easy to loop thru)
+	NO_PIN = 0  #TODO This constant may not be needed :)
+	NO_WIRE = -1
+	VCC = -2
+	GND = -3
+	PWR = -4
+	SIG_1 = -5
+	SIG_2 = -6
+
+	# Raspberry Pi B+ refernce pin constants as defined in ???rc.local script???
+	NUM_GPIO_PINS = 8                       # Outputs: GPO0 to GPO3 Inputs: GPI0 to GPI3
+	MAX_NUM_A_OR_B_PLUS_GPIO_PINS = 40      # Pins 1 to 40 on Raspberry Pi A+ or B+ or ZERO W
+	MAX_NUM_A_OR_B_GPIO_PINS = 26           # Pins 1 to 26 on Raspberry Pi A or B
+	NUM_OUTPUT_PINS = 4                     # This software instance of Raspberry Pi can have up to four output pins
+	NUM_INPUT_PINS = 4                      # This software instance of Raspberry Pi can have up to four input pins
+
+	# Class variables
 	currentNumOfActuators = 0
 
 	wires = [NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE, NO_WIRE]
@@ -87,7 +90,7 @@ class Actuator:
 	# @type - Single String character to select type of actuator to create (S=Servo, M=Motor, R=Relay)
 	# @wires[] - Array to document wires / pins being used by Pi 3 to control an actuator
 	# @partNumber - Vendor part number string variable (e.g. Seamuing MG996R)
-	# @direction - Set counter-clockwise (CCW) or clockwise (CW) as the forward direction
+	# @forwardDirection - Set counter-clockwise (CCW) or clockwise (CW) as the forward direction
 	#
 	# return NOTHING
 	###
@@ -97,7 +100,7 @@ class Actuator:
 		self.type = type
 		self.actuatorID = currentNumOfActuators	# Auto-incremented interger Class variable
 		self.partNumber = partNumber
-		self.direction = direction
+		self.forwardDirection = direction
 		self.currentNumOfActuators += 1
 
 		#https://gist.github.com/johnwargo/ea5edc8516b24e0658784ae116628277
@@ -121,8 +124,8 @@ class Actuator:
 	# return NOTHING
 	###
 	def debugPrint(stringToPrint):
-		if(DEBUG):
-			print(stringToPrint)
+		if(DEBUG_STATEMENTS_ON):
+			print("Actuator.py DEBUG STATEMENT: " + stringToPrint)
 		else:
 			print("/n") # PRINT NEW LINE
 
@@ -156,7 +159,7 @@ class Actuator:
 			self.enable()
 			currentPosition = self.value
 			while(currentPosition != newPosition):
-				if(direction == FORWARD):
+				if(self.forwardDirection == CW):
 					self.forward(speed)
 				else:
 					self.reverse(speed)
