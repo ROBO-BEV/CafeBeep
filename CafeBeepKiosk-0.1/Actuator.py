@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-11"
+__date__ =    "Late Updated: 2019-05-17"
 __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once with latency less then 100 ms"
 
 # Useful documentation:
@@ -65,9 +65,10 @@ class Actuator:
 	# Wire value constants (interger values don't really matter, but are easy to loop thru)
 	NO_PIN = 0  #TODO This constant may not be needed :)
 	NO_WIRE = -1
-	VCC = -2
-	GND = -3
-	PWR = -4
+	VCC_5V = "BOARD2"        # 5 Volts @ upto ??? Amps = ??? Watts
+	VCC_3_3V = "BOARD1"      # 3.3 Volts @ upto ??? Amps =  ??? Watts
+	GND = "BOARD9"
+	PWR_12V = -4
 	SIG_1 = -5
 	SIG_2 = -6
 

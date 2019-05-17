@@ -228,13 +228,14 @@ class Drink:
 			print("/n") # PRINT NEW LINE / DO NOTHING
 
 if __name__ == "__main":
+
 	print("START MAIN IN DRINK CLASS")
 
-	addOnTypes = [NONE, HALF_HALF, NO_ART]
-	addOnLevels = [NONE, 3]
-	drinkForBlaze = Drink(COLD_BREW, addOnTypes, addOnLevels)
-	drinkForBlaze.setLidColor(RED)
-	print(drinkForBlaze.getSize() + " oz drink coming right up!")
+	#addOnTypes = [NONE, HALF_HALF, NO_ART]
+	#addOnLevels = [NONE, 3]
+	#drinkForBlaze = Drink(COLD_BREW, addOnTypes, addOnLevels)
+	#drinkForBlaze.setLidColor(RED)
+	#print(drinkForBlaze.getSize() + " oz drink coming right up!")
 
 	#drinkForBlaze.getSugarType()
 	#drinkID = 1.0109039

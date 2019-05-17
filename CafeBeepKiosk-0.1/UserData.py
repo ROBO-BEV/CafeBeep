@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-14"
+__date__ =    "Late Updated: 2019-05-16"
 __doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
 
 # Useful system jazz
@@ -12,6 +12,9 @@ import sys, time, traceback, argparse, string
 
 # Read Comma Separated Value (CSV) files from external storage
 import csv
+
+# Double-ended queue which is implemented as a doubly-linked list interally
+import collections
 
 # BEEP BEEP code that defines valid drink configurtions for each kiosk
 import Drink
@@ -47,11 +50,42 @@ class UserData:
 	def __init__(self, firstName, userID, phoneNumber):
 		self.firstName = firstName
 		self.userID = userID
+		self.phoneNumnbers = [0, 0, 0, 0, 0, 0, 0, 0]
 		self.phoneNumbers[0] = phoneNumber
 		self.drinkObject = Drink(Drink.NONE, [Drink.NONE, Drink.NONE, Drink.NONE], [0, 0])
-		self.lastDrink = Drink.NONE
-		self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+		self.lastDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
+		self.freqDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
+		#TODO v2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+		self.fullOrderHistory = collections.deque() # Doubly-linked list
 
+	###
+	# Add to the end of the full order history and determine what three most ordered drinks are
+	#
+	# @drinkObject - Drink configuration to add to user order history
+	#
+	# return NOTHING
+	###
+	def updateDrinkHistory(drinkObject):
+		self.fullOrderHistory.append(1, drinkOrbject)
+		#self.lastDrinks[2] = self.fullOrderHistory(3)
+		#self.lastDrinks[1] = self.fullOrderHistory(2)
+		#self.lastDrinks[0] = self.fullOrderHistory(1)
+		self.lastDrinks[2] = self.lastDrinks[1]
+		self.lastDrinks[1] = self.lastDrinks[0]
+		self.lastDrinks[0] = drinkObject
+
+	###
+	# Transverse full order history and determine what three most ordered drinks are
+	#
+	# 
+	#
+	# return NOTHING
+	###
+	def updateDrinkFavorites():
+		#TODO v2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+		self.freqDrinks[0] = self.fullOrderHistory(1)
+		for nodeNum in self.fullOrderHistory:
+			print("TODO")
 	###
 	# Search user database (python Dictionary) to find user data
 	# Jump table / switch statement is much faster than an if-else-if ladder
