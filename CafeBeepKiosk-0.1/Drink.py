@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-12"
+__date__ =    "Late Updated: 2019-05-17"
 __doc__ =     "Class to define valid drink configurtions for each kioks"
 
 # Useful system jazz
@@ -74,7 +74,8 @@ class Drink:
         # return NOTHING
         ##
 	def __init__(self, drinkName, addOnTypes, addOnLevels):
-		for i in addOnLevels:
+		for i in range(0, len(addOnLevels)-1):
+			print(i)
 			if(addOnLevels[i] > 5):
 				debugPrint("ERROR: You created a Drink() object with add-on level greater then 5")
 				__exit__() #TODO EXIT CONSTRUCTOR
@@ -83,7 +84,7 @@ class Drink:
 				self.addOnTypes = addOnTypes
 				self.addOnLevles = addOnLevels
 
-		self.lidColor = BLACK 	# Default to black in constructor and update via web app
+		self.lidColor = Drink.BLACK 	# Default to black in constructor and update via web app
 		self.size = 10		# Units are ounces
 
 	###
@@ -117,7 +118,7 @@ class Drink:
         #
         # return String variable of product name
         ###
-	def getSugarType():
+	def getSugarType(self):
 		return self.addOnTypes[0]
 
         ###
@@ -127,7 +128,7 @@ class Drink:
         #
         # return String variable of product name
         ###
-	def getMilkType(addOnTypes):
+	def getMilkType(self, addOnTypes):
 		return self.addOnTypes[1]
 
         ###
@@ -137,7 +138,7 @@ class Drink:
         #
         # return String variable of filename
         ###
-	def getLatteArtType(addOnTypes):
+	def getLatteArtType(self, addOnTypes):
 		return self.addOnTypes[2]
 
         ###
@@ -147,7 +148,7 @@ class Drink:
         #
         # return Integer variable of product level
         ###
-	def getSugarLevel(addOnTypes):
+	def getSugarLevel(self, addOnTypes):
 		return self.addOnLevel[0]
 
         ###
@@ -157,7 +158,7 @@ class Drink:
         #
         # return Integer variable of product level
         ###
-	def getMilkLevel(addOnTypes):
+	def getMilkLevel(self, addOnTypes):
 		return self.addOnTypes[1]
 
         ###
@@ -169,7 +170,7 @@ class Drink:
         #
         # return NOTHING
         ###
-	def setLidColor(color):
+	def setLidColor(self, color):
 		self.lidColor = color
 
 
@@ -180,7 +181,7 @@ class Drink:
         #
         # return Lid color constant (e.g. BLACK, PINK, BLUE, etc)
         ###
-	def getLidColor():
+	def getLidColor(self):
 		return self.lidColor
 
         ###
@@ -190,11 +191,11 @@ class Drink:
         #
         # return Drink size in ounces
         ###
-	def getSize():
+	def getSize(self):
 		return self.size
 
 
-	def createDrinkID():
+	def createDrinkID(self):
 		print("TODO")
 
         # TODO Define drinkID protocal - Thinking D.CSA9 where:
@@ -203,7 +204,7 @@ class Drink:
         # S is sugar level 0 to 5
         # A is boolean latte art request (0 = NO ART, 1 to 8 is 8 different PNGs)
         # 9 is end of line value to search for , so that more Add-Ons can be added to DrinkID protocal
-	def decodeDrinkID(addOnInfoRequested, drinkID):
+	def decodeDrinkID(self, addOnInfoRequested, drinkID):
 		if(addOnInfoRequested == SUGAR_TYPE):
 			return #TODO SUBSTRING FIRST DECIMAL POINT
 		elif(addOnInfoRequested == MILK_TYPE):
@@ -227,15 +228,15 @@ class Drink:
 		else:
 			print("/n") # PRINT NEW LINE / DO NOTHING
 
-if __name__ == "__main":
+if __name__ == "__main__":
 
 	print("START MAIN IN DRINK CLASS")
 
-	#addOnTypes = [NONE, HALF_HALF, NO_ART]
-	#addOnLevels = [NONE, 3]
-	#drinkForBlaze = Drink(COLD_BREW, addOnTypes, addOnLevels)
-	#drinkForBlaze.setLidColor(RED)
-	#print(drinkForBlaze.getSize() + " oz drink coming right up!")
+	addOnTypes = [Drink.NONE, Drink.HALF_HALF, Drink.NO_ART]
+	addOnLevels = [Drink.NONE, 3]
+	drinkForBlaze = Drink(Drink.COLD_BREW, addOnTypes, addOnLevels)
+	drinkForBlaze.setLidColor(Drink.RED)
+	print(str(drinkForBlaze.getSize()) + " oz drink coming right up!")
 
 	#drinkForBlaze.getSugarType()
 	#drinkID = 1.0109039
