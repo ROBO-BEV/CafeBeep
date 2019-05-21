@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-17"
+__date__ =    "Late Updated: 2019-05-20"
 __doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once with latency less then 100 ms"
 
 # Useful documentation:
@@ -35,7 +35,6 @@ from gpiozero.tools import all_values, negated, sin_values
 from gpiozero import TimeOfDay
 import datetime
 import time
-#from time import sleep		# TODO I THINK I CAN REMOVE THIS
 
 # Allow asynchrous event to occur in parallel pause as needed
 from signal import pause
@@ -47,6 +46,7 @@ class Actuator:
 	MAX_NUM_OF_SERVOS = 8		# Circular servos
 	MAX_NUM_OF_MOTORS = 2		# Circular motors
 	MAX_NUM_OF_LINEAR_ACT = 4  	# Linear actuators
+	N_A = 0				# Not Applicable
 
 	# Constant to use to toggle debug print statements ON and OFF
 	DEBUG_STATEMENTS_ON = True
@@ -67,10 +67,8 @@ class Actuator:
 	NO_WIRE = -1
 	VCC_5V = "BOARD2"        # 5 Volts @ upto ??? Amps = ??? Watts
 	VCC_3_3V = "BOARD1"      # 3.3 Volts @ upto ??? Amps =  ??? Watts
-	GND = "BOARD9"
+	GND = "BOARD6&9&14&20&25&30&34&39"
 	PWR_12V = -4
-	SIG_1 = -5
-	SIG_2 = -6
 
 	# Raspberry Pi B+ refernce pin constants as defined in ???rc.local script???
 	NUM_GPIO_PINS = 8                       # Outputs: GPO0 to GPO3 Inputs: GPI0 to GPI3
@@ -109,13 +107,16 @@ class Actuator:
 		# https://stackoverflow.com/questions/14301967/bare-asterisk-in-function-arguments/14302007#14302007
 		if(type == "S"):
 			#self.actuatorType = Servo(wires[0], initial_value=0, min_pulse_width=1/1000, max_pulse_width=2/1000, frame_width=20/1000, pin_factory=None)
-			self.actuatorObject = AngularServo(wires[0])
+			#NOTE: The last wire in array is the PWM control pin
+			self.actuatorObject = AngularServo(wires[len(wires)-1])
 		elif(type == "M"):
 			#self.actuatorType = Motor(wires[0], wires[1], pwm=true, pin_factory=None)
-			self.actuatorObject = gpiozero.Motor(wires[0], wires[1])
+			#NOTE: The last two wires in array are the INPUT control pins
+			self.actuatorObject = gpiozero.Motor(wires[len(wires)-2], wires[len(wires)-1])
 		elif(type == "R"):
 			#self.actuatorObject = gpiozero.OutputDevice(wired[0], active_high=False, initial_value=False)
-			self.actuatorObject = gpiozero.OutputDevice(wires[0])
+			#NOTE: The last wire in array is the relay control pin
+			self.actuatorObject = gpiozero.OutputDevice(wires[len(wires)-1])
 		else:
 			DebugPrint("INVALID Actutator Type in __init__ method, please use S, M, R as first parameter to Actuator() Object")
 
@@ -156,7 +157,6 @@ class Actuator:
 				self.dettach()
 		elif(type == "M"):
 			DebugPrint("Write motor control code")
-
 			self.enable()
 			currentPosition = self.value
 			while(currentPosition != newPosition):
