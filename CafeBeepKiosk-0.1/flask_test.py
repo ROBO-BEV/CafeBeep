@@ -170,6 +170,10 @@ def confirmation():
         flash('Wrong code. Please try again.', 'error')
     return render_template('confirmation.html')
 
+@app.route('/menu', methods=['GET', 'POST'])
+def MenuScreen_Murali():
+    HTMLtoDisplay = "menu.html"
+    return render_template(HTMLtoDisplay)
 
 def SearchConfigurationDatabase(configNum, drinkNum):
     if(configNum == 0):
