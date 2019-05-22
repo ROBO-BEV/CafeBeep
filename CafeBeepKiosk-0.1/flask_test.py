@@ -24,7 +24,7 @@ from flask import Flask, render_template, session, request, redirect, url_for, f
 from flask_wtf import Form
 from wtforms import validators, SubmitField
 from wtforms.validators import DataRequired
-import phonenumbers
+# import phonenumbers
 from flask_wtf.html5 import TelField
 from twilio.rest import Client
 import random
@@ -77,11 +77,15 @@ def validate_phone_number(self, field):
 # Basically, it means if you go to your website with a slash at the end and nothing else,
 # the code in the HomeScreen() function will be run, and whatever is returned will be shown in your browser.
 ###
+# @app.route('/')
+# def HomeScreen():
+#     drinkID0_VendCount = session.get('drinkID0_VendCount', None)
+#
+#     return 'Hello World, this is the cafeBEEP robotic coffee kiosk!'
 @app.route('/')
 def HomeScreen():
-    drinkID0_VendCount = session.get('drinkID0_VendCount', None)
-
-    return 'Hello World, this is the cafeBEEP robotic coffee kiosk!'
+    HTMLtoDisplay = "welcome.html"
+    return render_template(HTMLtoDisplay)
 
 ###
 # GUI for front facing vend screen that shows logo and location of cup pick up
@@ -144,7 +148,7 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 
     )
 
-@app.route('/Bulma_Sample')
+@app.route('/Bulma_Sample', methods=['GET', 'POST'])
 def MenuScreen_Murali():
     HTMLtoDisplay = "Bulma_Sample.html"
     return render_template(HTMLtoDisplay)
@@ -190,5 +194,5 @@ def SearchConfigurationDatabase(configNum, drinkNum):
 # Code starts execution from here
 ###
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0')
 
