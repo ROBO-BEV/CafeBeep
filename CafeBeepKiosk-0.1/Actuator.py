@@ -4,8 +4,8 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-20"
-__doc__ =     "Actuator Class to operate at least 8 servos & 2 motors at once with latency less then 100 ms"
+__date__ =    "Late Updated: 2019-05-21"
+__doc__ =     "Class to operate at least 8 servos, 4 relays, and 4 motors at once with latency less then 100 ms"
 
 # Useful documentation:
 # https://gpiozero.readthedocs.io/en/stable/installing.html
@@ -219,6 +219,17 @@ class Actuator:
 
 	def setAngle(self, angle):
 		print("TEST")
+
+	###
+	# Calls standard Python 3 print("X") statement if DEBUG global variable is TRUE
+	#
+	# return String variable passed as input parameter
+	###
+	def debugPrint(stringToPrint):
+		if(DEBUG_STATEMENTS_ON):
+			print("Actuator.py DEBUG STATEMENT: " + stringToPrint)
+		else:
+			print("/n") # PRINT NEW LINE / DO NOTHING
 
 
 if __name__ == "__main__":
