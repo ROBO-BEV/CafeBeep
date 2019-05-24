@@ -11,18 +11,23 @@ __doc__ =     "Class to locally search user information, with data pulled and pu
 import sys, time, traceback, argparse, string
 
 # Read Comma Separated Value (CSV) files from external storage
+# FIND LINK
 import csv
 
 # Double-ended queue which is implemented as a doubly-linked list interally
+# https://docs.python.org/2/library/collections.html
 import collections
+
+# Provide C compatible data types (e.g. unsigned integers) and allows calling functions in DLLs
+# https://docs.python.org/2/library/ctypes.html
+import ctypes
 
 # BEEP BEEP code that defines valid drink configurtions for each kiosk
 import Drink
 
-#TODO https://docs.python.org/2/library/ctypes.html
-import ctypes
 
 class UserData:
+
 	DEBUG_STATEMENTS_ON = True
 
 	MAX_USERS_PER_KIOSK = 4000 # Determine this limit via testing
@@ -30,7 +35,7 @@ class UserData:
 	USB = -2
 	AWS_DYNAMO_DB_URL = "https://www.????.com"
 
-	nextUserIDtoAssign = 0
+	nextUserIDtoAssign = c_uint(0) # Ctype Unsigned Integer to give max number of userID's
 
         ###
         # Constructor to initialize an UserData object, which holds Drink() object
@@ -44,23 +49,23 @@ class UserData:
 	# drinkObject - Drink() object that holds currently selected drinkName, addOnType, and addOnLevels
 	# lastDrink - Last drink ordered from ANY cafeBEEP kiosk in the Sol Star System
 	# freqDrinks - An auto currated list of the three most ordered drinks by a user
-	# TODO favoriteDrinks - Array that holds five drink configurations manually favorited by user
+	# TODOv2019.0 favoriteDrinks - Array that holds five drink configurations manually favorited by user
 	# fullOrderHistoy - Doubly-linked list of an users entire order history from ANY cafeBEEP kiosk
 	###
 	def __init__(self, firstName, userID, phoneNumber):
 		self.firstName = firstName
 		self.userID = nextUserIDtoAssign
-		nextUserIDtoAssign = nextUserIDtoAssign + 1
+		nextUserIDtoAssign += 1
 		self.phoneNumnbers = [0, 0, 0, 0, 0, 0, 0, 0]
 		self.phoneNumbers[0] = phoneNumber
 		self.drinkObject = Drink(Drink.NONE, [Drink.NONE, Drink.NONE, Drink.NONE], [0, 0])
 		self.lastDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
 		self.freqDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
-		#TODO v2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+		#TODOv2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
 		self.fullOrderHistory = collections.deque()
 
 	###
-	# Add newly ordered drink to the HEAD (beginning) of the full order history, and determine 
+	# Add newly ordered drink to the HEAD (beginning) of the full order history, and determine
 	# what the three most ordered and last three drinks of a single user are.
 	#
 	# @self - Instance of UserData object being called
@@ -70,7 +75,7 @@ class UserData:
 	###
 	def updateDrinkHistory(self, newDrink):
 		# Add drink to front of the doubly-linked list
-		self.fullOrderHistory.append(0, newDrink) #TODO Are Linked Lists zero indexed
+		self.fullOrderHistory.appendleft(newDrink) #TODO Are Linked Lists zero indexed
 
 		# Update lastDrinks array via function input parmeter and doubly-linked list
 		#self.lastDrinks[2] = self.fullOrderHistory(2)
@@ -93,7 +98,10 @@ class UserData:
 	# return NOTHING
 	###
 	def updateDrinkFavorites(self):
-		#TODO v2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+		#TODOv2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+
+		# https://docs.python.org/2/library/collections.html
+		#TODO self.fullOrderHistory.count(1.214121)
 
 		freqCount = collections.Counter(self.fullOrderHistory)
 		collectionTuple = freqCount.most_common(3)
