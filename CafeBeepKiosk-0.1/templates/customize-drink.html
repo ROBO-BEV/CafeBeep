@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "navbar.html" %}
+    <main class="section">
+    <div class="columns">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-3 is-narrow is-sidebar">
+                     <figure class="image is-2by2">
+                         <img src="../static/images/CustomCup.png">
+                    </figure>
+                </div>
+                <div class="column">
+                <input id="sliderWithValue" class="slider has-output is-fullwidth" min="0" max="100" value="50" step="1" type="range">
+                    <output for="sliderWithValue">50</output>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+    <section class="section">
+        <form action = "phonepage" method = "post">
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+    </section>
+{% endblock %}

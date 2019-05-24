@@ -8,5 +8,7 @@ RUN apt-get update \
 COPY . /CafeBeepKiosk-0.1
 WORKDIR /CafeBeepKiosk-0.1
 RUN pip install -r requirements.txt
+#RUN install node and npm
+#RUN npm run install
 ENTRYPOINT ["python3"]
 CMD ["flask_test.py"]
