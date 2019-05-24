@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-16"
+__date__ =    "Late Updated: 2019-05-23"
 __doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
 
 # Useful system jazz
@@ -19,6 +19,9 @@ import collections
 # BEEP BEEP code that defines valid drink configurtions for each kiosk
 import Drink
 
+#TODO https://docs.python.org/2/library/ctypes.html
+import ctypes
+
 class UserData:
 	DEBUG_STATEMENTS_ON = True
 
@@ -27,65 +30,86 @@ class UserData:
 	USB = -2
 	AWS_DYNAMO_DB_URL = "https://www.????.com"
 
-	#TODO Can you replace string form Drink() object
-	userLocalDatabase = {
-		0: "Blaze",
-		1: "David",
-		2: "Murali"
-	}
+	nextUserIDtoAssign = 0
 
         ###
         # Constructor to initialize an UserData object, which holds Drink() object
         #
         # @self - Newly created object
         # @firstName -First name of user. Last name not require to protect privacy
-	# @userID - Internal BEEP BEEP Technology Inc ID number to ??? upto 32bit users
+	# @userID - Internal BEEP BEEP Technology Inc ID number up to 4,294,967,295 (32-bit unsigned interger)
 	# @phoneNUmber - First user phone number to connected to a specific userID
 
 	# phoneNumbers - Array to hold upto 8 phone numbers for a single userID
-	# drinkObject - Drink() object that holds drinkName, addOnType, and addOnLevels
-	# lastDrink - Last drink ordered from ANY cafeBEEP on Earth
-	# favoritrDrinks - Array that holds your five favorite drink configurations
+	# drinkObject - Drink() object that holds currently selected drinkName, addOnType, and addOnLevels
+	# lastDrink - Last drink ordered from ANY cafeBEEP kiosk in the Sol Star System
+	# freqDrinks - An auto currated list of the three most ordered drinks by a user
+	# TODO favoriteDrinks - Array that holds five drink configurations manually favorited by user
+	# fullOrderHistoy - Doubly-linked list of an users entire order history from ANY cafeBEEP kiosk
 	###
 	def __init__(self, firstName, userID, phoneNumber):
 		self.firstName = firstName
-		self.userID = userID
+		self.userID = nextUserIDtoAssign
+		nextUserIDtoAssign = nextUserIDtoAssign + 1
 		self.phoneNumnbers = [0, 0, 0, 0, 0, 0, 0, 0]
 		self.phoneNumbers[0] = phoneNumber
 		self.drinkObject = Drink(Drink.NONE, [Drink.NONE, Drink.NONE, Drink.NONE], [0, 0])
 		self.lastDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
 		self.freqDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
 		#TODO v2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
-		self.fullOrderHistory = collections.deque() # Doubly-linked list
+		self.fullOrderHistory = collections.deque()
 
 	###
-	# Add to the end of the full order history and determine what three most ordered drinks are
+	# Add newly ordered drink to the HEAD (beginning) of the full order history, and determine 
+	# what the three most ordered and last three drinks of a single user are.
 	#
-	# @drinkObject - Drink configuration to add to user order history
+	# @self - Instance of UserData object being called
+	# @newDrink - Drink configuration to add to user order history
 	#
 	# return NOTHING
 	###
-	def updateDrinkHistory(drinkObject):
-		self.fullOrderHistory.append(1, drinkOrbject)
-		#self.lastDrinks[2] = self.fullOrderHistory(3)
-		#self.lastDrinks[1] = self.fullOrderHistory(2)
-		#self.lastDrinks[0] = self.fullOrderHistory(1)
+	def updateDrinkHistory(self, newDrink):
+		# Add drink to front of the doubly-linked list
+		self.fullOrderHistory.append(0, newDrink) #TODO Are Linked Lists zero indexed
+
+		# Update lastDrinks array via function input parmeter and doubly-linked list
+		#self.lastDrinks[2] = self.fullOrderHistory(2)
+		#self.lastDrinks[1] = self.fullOrderHistory(1) TODO Are Linked Lists zero indexed
+		#self.lastDrinks[0] = newDrink
+
+		#TODO DETERMINE IF THIS IS FASTER THEN LINKED LIST METHOD ABOVE
+		# Add drink to index zero of lastDrinks array and shift older drink order one position
 		self.lastDrinks[2] = self.lastDrinks[1]
 		self.lastDrinks[1] = self.lastDrinks[0]
-		self.lastDrinks[0] = drinkObject
+		self.lastDrinks[0] = newDrink
+
+		self.updateDrinkFavorites()
 
 	###
 	# Transverse full order history and determine what three most ordered drinks are
-	#
-	# 
+	# TODO Uses algothrim from Stack Overflow "How to count frequency of the elements in a list" 
+	# @self - Instance of UserData object being called
 	#
 	# return NOTHING
 	###
-	def updateDrinkFavorites():
+	def updateDrinkFavorites(self):
 		#TODO v2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
-		self.freqDrinks[0] = self.fullOrderHistory(1)
+
+		freqCount = collections.Counter(self.fullOrderHistory)
+		collectionTuple = freqCount.most_common(3)
+		debugPrint(collectionTuple) #TODO [(object1, FREQ1), (object2, FREQ2), (object3, FREQ3)]
+		freqDrinks[0] = collectionTuple(0, 1)
+		freqDrinks[1] = collectionTuple(1, 1)
+		freqDrinks[2] = collectionTuple(2, 1)
+
+
+		self.freqDrinks[0] = self.fullOrderHistory(0) #TODO Is LL zero indexed???
 		for nodeNum in self.fullOrderHistory:
-			print("TODO")
+			if(self.freqDrinks[0] == self.fullOrderHistory(nodeNum+1)):
+				print("DO NOTHING")
+			else:
+				self.freqDrinks[1] = self.fullOrderHistory(nodeNum+1)
+
 	###
 	# Search user database (python Dictionary) to find user data
 	# Jump table / switch statement is much faster than an if-else-if ladder
@@ -96,6 +120,12 @@ class UserData:
 	###
 	def getUserFirstName(userID):
 		return userLocalDatabase.get(userID, " ").firstName
+
+
+
+	def updateNonLocalDatabase():
+		print("#PUSH nextUserIDtoAssign to cloud")
+
 
 	###
 	# Copy user database (python Dictionary) from non-local source
@@ -109,6 +139,13 @@ class UserData:
 	###
 	def updateLocalUserDatabase(currentLocalUserDatabase, source):
 		# TODO COPY DATA FROM SOURCE INTO / OVER currentLocalUserDatabase
+
+		#TODO Can you replace string form Drink() object
+		# Use phone numebr as key and then search for active phone numbers
+		userLocalDatabase = {
+			15105139110: UserData("Blaze", 0, 15135109110)
+		}
+
 
 		if(source == AWS):
 			print("TODO AWS DYNAMO DB API CALLS")
