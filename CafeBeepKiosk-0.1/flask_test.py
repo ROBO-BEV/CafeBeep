@@ -29,6 +29,8 @@ from flask_wtf.html5 import TelField
 from twilio.rest import Client
 import random
 from flask import session
+from flask import Flask
+from flask_dynamo import Dynamo
 
 # Useful Constants
 
@@ -41,9 +43,23 @@ MAX_DRINK_NUM = 4
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
 app.secret_key = 'BeepBeep@42'  # TODO: Select STRONG key for production code
+
 app.config['SESSION_TYPE'] = 'filesystem'  #
-
-
+app.config['AWS_ACCESS_KEY_ID'] = 'myfake'
+app.config['AWS_SECRET_ACCESS_KEY'] = 'mysecret'
+app.config['AWS_REGION'] = 'us-east-1'
+app.config['DYNAMO_ENABLE_LOCAL'] = True
+app.config['DYNAMO_LOCAL_HOST'] = 'localhost'
+app.config['DYNAMO_LOCAL_PORT'] = 8000
+app.config['DYNAMO_TABLES'] = [{
+    "TableName":"customers",
+    "KeySchema":[dict(AttributeName='username', KeyType='HASH')],
+    "AttributeDefinitions":[dict(AttributeName='username', AttributeType='S')],
+    "ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)
+}]
+dynamo = Dynamo(app)
+with app.app_context():
+    dynamo.create_all()
 def send_confirmation_code(to_number):
     verification_code = generate_verification_code()
     send_message(to_number, verification_code)
@@ -193,6 +209,18 @@ def customizedrink():
     HTMLtoDisplay = "customize-drink.html"
     return render_template(HTMLtoDisplay)
 
+@app.route('/create_user')
+def create_user():
+    table = dynamo.get_table('customers')
+    title = "New User"
+    table.put_item(
+        Item={
+            'username': title,
+            'title': title,
+        }
+    )
+for table_name, table in dynamo.tables.items():
+    print(table_name, table)
 
 def SearchConfigurationDatabase(configNum, drinkNum):
     if (configNum == 0):
