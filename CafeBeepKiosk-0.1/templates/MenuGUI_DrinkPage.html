@@ -1,17 +1,26 @@
-
 <!--
- * @file MenuGUI_Page2.html
+ * @file MenuGUI_DrinkPage.html
  * @author Blaze Sanders BEEP BEEP Technologies Inc(TM)
- * @date 2019-04-16
- * @link https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
- * TODO: DESIGN TO MATCH - https://docs.google.com/presentation/d/1k3KfbtSabTe1aBXNeYydRW-ElHDFg9CbhrUZAfb_Uhg/edit#slide=id.g30aea89634_0_121
- * @version 1.0
+ * @date 2019-05-10
+ * @link www.cafebeep.com/drinks
+ * @version 2019.0
  *
- * @brief HTML code to render Web 1.0 highest level menu screen for cafeBEEP robotic coffee kiosk
- *	
+ * @brief HTML, CSS, and Javascript code to render page where users select drink they want
+ *
  * @section DESCRIPTION
  *
- * Page #3 of Menu Screen that displays the currently available menu for a kiosk configuration 
+ * This screen displays the currently available menu for a kiosk configuration, welcomes the user, and 
+ * displays the most popular drinks at that specifickiosks.
+ *
+ * Users can click on their Avatar to update their contact info and favorites. 
+ *
+ * This HTML uses special Unicode blank characters for  layout - [　] ideographic space U+3000. 
+ * More details can be found at  https://www.brunildo.org/test/space-chars.html 
+ * 
+ *
+ *
+ * https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
+ * TODO: DESIGN TO MATCH - https://docs.google.com/presentation/d/1k3KfbtSabTe1aBXNeYydRW-ElHDFg9CbhrUZAfb_Uhg/edit#slide=id.g30aea89634_0_121
  * TODO: Red (0xB8191D), Tan (0xFEDFB3), White (0xFDFDFD) and/or Black (0x010306)
  * https://www.brunildo.org/test/space-chars.html [　] ideographic space U+3000
  * <a href="http://www.htmldog.com" <(/a)
@@ -37,10 +46,15 @@
   </head>
 
   <body>
+
+
   	<!--TODO: FIX SCRIPT TO ALLOW USE OF ARRAYS-->
+    <!--DO STUFF TO BUTTON TO CHANGE PAGE-->
 	<script language ="JavaScript">
  	  var drinkID = new Array();
 	  drinkID[0] = TODO;
+
+
 	</script>
 	<table>
   	  <tr>
@@ -59,7 +73,7 @@
 	  <center> <h4 style="color: #000000;"> {{ drinkID0 }} ({{ drinkPercentage0 }}%) </h4></center> 
           <center> <h4 style="color: #000000;"> {{ drinkID1 }} ({{ drinkPercentage1 }}%) </h4></center> 
     	  <center> <img src="../static/Images/userAvatar.png" width="70" height="70" alt="User Avatar UserID: 15105139110"> </center> <!-- Source Image is  597 x 597 -->
-        </td> <!END ROW 2, CELL 1 >
+        </td> <!-- END ROW 2, CELL 1 -->
         <td>
           <table>
             <tr>
@@ -69,7 +83,7 @@
           	    	<center> <img src="{{ url_for('static', filename='Images/Cup.png') }}" width="100" height="70" alt="Cup"> </center> <!-- Source Image is  1600 x 1116 -->
           	    	<br> <center> {{ drinkID0 }} </center> <!-- Two [　] ideographic spaces U+3000 -->
           	    </button>	
-          	  </td> <!--INTERNAL END ROW 1, CELL 1-->
+          	  </td> <!--NESTED END ROW 1, CELL 1-->
           
       		  <td width="210"> 
 				<button style="background-color: #FDFDFD; color: #000; display: inline-block; padding: 20px 30px; width: 200px; font-weight: bold; border-radius: 20px;" type="/Cold_Brew\" value="/Cold_Brew\">   
@@ -77,7 +91,7 @@
 					<center> <img src="{{ url_for('static', filename='Images/Cup.png') }}" width="100" height="70" alt="Cup"> </center>  <!-- Source Image is  1600 x 1116 -->
 					<br><center> {{ drinkID1 }} </center><!-- Two [　] ideographic spaces U+3000 -->
          		</button>
-        	  </td> <!--INTERNAL END ROW 1, CELL 2-->
+        	  </td> <!--NESTED TABLE END ROW 1, CELL 2-->
       	    </tr>	
           </table>
         </td><!--END ROW 2, CELL 2-->

@@ -1,0 +1,51 @@
+<!--
+ * @file SliderWithLablesTest.html
+ * @author Blaze Sanders BEEP BEEP Technologies Inc(TM)
+ * @date 2019-05-11
+ * @link https://github.com/jgthms/bulma/
+ * @link https://wikiki.github.io/form/slider/
+ * @link labbookpages.co.uk/web/realtime.html
+ * TODO: DESIGN TO MATCH - https://docs.google.com/presentation/d/1k3KfbtSabTe1aBXNeYydRW-ElHDFg9CbhrUZAfb_Uhg/edit#slide=id.g30aea89634_0_121
+ * @version 1.0
+ *
+ * @brief HTML, CSS, and Javascript code to render vairable slider with labeles that change to bold (Dynamic Text) when in the correct location
+ *	
+ * @section DESCRIPTION
+ *
+ * TODO: Red (0xB8191D), Tan (0xFEDFB3), White (0xFDFDFD) and/or Black (0x010306)
+ * https://www.brunildo.org/test/space-chars.html [　] ideographic space U+3000
+ * https://github.com/anfederico/Flaskex
+ -->
+
+<html lang="en">
+  <head>
+  	<title>Slider Test</title>
+
+    <!--TODO CSS STUFF HERE-->
+    <style type="text/css">
+      
+      table {
+      	font-family: Source Sans Pro, Arial, Courier New; /* Try Source San PRo typeface first and Courier New last */ 
+      }
+      
+      slider {
+      	outline: 0;  /* Turn off annoying blue highlight around button during click> */ 
+      }
+
+      button {
+      	outline: 0;  /* Turn off annoying blue highlight around button during click> */ 
+      }
+    </style>
+
+  </head>
+  <!--style = "font-family: Courier New"-->
+  <body>
+  <label for = "1 Packet" style = "color: white" > |  1  | </label>
+  <span style = "font-weight:bold">  |  2  | </span>
+  <label for = "3 Packet" > |  3  | </label>
+  <label for = "4 Packet" style = "color: lightgrey" > |  4　 </label>
+  <label for = "5 Packet" style = "color: red" >5　</label>
+  <br>
+  <input type = "range" min = "1" max = "5" value = "3" class = "slider" id = "sugarLevel">
+  </body>
+</html>
