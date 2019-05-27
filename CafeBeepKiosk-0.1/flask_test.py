@@ -17,19 +17,23 @@ import sys, time, traceback, argparse, string
 
 # Allows for the creation of a GUI web app that communicates with python backend code
 # Save HTML file in a folder called "templates" in the same folder as your Flask code.
-# Save user state / data across page refreshes and crashes, by using browser cookies.
 from flask import Flask, render_template, session, request, redirect, url_for, flash
-# from .phone_form import PhoneForm
-# from .sms_sender import send_confirmation_code
+from flask import Flask
+
+# Allow user import from TODO
 from flask_wtf import Form
 from wtforms import validators, SubmitField
 from wtforms.validators import DataRequired
-# import phonenumbers
 from flask_wtf.html5 import TelField
 from twilio.rest import Client
+
+# TODO
 import random
+
+# Save user state / data across page refreshes and crashes, by using browser cookies.
 from flask import session
-from flask import Flask
+
+# Allow management of UserData.py objects in local database 
 from flask_dynamo import Dynamo
 
 # Useful Constants
@@ -44,33 +48,44 @@ MAX_DRINK_NUM = 4
 app = Flask(__name__)
 app.secret_key = 'BeepBeep@42'  # TODO: Select STRONG key for production code
 
-app.config['SESSION_TYPE'] = 'filesystem'  #
+app.config['SESSION_TYPE'] = 'filesystem'  
 app.config['AWS_ACCESS_KEY_ID'] = 'myfake'
-app.config['AWS_SECRET_ACCESS_KEY'] = 'mysecret'
-app.config['AWS_REGION'] = 'us-east-1'
+app.config['AWS_SECRET_ACCESS_KEY'] = 'BeepBeep@42'
+app.config['AWS_REGION'] = 'us-east-1' #TODO Change to west
 app.config['DYNAMO_ENABLE_LOCAL'] = True
 app.config['DYNAMO_LOCAL_HOST'] = 'localhost'
 app.config['DYNAMO_LOCAL_PORT'] = 8000
+
+#TODO Match table structure already created.  
 app.config['DYNAMO_TABLES'] = [{
     "TableName":"customers",
     "KeySchema":[dict(AttributeName='username', KeyType='HASH')],
     "AttributeDefinitions":[dict(AttributeName='username', AttributeType='S')],
     "ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)
 }]
+
 dynamo = Dynamo(app)
 with app.app_context():
     dynamo.create_all()
+
+###
+# TODO Document Function 
+###
 def send_confirmation_code(to_number):
     verification_code = generate_verification_code()
     send_message(to_number, verification_code)
     session['verification_code'] = verification_code
     return verification_code
 
-
+###
+# TODO Document Function 
+###
 def generate_verification_code():
     return str(random.randrange(100000, 999999))
 
-
+###
+# TODO Document Function 
+###
 def send_message(to_number, body):
     twilio_sid = 'AC2384e9ca97db1b1b26ab9316ce6fb7be'
     auth_token = 'af684eefa055d96468e26510a2d35f01'
@@ -84,6 +99,9 @@ class PhoneForm(Form):
     submit = SubmitField("Send")
 
 
+###
+# TODO Document Function 
+###
 def validate_phone_number(self, field):
     error_message = "Invalid phone number. Example: +19966966989"
     try:
@@ -173,13 +191,17 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 
     )
 
-
+###
+# TODO Document Function 
+###
 @app.route('/Bulma_Sample', methods=['GET', 'POST'])
 def MenuScreen_Murali():
     HTMLtoDisplay = "Bulma_Sample.html"
     return render_template(HTMLtoDisplay)
 
-
+###
+# TODO Document Function 
+###
 @app.route('/phonepage', methods=['GET', 'POST'])
 def phonepage():
     form = PhoneForm()
@@ -189,7 +211,9 @@ def phonepage():
         return redirect(url_for('confirmation'))
     return render_template('Phone_Page.html', form=form)
 
-
+###
+# TODO Document Function 
+###
 @app.route('/confirmation', methods=['GET', 'POST'])
 def confirmation():
     if request.method == 'POST':
@@ -198,17 +222,25 @@ def confirmation():
         flash('Wrong code. Please try again.', 'error')
     return render_template('confirmation.html')
 
-
+###
+# TODO Document Function 
+###
 @app.route('/menu', methods=['GET', 'POST'])
 def menu_screen_new():
     HTMLtoDisplay = "menu.html"
     return render_template(HTMLtoDisplay)
 
+###
+# TODO Document Function 
+###
 @app.route('/customize-drink', methods=['GET', 'POST'])
 def customizedrink():
     HTMLtoDisplay = "customize-drink.html"
     return render_template(HTMLtoDisplay)
 
+###
+# TODO Document Function 
+###
 @app.route('/create_user')
 def create_user():
     table = dynamo.get_table('customers')
@@ -222,6 +254,9 @@ def create_user():
 for table_name, table in dynamo.tables.items():
     print(table_name, table)
 
+###
+# TODO Document Function 
+###
 def SearchConfigurationDatabase(configNum, drinkNum):
     if (configNum == 0):
         configurationDatabase = {
