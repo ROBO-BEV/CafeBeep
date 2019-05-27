@@ -4,14 +4,14 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-25"
+__date__ =    "Late Updated: 2019-05-27"
 __doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
 
 # Useful system jazz
 import sys, time, traceback, argparse, string
 
 # Read Comma Separated Value (CSV) files from external storage
-# FIND LINK
+# https://TODO
 import csv
 
 # Double-ended queue which is implemented as a doubly-linked list interally
@@ -24,7 +24,6 @@ import ctypes
 
 # BEEP BEEP code that defines valid drink configurtions for each kiosk
 import Drink
-
 
 class UserData:
 
@@ -127,14 +126,20 @@ class UserData:
 	# TODO https://jaxenter.com/implement-switch-case-statement-python-138315.html
 	# @userID - ID number of user you are searching for
 	#
-	# @return - String variable with first name (only) of user. (PRIVACY MATTERS!)
+	# return - String variable with first name (only) of user. (PRIVACY MATTERS!)
 	###
 	def getUserFirstName(userID):
 		return userLocalDatabase.get(userID, " ").firstName
 
 
-
-	def updateNonLocalDatabase():
+	###
+	# Export python Dictionary to user database at non-local source
+	#
+	# @sink - Databased to export user data to
+	#
+	# return INTERNET_CONNECTION_ERROR or 
+	###
+	def updateNonLocalDatabase(sink):
 		print("#PUSH nextUserIDtoAssign to cloud")
 
 
@@ -179,7 +184,7 @@ class UserData:
 	###
 	def readCSV(filepath):
 		if(not filepath.endswith('/)')
-			debugPrint("HEY DUMB ASS END YOUR FILEPATH WITH A '/' CHARACTER!!!")			
+			debugPrint("HEY DUMB ASS END YOUR FILEPATH WITH A '/' CHARACTER!!!")
 			return FILEPATH_ERROR
 
 		debugPrint("START READING CSV FILE FROM " + filepath + "UserDataDatabase1.csv")
