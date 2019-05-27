@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-23"
+__date__ =    "Late Updated: 2019-05-25"
 __doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
 
 # Useful system jazz
@@ -29,10 +29,13 @@ import Drink
 class UserData:
 
 	DEBUG_STATEMENTS_ON = True
+	FILEPATH_ERROR = -1
+	OK = 0
 
 	MAX_USERS_PER_KIOSK = 4000 # Determine this limit via testing
 	AWS = -1
-	USB = -2
+	USB_FLASHDRIVE = -2
+	PI_SD_CARD = -3
 	AWS_DYNAMO_DB_URL = "https://www.????.com"
 
 	nextUserIDtoAssign = c_uint(0) # Ctype Unsigned Integer to give max number of userID's
@@ -136,12 +139,12 @@ class UserData:
 
 
 	###
-	# Copy user database (python Dictionary) from non-local source
+	# Import user database to python Dictionary from non-local source
 	# Jump table / switch statement is much faster than an if-else-if ladder
 	# TODO https://jaxenter.com/implement-switch-case-statement-python-138315.html
 	#
 	# @currentLocalUserDatabase - Current Python Dictionary stored in RAM and non-volatile ROM
-	# @source - Location (e.g. Amazon AWS) to get most up-to-date database from
+	# @source - Location (e.g. Amazon AWS) to get new database from
 	#
 	# return NOTHING
 	###
@@ -156,36 +159,55 @@ class UserData:
 
 
 		if(source == AWS):
-			print("TODO AWS DYNAMO DB API CALLS")
-		elif(source == USB):
-			debugPrint("START READING TEXT FILE FROM USB")
-			with open('E:/UserData_database_1.csv', newline = '') as csvfile:
-				userDataReader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
-				lineCount = 0
-			for row in userDataReader:
-				for i in range(2, 10):	# 2 to 9
-					tempPhoneNumbers[i] = row[i]
-				for j in range(10, 14): # 11 to 13
-					tempAddOnTypes[j] = row[j]
-				for k in range(14, 16): # 14 to 15
-					tempAddOnLevels[k] = row[k]
-
-			tempUser = UserData(row[0], row[1], tempPhoneNumbers)
-			tempDrink = Drink(row[10], tempAddOnTypes, tempAddOnLevels)
-			tempUser.setDrink(tempDrink)
-			tempUser.setLastDrink(row[16])
-			tempUser.setFavoriteDrinks(row[17], row[18], row[19], row[20], row[21])
-
-			#print(', '.join(row))
-
-			for userID in range(0, MAX_USERS_PER_KIOSK+1):
-				setDictionary(userID)
-
-			debugPrint("END READING TEXT FILE FROM USB")
-
+			print("TODOv2019.0 AWS DYNAMO DB API CALLS")
+		elif(source == USB_FLASHDRIVE):
+			errorCode = writeCSV('E:/')
+		elif(source == PI_SD_CARD):
+			errorCode = writeCSV('TODO')
 		else:
-			print("INVLAID SOURCE FOR USER DATABASE UPDATE: USE AWS OR USB FLASHDRIVE")
+			print("INVLAID SOURCE FOR USER DATABASE UPDATE: USE AWS, PI SD CARD, OR USB FLASHDRIVE")
 
+		return errorCode
+
+	###
+	# Read Comma Separated Value (CSV) data into locally connect storage (SD card, Flashdrive, or TODO)
+	# NOTE: Code doesn't current work on Windows with their dumb ass backward slash :)
+	#
+	# @filepath - Full filepath to write CSV file to. Must including the final forward slash '/'
+	#
+	# return FILEPATH_ERROR code if invalid filepath passed as parameter, OK otherwise
+	###
+	def readCSV(filepath):
+		if(not filepath.endswith('/)')
+			debugPrint("HEY DUMB ASS END YOUR FILEPATH WITH A '/' CHARACTER!!!")			
+			return FILEPATH_ERROR
+
+		debugPrint("START READING CSV FILE FROM " + filepath + "UserDataDatabase1.csv")
+		with open(filepath + '/UserDataDatabase1.csv', newline = '') as csvfile:
+			userDataReader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
+			lineCount = 0
+		for row in userDataReader:
+			for i in range(2, 10):	# 2 to 9
+				tempPhoneNumbers[i] = row[i]
+			for j in range(10, 14): # 11 to 13
+				tempAddOnTypes[j] = row[j]
+			for k in range(14, 16): # 14 to 15
+				tempAddOnLevels[k] = row[k]
+
+		tempUser = UserData(row[0], row[1], tempPhoneNumbers)
+		tempDrink = Drink(row[10], tempAddOnTypes, tempAddOnLevels)
+		tempUser.setDrink(tempDrink)
+		tempUser.setLastDrink(row[16])
+		tempUser.setFavoriteDrinks(row[17], row[18], row[19], row[20], row[21])
+
+		#print(', '.join(row))
+
+		for userID in range(0, MAX_USERS_PER_KIOSK+1):
+			setDictionary(userID)
+
+		debugPrint("END READING TEXT FILE FROM " + filepath)
+
+		return OK
 
 	###
 	# Calls standard Python 3 print("X") statement if DEBUG global variable is TRUE
