@@ -37,7 +37,7 @@ class UserData:
 	PI_SD_CARD = -3
 	AWS_DYNAMO_DB_URL = "https://www.????.com"
 
-	nextUserIDtoAssign = c_uint(0) # Ctype Unsigned Integer to give max number of userID's
+	nextUserIDtoAssign = 0 #TODO c_unit(0) Ctype Unsigned Integer to give max number of userID's
 
         ###
         # Constructor to initialize an UserData object, which holds Drink() object
@@ -183,7 +183,7 @@ class UserData:
 	# return FILEPATH_ERROR code if invalid filepath passed as parameter, OK otherwise
 	###
 	def readCSV(filepath):
-		if(not filepath.endswith('/)')
+		if(not filepath.endswith('/')):
 			debugPrint("HEY DUMB ASS END YOUR FILEPATH WITH A '/' CHARACTER!!!")
 			return FILEPATH_ERROR
 

@@ -69,8 +69,8 @@ app.config['DYNAMO_LOCAL_PORT'] = 8000
 # TODO mainPhoneNumber is like a userID and is the search key. phoneNumbers[] array is all phone numbers connected to an account
 app.config['DYNAMO_TABLES'] = [{
 	"TableName":"UserData",
-	"KeySchema":[dict(AttributeName='mainPhoneNumber', KeyType='HASH'],
-	"AttributeDefinitions":[dict(AttributeName='mainPhoneNumber', AttributeType='I')],	#TODO I, S, or C???
+	"KeySchema":dict(AttributeName='mainPhoneNumber', KeyType='HASH'),
+	"AttributeDefinitions":dict(AttributeName='mainPhoneNumber', AttributeType='I'),	#TODO I, S, or C???
 	"ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)    #TODO ReadCapacityUnits NO SQUARE BRACKETS???
 }]
 
@@ -251,7 +251,7 @@ def confirmation():
 	if request.method == 'POST':
 		if request.form['verification_code'] == session['verification_code']:
 			return render_template("notification.html")
-		flash('Wrong code. Please try again.', 'error'
+		flash('Wrong code. Please try again.', 'error')
 	return render_template('confirmation.html')
 
 ###
