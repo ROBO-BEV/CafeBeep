@@ -13,6 +13,10 @@ import sys, time, traceback, argparse, string
 # Allow UDP communication between different CPUs (e.g. Raspberry Pi, NVIVDIA TX2, etc) using Ethernet
 import socket
 
+# Allow keyboard to control program flow and typing to terminal window
+import pynput.keyboard
+from pynput.keyboard import Key, Controller
+
 # BEEP BEEP Technologies Inc code
 #SHOULD NOT NEED THIS FOR BACK END import UserData         # Store user name, ID, and drink preferences
 import Drink            # Store valid BEEP BEEP drink configurations
