@@ -1,1 +1,8 @@
 flask
+twilio
+
+# Flask Components
+Flask-Session
+Flask-WTF
+Flask-Script
+flask-dynamo

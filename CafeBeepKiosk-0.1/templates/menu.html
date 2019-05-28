@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "navbar.html" %}
+   <section class="section">
+   <div class="columns">
+       <div class="column is-2">
+           <aside class="menu">
+               <p class="menu-label">Most Popular</p>
+               <ul class="menu-list">
+                   <li><a>Coffe</a></li>
+                   <li><a>Tea</a></li>
+                   <li><a>Hot</a></li>
+                   <li><a>Cold</a></li>
+               </ul>
+           </aside>
+       </div>
+       <div class="column is-10">
+            <div class="tile is-ancestor">
+            <div class="tile is-vertical">
+                <div class="tile">
+               <div class="tile is-4 is-parent">
+                    <article class="tile is-child box">
+                        <a href="{{ url_for('customizedrink') }}", method="GET">
+                            <figure class="image is-3by3">
+                                <img src="../static/images/CustomCup.png">
+                            </figure>
+                            <hr>
+                            <p class="title has-text-centered">Hot Choclate</p>
+                        </a>
+                   </article>
+               </div>
+               <div class="tile is-4 is-parent">
+                    <article class="tile is-child box">
+                        <a href="{{ url_for('customizedrink') }}", method="GET">
+                            <figure class="image is-3by3">
+                                <img src="../static/images/CustomCup.png">
+                            </figure>
+                            <hr>
+                            <p class="title has-text-centered">Barista</p>
+                        </a>
+                   </article>
+               </div>
+               <div class="tile is-4 is-parent">
+                    <article class="tile is-child box">
+                        <a href="{{ url_for('customizedrink') }}", method="GET">
+                            <figure class="image is-3by3">
+                                <img src="../static/images/CustomCup.png">
+                            </figure>
+                            <hr>
+                            <p class="title has-text-centered">Cappuchino</p>
+                        </a>
+                   </article>
+               </div>
+            </div>
+                <div class="tile">
+                <div class="tile is-4 is-parent">
+                <article class="tile is-child box">
+                    <a href="{{ url_for('customizedrink') }}", method="GET">
+                        <figure class="image is-2by2">
+                            <img src="../static/images/CustomCup.png">
+                        </figure>
+                        <hr>
+                        <p class="title has-text-centered">Iced Coffe</p>
+                    </a>
+               </article>
+           </div>
+                <div class="tile is-4 is-parent">
+                <article class="tile is-child box">
+                    <a href="{{ url_for('customizedrink') }}", method="GET">
+                        <figure class="image is-3by3">
+                            <img src="../static/images/CustomCup.png">
+                        </figure>
+                        <hr>
+                        <p class="title has-text-centered">White Mocha</p>
+                    </a>
+               </article>
+           </div>
+                <div class="tile is-4 is-parent">
+                <article class="tile is-child box">
+                    <a href="{{ url_for('customizedrink') }}", method="GET">
+                        <figure class="image is-3by3">
+                            <img src="../static/images/CustomCup.png">
+                        </figure>
+                        <hr>
+                        <p class="title has-text-centered">Hot Coffe</p>
+                    </a>
+               </article>
+           </div>
+            </div>
+            </div>
+        </div>
+       </div>
+   </div>
+   </section>
+{% endblock %}
