@@ -4,22 +4,23 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-27"
-__doc__ =     "Class to locally search user information, with data pulled and pushed from servers (AWS)"
+__date__ =    "Late Updated: 2019-05-29"
+__doc__ =     "Class to locally search user information, with ability to pull and push data from servers and flashdrives"
 
-# Useful system jazz
+# Useful system jazz to do the following:
+# ???, pause program execution, trace runtime error, accept terminal input parameters, and use String variable
 import sys, time, traceback, argparse, string
 
 # Read Comma Separated Value (CSV) files from external storage
-# https://TODO
+# https://docs.python.org/3/library/csv.html
 import csv
 
-# Double-ended queue which is implemented as a doubly-linked list interally
-# https://docs.python.org/2/library/collections.html
+# Double-ended queue which is implemented as a doubly-linked list internally (zero indexed)
+# https://docs.python.org/3/library/collections.html
 import collections
 
 # Provide C compatible data types (e.g. unsigned integers) and allows calling functions in DLLs
-# https://docs.python.org/2/library/ctypes.html
+# https://docs.python.org/3/library/ctypes.html
 import ctypes
 
 # BEEP BEEP code that defines valid drink configurtions for each kiosk
@@ -29,13 +30,17 @@ class UserData:
 
 	DEBUG_STATEMENTS_ON = True
 	FILEPATH_ERROR = -1
+	DATA_CONNECTION_ERROR = -2
 	OK = 0
 
-	MAX_USERS_PER_KIOSK = 4000 # Determine this limit via testing
-	AWS = -1
-	USB_FLASHDRIVE = -2
-	PI_SD_CARD = -3
-	AWS_DYNAMO_DB_URL = "https://www.????.com"
+	MAX_USERS_PER_KIOSK = 4000 # TODO Determine this limit via testing
+	AWS = "Dynamo"
+	USB_FLASHDRIVE = "32GB"
+	PI_SD_CARD = "4GB"
+	ONLINE_AWS_DYNAMO_DB_URL = "https://www.????.com"
+	LOCAL_DYNAMO_??? = -1 #TODO
+
+	SOURCE_SANS_PRO = "Source Sans Pro"
 
 	nextUserIDtoAssign = 0 #TODO c_unit(0) Ctype Unsigned Integer to give max number of userID's
 
@@ -61,31 +66,43 @@ class UserData:
 		self.phoneNumnbers = [0, 0, 0, 0, 0, 0, 0, 0]
 		self.phoneNumbers[0] = phoneNumber
 		self.drinkObject = Drink(Drink.NONE, [Drink.NONE, Drink.NONE, Drink.NONE], [0, 0])
+		self.preferredFont = SOURCE_SANS_PRO
 		self.lastDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
 		self.freqDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
 		#TODOv2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
 		self.fullOrderHistory = collections.deque()
+
+
+	###
+	# Store UserData.py objects
+	#
+	# @location - Location of kiosk, which effects which AWS servers to connect to (e.g. USA_WEST, USA_EAST, INDIA, ASIA, EUROPE)
+	# @maxSize -  TODO ???? (e.g MAX_USERS_PER_KIOSK  # TODO Determine this limit via testing)
+	#
+	# return ???
+	###
+	def configureLocalDynamoDatabase(location, maxSize):
+		debugPrint("TODO v2019.0 work")
+	def writeToLocalDynamoDatabase(inputData):
+		debugPrint("TODO v2019.0 work")
+	def readFromLocalDynamoDatabase(mainPhoneNumber, userID):
+		debugPrint("TODO v2019.0 work")
+
 
 	###
 	# Add newly ordered drink to the HEAD (beginning) of the full order history, and determine
 	# what the three most ordered and last three drinks of a single user are.
 	#
 	# @self - Instance of UserData object being called
-	# @newDrink - Drink configuration to add to user order history
+	# @newDrink - User Drink.py object to add to user order history
 	#
 	# return NOTHING
 	###
 	def updateDrinkHistory(self, newDrink):
-		# Add drink to front of the doubly-linked list
+		# Add drink to front (best insertion performance) of the doubly-linked list
 		self.fullOrderHistory.appendleft(newDrink) #TODO Are Linked Lists zero indexed
 
-		# Update lastDrinks array via function input parmeter and doubly-linked list
-		#self.lastDrinks[2] = self.fullOrderHistory(2)
-		#self.lastDrinks[1] = self.fullOrderHistory(1) TODO Are Linked Lists zero indexed
-		#self.lastDrinks[0] = newDrink
-
-		#TODO DETERMINE IF THIS IS FASTER THEN LINKED LIST METHOD ABOVE
-		# Add drink to index zero of lastDrinks array and shift older drink order one position
+		#Sshift older drinks one position and add new drink to index zero of lastDrinks array
 		self.lastDrinks[2] = self.lastDrinks[1]
 		self.lastDrinks[1] = self.lastDrinks[0]
 		self.lastDrinks[0] = newDrink
