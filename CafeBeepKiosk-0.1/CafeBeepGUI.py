@@ -96,12 +96,11 @@ def send_confirmation_code(to_number):
 ###
 # TODO Murali Document Function
 # TODO Will code collisions with only 4 digit be a problem? See GitHub Issue #12
-# https://l.facebook.com/l.php?u=https%3A%2F%2Fgithub.com%2FROBO-BEV%2FCafeBeep%2Fissues%2F12%3Ffbclid%3DIwAR24wNoS9OOGUTlpBN58bs7956hhmH4mbkhBPaWhxRmmU7lUdizEH6UY8X0&h=AT0gEbwTzsQSNDsA03NmueV9C17KcWMzXH7Rqii9cIxOJRsa2ygWoxv1hJipiTalYybX4X6qNi_HGkQR_czzUlRNzcfeg0cmB1C36tEG6JkeuAsMR1nwlUdYO1LJb64w_g
-#
+# https://github.com/ROBO-BEV/CafeBeep/issues/12
 # return ???
 ###
 def generate_verification_code():
-	return str(random.randrange(1000, 9999)) #4 digit code is user for user then 6 digit code.
+	return str(random.randrange(1000, 9999)) #A 4 digit code is easier for users then a 6 digit code
 
 ###
 # TODO Murali Document Function

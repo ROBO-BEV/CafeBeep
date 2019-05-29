@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 #RUN install node and npm
 #RUN npm run install
 ENTRYPOINT ["python3"]
-CMD ["flask_test.py"]
+CMD ["CafeBeepGUI.py"]
