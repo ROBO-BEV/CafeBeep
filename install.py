@@ -41,27 +41,31 @@ if __name__ == "__main__":
 	### Follow these steps to get initial cafeBEEP software running
 
 	# Flask requires Python 3 to work
-	check_call("sudo apt install python3-pip", shell=True)  # Clear terminal
+	check_call("sudo apt install python3-pip", shell=True)
 
 	# Flask is the GUI frontend to that runs in parallel with python backend controling pumps
 	# Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)
 	# https://aryaboudaie.com/python/technical/educational/web/flask/2018/10/17/flask.html
-	check_call("pip3 install flask", shell=True)  # Clear terminal
+	check_call("pip3 install flask", shell=True)
+
+	# Simple integration of Flask and WTForms, including CSRF, file upload and Recaptcha integration
+	# https://flask-wtf.readthedocs.io/en/stable/
+	check_call("pip install Flask-WTF", shell=True)
 
 	# CSS framework to make Flask HTML pretty (GUI slider especially)
 	check_call("npm install bulma", shell=True)
 
 	# Text to voice synthesizer for V+1
 	#https://elinux.org/RPi_Text_to_Speech_(Speech_Synthesis)
-	check_call("sudo apt-get install espeak", shell=True)  # Clear terminal
+	check_call("sudo apt-get install espeak", shell=True)
 
 	# Low level control on GPIO pins to drive Servo, Motor, Relays, LED, etc
 	# Python 3 install of GPIO and servo to match Flask
 	# https://gpiozero.readthedocs.io/en/stable/installing.html
 	if(CONGFIG == "Pi3B+"):
-		check_call("sudo apt install python3-gpiozero", shell=True)  # Clear terminal
+		check_call("sudo apt install python3-gpiozero", shell=True)
 	elif(CONFIG == "UbuntuOnWindows"):
-		check_call("sudo pip install gpiozero", shell=True)  # Clear terminal
+		check_call("sudo pip install gpiozero", shell=True)
 	elif(CONFIG == "UbuntuMate"):
 		#TODO After $25 USB arrives check_call("sudo ???", shell=True)
 	else:
