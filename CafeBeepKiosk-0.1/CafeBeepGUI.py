@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-28"
+__date__ =    "Late Updated: 2019-05-29"
 __doc__ =     "Logic to run cafeBEEP Flask kiosk GUI front-end"
 
 # OLD DRIVER CODE https://github.com/ROBO-BEV/CafeBeep/blob/2d04e4e298290e4dc736326b1a889be227587155/CafeBeepKiosk-0.1/CafeBeepDriver.py
@@ -34,6 +34,7 @@ from flask_wtf.html5 import TelField
 from twilio.rest import Client
 
 # Allow management of UserData.py objects in local database
+# https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
 from flask_dynamo import Dynamo
 
 # Allow for generation of 4 digit random SMS confirmation codes
@@ -105,17 +106,17 @@ def generate_verification_code():
 ###
 # TODO Murali Document Function
 #
-# @to_number -
-# @body -
+# @toNumber - Cell phone number to send SMS message to
+# @body - ???
 #
 # return NOTHING
 ###
-def send_message(to_number, body):
-	twilio_sid = 'AC2384e9ca97db1b1b26ab9316ce6fb7be'
-	auth_token = 'af684eefa055d96468e26510a2d35f01'
-	twilio_phone_number = '+19495776507'
-	twilio_client = Client(twilio_sid, auth_token)
-	twilio_client.api.messages.create(to_number, from_=twilio_phone_number, body=body)
+def send_message(toNumber, body):
+	twilio_sid = 'AC2384e9ca97db1b1b26ab9316ce6fb7be'  	#TODO Make TWILIO_SID CONSTANT in SMSsend.py Class
+	auth_token = 'af684eefa055d96468e26510a2d35f01'		#TODO Make AUTH_TOKEN CONSTANT in SMSsend.py Class
+	twilioPhoneNumber = '+19495776507'			#BEEP BEEP Technology Inc Twilio Cell Phone Number 
+	twilioClient = Client(twilio_sid, auth_token)		#TODO Use TWILIO_SID and AUTH_TOKEN CONSTANTS
+	twilioClient.api.messages.create(toNumber, from_=twilioPhoneNumber, body=body)
 
 ###
 # TODO Murali Move to PhoneForm.py or Form.py file
@@ -128,13 +129,13 @@ class PhoneForm(Form):
 ###
 # TODO Murali Document Function
 #
-# @self -
+# @self - Instance of object being called
 # @field -
 #
 # raise ???
 ###
 def validate_phone_number(self, field):
-	error_message = "Invalid phone number. Example: +19966966989"
+	error_message = "Invalid phone number. Example: +1-555-123-4567"
 	try:
 		data = phonenumbers.parse(field.data)
 	except:
@@ -219,7 +220,7 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 ###
 # TODO Murali Document Functions
 #
-# return ???
+# return TODO HTML and CSS file to display on screen???
 ###
 @app.route('/Bulma_Sample')
 def MenuScreen_Murali():
@@ -229,7 +230,7 @@ def MenuScreen_Murali():
 ###
 # TODO Murali Document Function
 #
-# return ???
+# return TODO HTML and CSS file to display on screen???
 ###
 @app.route('/phonepage', methods=['GET', 'POST'])
 def phonepage():
@@ -243,7 +244,7 @@ def phonepage():
 ###
 # TODO Murali Document Function
 #
-# return ???
+# return TODO HTML and CSS file to display on screen???
 ###
 @app.route('/confirmation', methods=['GET', 'POST'])
 def confirmation():
@@ -257,7 +258,7 @@ def confirmation():
 # TODO Murali Document Function
 # TODO Rename to MenuScreen and get rid of Blaze function from above
 #
-# return ???
+# return TODO HTML and CSS file to display on screen???
 ###
 @app.route('/menu', methods=['GET', 'POST'])
 def menu_screen_new():
@@ -275,7 +276,7 @@ def customizedrink():
 ###
 # TODO Murali Document Function
 #
-# return ???
+# return TODO HTML and CSS file to display on screen???
 ###
 @app.route('/create_user')
 def create_user():
@@ -292,9 +293,15 @@ def create_user():
 		print(table_name, table)
 
 ###
-# TODO Blaze Document Function
+# TODO Local Python Dictionary holding upto MAX_CONFIG_NUM kiosk configurations
+# A configuration is the set of drinks in a kiosk, define by the franchise owner
+# No two configutations should have the same drink set (TODO code to preform drink set check)
 #
-# return ???
+# @configNum - Interger ID number representing franchisee kiosk configuration
+# @drinkNum - Interger ID number representing a coffee product name. 
+#	      The same coffee product CAN have different drinkNum values in two different configurations
+#
+# return String variable of coffee product name corresponding to (configNum, drinkNum) data point
 ###
 def SearchConfigurationDatabase(configNum, drinkNum):
 	if(configNum == 0):
