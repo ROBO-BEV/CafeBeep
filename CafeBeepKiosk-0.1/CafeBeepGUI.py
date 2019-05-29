@@ -60,13 +60,13 @@ app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'		# TODO Murali Document Code
 app.config['AWS_ACCESS_KEY_ID'] = 'myfake'		# TODO Murali Document Code
 app.config['AWS_SECRET_ACCESS_KEY'] = 'BeepBeep@42'	# TODO Murali Document Code app.secret_key = 'BeepBeep@42'            		# TODO Select STRONG key for production code
+
+# TODO Match table structure for new table in AWS
+# TODO mainPhoneNumber is like a userID and is the search key. phoneNumbers[] array is all phone numbers connected to an account
 app.config['AWS_REGION'] = 'us-west-1' 			# Select west to reduce v2019.0 San Francisco demo latency
 app.config['DYNAMO_ENABLE_LOCAL'] = True
 app.config['DYNAMO_LOCAL_HOST'] = 'localhost'
 app.config['DYNAMO_LOCAL_PORT'] = 8000
-
-# TODO Match table structure for new table in AWS
-# TODO mainPhoneNumber is like a userID and is the search key. phoneNumbers[] array is all phone numbers connected to an account
 app.config['DYNAMO_TABLES'] = [{
 	"TableName":"UserData",
 	"KeySchema":dict(AttributeName='mainPhoneNumber', KeyType='HASH'),
