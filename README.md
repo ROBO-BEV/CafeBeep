@@ -18,6 +18,12 @@ To run the code in CafeBeepKiosk-0.1 directory complete the following steps:
 4. Use "cd CafeBeep/CafeBeepKiosk-0.1" command to navigate to the main code directory 
 5. Finally run the command "python3 CafeBeep_GUI.py" to start kiosk software running
 6. NOTE: Use "python3" and NOT "python", in step 5 or you will get run time errors!!!
+[**Steps to manage front end packages:**
+a) Install Node and NPM
+b) Go to CafeBeep/CafeBeepKiosk-0.1/static folder and run 'npm run install']
+2. Use "cd CafeBeep/CafeBeepKiosk-0.1" linux terminal command to navigate to the CafeBeepKiosk-0.1 directory 
+3. Next run the command "python  CafeBeep_Driver.py" to start kiosk software running
+4. Enter terminal input as prompted and have fun
 
 To Run the application on Docker, follow the steps.
 1. Download the docker for Desktop [Windows, *x, MAC OSX etc]
