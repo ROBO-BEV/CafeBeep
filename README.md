@@ -13,6 +13,9 @@ CafeBeepKiosk-0.1:
 
 To run the code in CafeBeepKiosk-0.1 directory complete the following steps:
 1. Download this FULL git repo onto a Raspberry Pi 3 B+  
+[**Steps to manage front end packages:**
+a) Install Node and NPM
+b) Go to CafeBeep/CafeBeepKiosk-0.1/static folder and run 'npm run install']
 2. Use "cd CafeBeep/CafeBeepKiosk-0.1" linux terminal command to navigate to the CafeBeepKiosk-0.1 directory 
 3. Next run the command "python  CafeBeep_Driver.py" to start kiosk software running
 4. Enter terminal input as prompted and have fun

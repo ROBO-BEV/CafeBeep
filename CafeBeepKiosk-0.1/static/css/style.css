@@ -1,6 +1,6 @@
 .section {
   padding: 1rem;
 }
-.large-section {
-  padding-bottom: 4rem;
+.navbar-item img {
+    max-height: 2.75rem;
 }
