@@ -12,8 +12,10 @@ __doc__ =     "Logic to run cafeBEEP Flask kiosk GUI front-end"
 # BEEP BEEP Technologies Inc code
 import Drink		# Store valid BEEP BEEP drink configurations
 import UserData 	# Store user name, ID, and drink preferences
-import Actuator		# Modular plug and play control of motors, servos, and relays
-import CafeBeepDriver	# Back-end logic connected to GUI
+#TODO Blaze will fix issue raising when starting the app, until Murali, commenting in this code.
+#import Actuator		# Modular plug and play control of motors, servos, and relays
+#TODO Blaze will fix issue raising when starting the app, until Murali, commenting in this code.
+#import CafeBeepDriver	# Back-end logic connected to GUI
 
 # Useful system jazz
 import sys, time, traceback, argparse, string
@@ -30,7 +32,7 @@ from flask import request, redirect, url_for, flash
 from flask_wtf import Form
 from wtforms import validators, SubmitField
 from wtforms.validators import DataRequired
-from flask_wtf.html5 import TelField
+#from flask_wtf.html5 import TelField
 from twilio.rest import Client
 
 # Allow management of UserData.py objects in local database
@@ -71,22 +73,23 @@ app.config['DYNAMO_LOCAL_PORT'] = 8000
 app.config['DYNAMO_TABLES'] = [{
 	"TableName":"UserData",
 	"KeySchema":dict(AttributeName='mainPhoneNumber', KeyType='HASH'),
-	"AttributeDefinitions":dict(AttributeName='mainPhoneNumber', AttributeType='I'),	#TODO I, S, or C???
-	"ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)    #TODO ReadCapacityUnits NO SQUARE BRACKETS???
+	"AttributeDefinitions":dict(AttributeName='mainPhoneNumber', AttributeType='I'),
+	"ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)
 }]
 
 
-#TODO Murali Document Code
+# Initializing the Dynamo App
+# Creating the tables if they dont exist already.
 dynamo = Dynamo(app)
 with app.app_context():
 	dynamo.create_all()
 
 ###
-# TODO Murali Document Function
-#
-# @to_number -
-#
-# return ???
+# This function will generate verification code,
+# send to @input to_number using send_message method.
+# the phone number given
+# @to_number - 10 digit phone number, example +19499759879
+# @return 6-digit integer code.
 ###
 def send_confirmation_code(to_number):
 	verification_code = generate_verification_code()
@@ -95,21 +98,21 @@ def send_confirmation_code(to_number):
 	return verification_code
 
 ###
-# TODO Murali Document Function
+# This function will generate the verification code
+# using the random function.
 # TODO Will code collisions with only 4 digit be a problem? See GitHub Issue #12
 # https://github.com/ROBO-BEV/CafeBeep/issues/12
-# return ???
+# return 6-digit integer code.
 ###
 def generate_verification_code():
 	return str(random.randrange(1000, 9999)) #A 4 digit code is easier for users then a 6 digit code
 
 ###
-# TODO Murali Document Function
-#
+# This function will send message to the @input toNumber
 # @toNumber - Cell phone number to send SMS message to
-# @body - ???
-#
+# @body - SMS Content, in this case verficiation_code.
 # return NOTHING
+#TODO Twillio SID and AuthToken has to be read from the environment variables.
 ###
 def send_message(toNumber, body):
 	twilio_sid = 'AC2384e9ca97db1b1b26ab9316ce6fb7be'  	#TODO Make TWILIO_SID CONSTANT in SMSsend.py Class
@@ -124,8 +127,6 @@ def send_message(toNumber, body):
 class PhoneForm(Form):
 	phone_number = TelField('phone_number', validators=[DataRequired()])
 	submit = SubmitField("Send")
-
-
 ###
 # TODO Murali Document Function
 #
@@ -143,7 +144,6 @@ def validate_phone_number(self, field):
 
 	if not phonenumbers.is_possible_number(data):
 		raise validators.ValidationError(error_message)
-
 
 ###
 # Adding @app.route('/') line on top of a function definition turns it into a “route.”
@@ -216,17 +216,6 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 		drinkPercentage3 = 100
 
 	)
-
-###
-# TODO Murali Document Functions
-#
-# return TODO HTML and CSS file to display on screen???
-###
-@app.route('/Bulma_Sample')
-def MenuScreen_Murali():
-	HTMLtoDisplay = "Bulma_Sample.html"
-	return render_template(HTMLtoDisplay)
-
 ###
 # TODO Murali Document Function
 #

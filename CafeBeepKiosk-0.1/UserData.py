@@ -38,7 +38,7 @@ class UserData:
 	USB_FLASHDRIVE = "32GB"
 	PI_SD_CARD = "4GB"
 	ONLINE_AWS_DYNAMO_DB_URL = "https://www.????.com"
-	LOCAL_DYNAMO_??? = -1 #TODO
+	#LOCAL_DYNAMO_??? = -1 #TODO
 
 	SOURCE_SANS_PRO = "Source Sans Pro"
 

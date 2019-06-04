@@ -157,13 +157,6 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 
     )
 
-
-@app.route('/Bulma_Sample', methods=['GET', 'POST'])
-def MenuScreen_Murali():
-    HTMLtoDisplay = "Bulma_Sample.html"
-    return render_template(HTMLtoDisplay)
-
-
 @app.route('/phonepage', methods=['GET', 'POST'])
 def phonepage():
     form = PhoneForm()
