@@ -34,6 +34,7 @@ from wtforms import validators, SubmitField
 from wtforms.validators import DataRequired
 #from flask_wtf.html5 import TelField
 from twilio.rest import Client
+from flask_wtf.html5 import TelField
 
 # Allow management of UserData.py objects in local database
 # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
@@ -60,6 +61,7 @@ ORDER_SCREEN_2 = 2              # Left side order screen use to order beverage o
 
 # Make a Flask application and start running code from __main__
 app = Flask(__name__)
+app.secret_key = 'BeepBeep@42'                  # TODO: Select STRONG key for production code
 app.config['SESSION_TYPE'] = 'filesystem'		# TODO Murali Document Code
 app.config['AWS_ACCESS_KEY_ID'] = 'myfake'		# TODO Murali Document Code
 app.config['AWS_SECRET_ACCESS_KEY'] = 'BeepBeep@42'	# TODO Murali Document Code app.secret_key = 'BeepBeep@42'            		# TODO Select STRONG key for production code
@@ -72,8 +74,8 @@ app.config['DYNAMO_LOCAL_HOST'] = 'localhost'
 app.config['DYNAMO_LOCAL_PORT'] = 8000
 app.config['DYNAMO_TABLES'] = [{
 	"TableName":"UserData",
-	"KeySchema":dict(AttributeName='mainPhoneNumber', KeyType='HASH'),
-	"AttributeDefinitions":dict(AttributeName='mainPhoneNumber', AttributeType='I'),
+	"KeySchema":[dict(AttributeName='mainPhoneNumber', KeyType='HASH')],
+	"AttributeDefinitions":[dict(AttributeName='mainPhoneNumber', AttributeType='S')],
 	"ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)
 }]
 
@@ -127,7 +129,7 @@ def send_message(toNumber, body):
 class PhoneForm(Form):
 	phone_number = TelField('phone_number', validators=[DataRequired()])
 	submit = SubmitField("Send")
-###
+##
 # TODO Murali Document Function
 #
 # @self - Instance of object being called
@@ -152,9 +154,8 @@ def validate_phone_number(self, field):
 ###
 @app.route('/')
 def HomeScreen():
-	drinkID0_VendCount = session.get('drinkID0_VendCount', None)
-
-	return 'Hello World, this is the cafeBEEP robotic coffee kiosk!'
+    HTMLtoDisplay = "welcome.html"
+    return render_template(HTMLtoDisplay)
 
 ###
 # GUI for front facing vend screen that shows logo and location of cup pick up
@@ -186,7 +187,6 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 	kioskConfig = [[0]*MAX_DRINK_NUM for _ in range(MAX_DRINK_NUM-1)] # Initialise 2D array with all ZEROs
 	for colNum in range(len(kioskConfig[drinkConfiguration])):	  # Load 2D array with data from Configuration Database dictionary
         	kioskConfig[drinkConfiguration][colNum] = SearchConfigurationDatabase(drinkConfiguration, colNum)
-
 	HTMLtoDisplay = "INVALID"
 	if (pageNum ==  -1):
 		HTMLtoDisplay = "MenuGUI_DrinkPage.html"
@@ -263,9 +263,8 @@ def customizedrink():
 	return render_template(HTMLtoDisplay)
 
 ###
-# TODO Murali Document Function
-#
-# return TODO HTML and CSS file to display on screen???
+# Template function to create record in the Dynamo Table.
+# return Nothing , but printing some logs.
 ###
 @app.route('/create_user')
 def create_user():
@@ -313,6 +312,7 @@ def SearchConfigurationDatabase(configNum, drinkNum):
 
 ###
 # Code starts execution from here
+#TODO When moving to prod, make sure turn off debug mode.
 ###
 if __name__ == '__main__':
-	app.run(host='0.0.0.0')
+	app.run(debug=True, host='0.0.0.0')
