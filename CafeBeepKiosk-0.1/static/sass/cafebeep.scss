@@ -11,7 +11,7 @@ $family-sans-serif: 'Open Sans', sans-serif;
 $primary: $red;
 $secondary: $tan;
 $link: $tan;
-//$control-border-width: 2px;
+$control-border-width: 2px;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/bulma.sass";

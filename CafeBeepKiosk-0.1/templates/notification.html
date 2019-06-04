@@ -1,4 +1,8 @@
-<div class="notification is-primary">
-Good Day Blaze.
-Mocha with Extra Hot is Coming Up!
-</div>
+{% extends "base.html" %}
+{% block body %}
+{% include "navbar.html" %}
+    <div class="notification">
+        Good Day Blaze.
+        Mocha with Extra Hot is Coming Up!
+    </div>
+{% endblock %}
