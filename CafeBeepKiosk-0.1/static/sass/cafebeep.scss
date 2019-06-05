@@ -10,9 +10,8 @@ $black: #010306;
 $family-sans-serif: 'Open Sans', sans-serif;
 $primary: $red;
 $secondary: $tan;
-$link: $tan;
 $control-border-width: 2px;
-
+$title-weight: 400;
 // Import only what you need from Bulma
 @import "../node_modules/bulma/bulma.sass";
 // Import Bulma Slider

@@ -4,3 +4,10 @@
 .navbar-item img {
     max-height: 2.75rem;
 }
+.menu.is-large {
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
+}
+.pad-section {
+    padding: 3rem;
+}
