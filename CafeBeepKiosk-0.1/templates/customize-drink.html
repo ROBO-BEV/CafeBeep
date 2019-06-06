@@ -74,44 +74,87 @@
           } );
         } );
     </script>
-    <main class="section">
-        <div class="container">
-            <div class="columns">
+    <section class="section pad-section">
+        <div class="columns">
                 <div class="column is-3 is-narrow is-sidebar">
                      <figure class="image is-2by2">
                          <img src="../static/images/CustomCup.png">
                     </figure>
                 </div>
                 <div class="column is-9">
-                    <div class="columns is-multiline is-mobile">
-                      <div class="column is-one-quarter has-text-centered has-text-primary">
-                        <p class="title has-text-centered has-text-primary">Creamer</p>
-                      </div>
-                      <div class="column is-three-quarters">
-                        <input id="sliderWithValueCreamer" class="slider has-output is-fullwidth" min="0" max="100" value="50" step="1" type="range">
-                          <output for="sliderWithValueCreamer">50</output>
-                      </div>
-                      <div class="column is-one-quarter has-text-centered has-text-primary">
-                        <p class="title has-text-centered has-text-primary">Base</p>
-                      </div>
-                      <div class="column is-three-quarters">
-                        <input id="sliderWithValueBase" class="slider has-output is-fullwidth" min="0" max="100" value="50" step="1" type="range">
-                          <output for="sliderWithValueBase">50</output>
-                      </div>
-                        <div class="column is-6 is-centered">
-                              <form action = "phonepage" method = "post">
-                                <input class ="button is-medium is-info" type = "submit" value = "Back" />
-                              </form>
-                        </div>
-                        <div class="column is-6 is-centered">
-                              <form action = "phonepage" method = "post">
+                    <div class="field is-horizontal">
+                                <div class="field-label is-medium">
+                                    <label class="label">Creamer</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field is-expanded">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                              <a class="button is-static">
+                                                  <output for="sliderWithValueCreamer">5</output>
+                                              </a>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input id="sliderWithValueCreamer" class="slider has-output is-fullwidth is-medium" min="0" max="10" value="5" step="1" type="range">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    <br>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-medium">
+                                    <label class="label">Base</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field is-expanded">
+                                      <div class="field has-addons">
+                                        <p class="control">
+                                          <a class="button is-static">
+                                              <output for="sliderWithValueBase">5</output>
+                                          </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input id="sliderWithValueBase" class="slider has-output is-fullwidth is-medium" min="0" max="10" value="5" step="1" type="range">
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                    </div>
+                    <br>
+                    <div class="field is-horizontal">
+                                <div class="field-label is-medium">
+                                    <label class="label">Sweetener</label>
+                                </div>
+                                <div class="field-body">
+                                <div class="field is-expanded">
+                                  <div class="field has-addons">
+                                    <p class="control">
+                                      <a class="button is-static">
+                                          <output for="sliderWithValueSweetener">5</output>
+                                      </a>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input id="sliderWithValueSweetener" class="slider has-output is-fullwidth is-medium" min="0" max="10" value="5" step="1" type="range">
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                    <br><br>
+                    <div class="field is-grouped is-grouped-centered">
+                      <p class="control">
+                        <a class="button is-info is-medium" href="/menu">
+                          Back
+                        </a>
+                      </p>
+                      <p class="control">
+                          <form action = "phonepage" method = "post">
                                 <input class ="button is-medium is-primary" type = "submit" value = "Confirm" />
-                              </form>
-                        </div>
-                        </div>
+                          </form>
+                      </p>
                     </div>
                 </div>
-            </div>
         </div>
-    </main>
+    </section>
 {% endblock %}

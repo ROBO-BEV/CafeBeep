@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block body %}
 {% include "navbar.html" %}
-   <section class="section">
-   <div class="columns">
+   <section class="section pad-section">
+    <div class="columns">
        <div class="column is-3">
            <aside class="menu is-large">
                <p class="menu-label">Most Popular</p>
@@ -16,7 +16,7 @@
        </div>
        <div class="column is-9">
             <div class="tile is-ancestor">
-            <div class="tile is-vertical">
+                <div class="tile is-vertical">
                 <div class="tile">
                     <div class="tile is-4 is-parent">
                     <article class="tile is-child box">
@@ -25,70 +25,70 @@
                                 <img src="../static/images/CustomCup.png">
                             </figure>
                             <hr>
-                            <p class="title is-4 has-text-centered">Hot Choclate</p>
+                            <p class="title is-5 has-text-centered">Hot Choclate</p>
                         </a>
                    </article>
                </div>
-                       <div class="tile is-4 is-parent">
+                    <div class="tile is-4 is-parent">
                             <article class="tile is-child box">
                                 <a href="{{ url_for('customizedrink') }}", method="GET">
                                     <figure class="image is-3by3">
                                         <img src="../static/images/CustomCup.png">
                                     </figure>
                                     <hr>
-                                    <p class="title is-4 has-text-centered">Barista</p>
+                                    <p class="title is-5 has-text-centered">Barista</p>
                                 </a>
                            </article>
                        </div>
-                       <div class="tile is-4 is-parent">
+                    <div class="tile is-4 is-parent">
                             <article class="tile is-child box">
                                 <a href="{{ url_for('customizedrink') }}", method="GET">
                                     <figure class="image is-3by3">
                                         <img src="../static/images/CustomCup.png">
                                     </figure>
                                     <hr>
-                                    <p class="title is-4 has-text-centered">Cappuchino</p>
+                                    <p class="title is-5 has-text-centered">Cappuchino</p>
                                 </a>
                            </article>
                        </div>
-            </div>
+                </div>
                 <div class="tile">
-                <div class="tile is-4 is-parent">
-                <article class="tile is-child box">
+                    <div class="tile is-4 is-parent">
+                        <article class="tile is-child box">
                     <a href="{{ url_for('customizedrink') }}", method="GET">
                         <figure class="image is-2by2">
                             <img src="../static/images/CustomCup.png">
                         </figure>
                         <hr>
-                        <p class="title is-4 has-text-centered">Iced Coffe</p>
+                        <p class="title is-5 has-text-centered">Iced Coffe</p>
                     </a>
                </article>
-           </div>
-                <div class="tile is-4 is-parent">
-                <article class="tile is-child box">
+                    </div>
+                    <div class="tile is-4 is-parent">
+                        <article class="tile is-child box">
                     <a href="{{ url_for('customizedrink') }}", method="GET">
                         <figure class="image is-3by3">
                             <img src="../static/images/CustomCup.png">
                         </figure>
                         <hr>
-                        <p class="title is-4 has-text-centered">White Mocha</p>
+                        <p class="title is-5 has-text-centered">White Mocha</p>
                     </a>
                </article>
-           </div>
-                <div class="tile is-4 is-parent">
-                <article class="tile is-child box">
+                    </div>
+                    <div class="tile is-4 is-parent">
+                        <article class="tile is-child box">
                     <a href="{{ url_for('customizedrink') }}", method="GET">
                         <figure class="image is-3by3">
                             <img src="../static/images/CustomCup.png">
                         </figure>
                         <hr>
-                        <p class="title is-4 has-text-centered">Hot Coffe</p>
+                        <p class="title is-5 has-text-centered">Hot Coffe</p>
                     </a>
                </article>
-           </div>
+                    </div>
+                </div>
             </div>
             </div>
-        </div>
        </div>
    </div>
    </section>
