@@ -118,3 +118,4 @@ venv.bak/
 #node modules
 node_modules/
 CafeBeepKiosk-0.1/static/css/cafebeep.css
+CafeBeepKiosk-0.1/package-lock.json

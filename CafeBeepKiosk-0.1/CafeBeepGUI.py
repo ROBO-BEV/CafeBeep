@@ -251,6 +251,8 @@ def confirmation():
 ###
 @app.route('/menu', methods=['GET', 'POST'])
 def menu_screen_new():
+	userSelection = request.args.get('userselection')
+	print('userSelection:: ' + str(userSelection))
 	HTMLtoDisplay = "menu.html"
 	return render_template(HTMLtoDisplay)
 
@@ -259,6 +261,8 @@ def menu_screen_new():
 ###
 @app.route('/customize-drink', methods=['GET', 'POST'])
 def customizedrink():
+	userSelection = request.args.get('userselection')
+	print('user selected option is:: ' + str(userSelection))
 	HTMLtoDisplay = "customize-drink.html"
 	return render_template(HTMLtoDisplay)
 
