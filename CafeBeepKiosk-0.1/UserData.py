@@ -4,11 +4,12 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-29"
+__date__ =    "Late Updated: 2019-05-31"
 __doc__ =     "Class to locally search user information, with ability to pull and push data from servers and flashdrives"
 
 # Useful system jazz to do the following:
-# ???, pause program execution, trace runtime error, accept terminal input parameters, and use String variable
+# Interpreter functions, pause program execution, trace runtime errors,
+# accept terminal input parameters, and use String variable
 import sys, time, traceback, argparse, string
 
 # Read Comma Separated Value (CSV) files from external storage
@@ -29,19 +30,29 @@ import Drink
 class UserData:
 
 	DEBUG_STATEMENTS_ON = True
+
+	# Useful function return error codes
+	OK = 0
 	FILEPATH_ERROR = -1
 	DATA_CONNECTION_ERROR = -2
-	OK = 0
+	BAD_USER_INPUT_ERROR = -3
+	INVALID_USER_ERROR = -4
 
-	MAX_USERS_PER_KIOSK = 4000 # TODO Determine this limit via testing
-	AWS = "Dynamo"
-	USB_FLASHDRIVE = "32GB"
-	PI_SD_CARD = "4GB"
-	ONLINE_AWS_DYNAMO_DB_URL = "https://www.????.com"
-	LOCAL_DYNAMO_??? = -1 #TODO
+	MAX_USERS_PER_KIOSK = 4000 		# TODO Determine this limit via testing
+	PHONE_NUMBER = "15558675309"			# Constant for fixing user input, which is ALWAYS bad
+	FIRST_NAME = "Jane"
+	AWS_DATABASE_SERIVCE = "DynamodB"	# Name of AWS database service in use
+	USB_FLASHDRIVE = "64GB"			# Max USB flahsdrive size supported is 64 GigaBytes
+	PI_SD_CARD = "32GB"			# Max microSD card size supported in 32 GigaBytes
+	ONLINE_AWS_DYNAMO_DB_URL = "arn:aws:dynamodb:us-west-1:076571243942:table/UserData"
+	DYNAMO_TABLE_NAME = "UserData"		# TODO Database service MUST be named as class they are in
 
+	# Allow users to select font for kiosk display (Customize all the things!)
 	SOURCE_SANS_PRO = "Source Sans Pro"
+	ARIAL = "Arial"
+	COURIER_NEW = "Courier New"
 
+	# Global class variable that is stored locally and on AWS
 	nextUserIDtoAssign = 0 #TODO c_unit(0) Ctype Unsigned Integer to give max number of userID's
 
         ###
@@ -53,7 +64,7 @@ class UserData:
 	# @phoneNUmber - First user phone number to connected to a specific userID
 
 	# phoneNumbers - Array to hold upto 8 phone numbers for a single userID
-	# drinkObject - Drink() object that holds currently selected drinkName, addOnType, and addOnLevels
+	# mainPhoneNUmber - Cell phone number that definds public facing userID (TODO different then userID ???)	# drinkObject - Drink() object that holds currently selected drinkName, addOnType, and addOnLevels
 	# lastDrink - Last drink ordered from ANY cafeBEEP kiosk in the Sol Star System
 	# freqDrinks - An auto currated list of the three most ordered drinks by a user
 	# TODOv2019.0 favoriteDrinks - Array that holds five drink configurations manually favorited by user
@@ -63,8 +74,8 @@ class UserData:
 		self.firstName = firstName
 		self.userID = nextUserIDtoAssign
 		nextUserIDtoAssign += 1
-		self.phoneNumnbers = [0, 0, 0, 0, 0, 0, 0, 0]
-		self.phoneNumbers[0] = phoneNumber
+		self.phoneNumbers = [0, 0, 0, 0, 0, 0, 0, 0]
+		self.mainPhoneNumber = phoneNumbers[0] = sanitizeUserInput(phoneNumber, PHONE_NUMBER)
 		self.drinkObject = Drink(Drink.NONE, [Drink.NONE, Drink.NONE, Drink.NONE], [0, 0])
 		self.preferredFont = SOURCE_SANS_PRO
 		self.lastDrinks = [Drink.NONE, Drink.NONE, Drink.NONE]
@@ -74,7 +85,41 @@ class UserData:
 
 
 	###
-	# Store UserData.py objects
+	# Fix TWO different type of user input (which is ALWAYS wrong)
+	# NOTE: Only North America cell phone numbers starting with 1 digit are allowed
+	#
+	# @input - User input to check for errors (which there ALWAYS are)
+	# @inputType - CONTSTANT used to select final target conversion of user input
+	#
+	# return  A valid 10 digit North America phone number or person name with first letter capitalized
+	###
+	def sanitizeUserInput(input, inputType):
+		if(inputType == PHONE_NUMBER):
+			inputStringPhoneNUmber = str(input)
+
+			# Rebuild phone number one character at a time by pulling out just numerical digits (0 to 9) 
+			for i in len(stringPhoneNumber):
+				character = stringPhoneNumber[i : i + 1]
+				if(character.isDigit()):
+					correctStringPhoneNumber += character
+
+			# Check that phone North America number / first digit is an 1
+			if(int(correctStringPhoneNumber[0 : 1] != 1):
+				correctStringPhoneNumber = "1" + correctStringPhoneNumber
+
+			tenDigitIntegerPhoneNumber = int(correctStringPhoneNumber)
+
+			return tenDigitIntegerPhoneNumber
+
+		elif(inputType == FIRST_NAME):
+			#TODO Check for "McDondald" and ???
+			#Capitalize the first character and make the rest lowercase
+			return intput.capitalize()
+		else:
+			print("")
+
+	###
+	# TODOv2019.0 feature Store UserData.py objects
 	#
 	# @location - Location of kiosk, which effects which AWS servers to connect to (e.g. USA_WEST, USA_EAST, INDIA, ASIA, EUROPE)
 	# @maxSize -  TODO ???? (e.g MAX_USERS_PER_KIOSK  # TODO Determine this limit via testing)
@@ -107,17 +152,19 @@ class UserData:
 		self.lastDrinks[1] = self.lastDrinks[0]
 		self.lastDrinks[0] = newDrink
 
-		self.updateDrinkFavorites()
 
 	###
 	# Transverse full order history and determine what three most ordered drinks are
-	# TODO Uses algothrim from Stack Overflow "How to count frequency of the elements in a list" 
+	# TODO Uses algothrim from Stack Overflow "How to count frequency of the elements in a list"
+	# This should be a chron job run for every user in database at 2:42 am everyday
+	# TODO Run update based on location (< 50 miles) and at ANY slow times during  6 pm to 6 am
+	#
 	# @self - Instance of UserData object being called
 	#
 	# return NOTHING
 	###
 	def updateDrinkFavorites(self):
-		#TODOv2019.0 self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
+		#TODOv2019.0 feature self.favoriteDrinks = [Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE, Drink.NONE]
 
 		# https://docs.python.org/2/library/collections.html
 		#TODO self.fullOrderHistory.count(1.214121)
@@ -130,12 +177,28 @@ class UserData:
 		freqDrinks[2] = collectionTuple(2, 1)
 
 
-		self.freqDrinks[0] = self.fullOrderHistory(0) #TODO Is LL zero indexed???
+		#BLAZE'S BAD IMPLEMENTATION OF BUILT IN FUNCTION ABOVE
+		self.freqDrinks[0] = self.fullOrderHistory(0) 
 		for nodeNum in self.fullOrderHistory:
 			if(self.freqDrinks[0] == self.fullOrderHistory(nodeNum+1)):
 				print("DO NOTHING")
 			else:
 				self.freqDrinks[1] = self.fullOrderHistory(nodeNum+1)
+
+
+	###
+	# Search local user database (python Dictionary) very quickly to find userID linked to a phone
+	# number which is used to search (python deque = Doubly Linked-List) or Dynamo Table for full userdata
+	# set.
+	#
+	# return INVALID_USER_ERROR if user phone number doesn't exist, integer greater than or equal to 0 otherwise
+	###
+	def getUserID(mainPhoneNumber):
+		userID = userIdDatabase.get(mainPhoneNumber, " ").userID
+		if(userID < 0):
+			userID = INVALID_USER_ERROR
+		return userID
+
 
 	###
 	# Search user database (python Dictionary) to find user data
@@ -146,7 +209,7 @@ class UserData:
 	# return - String variable with first name (only) of user. (PRIVACY MATTERS!)
 	###
 	def getUserFirstName(userID):
-		return userLocalDatabase.get(userID, " ").firstName
+		return userDataLocalDatabase.get(userID, " ").firstName
 
 
 	###
@@ -173,19 +236,29 @@ class UserData:
 	def updateLocalUserDatabase(currentLocalUserDatabase, source):
 		# TODO COPY DATA FROM SOURCE INTO / OVER currentLocalUserDatabase
 
-		#TODO Can you replace string form Drink() object
-		# Use phone numebr as key and then search for active phone numbers
-		userLocalDatabase = {
-			15105139110: UserData("Blaze", 0, 15135109110)
+		# Hardcoded userIDs and main phone number that always work
+		userIdDatabase = {
+			15105139110: 0, # Blaze
+			1510???????: 1, # David
+			19499759879: 2  # Murali
 		}
 
 
-		if(source == AWS):
+		# Hardcoded UserData.py objects that always work
+		# Use phone numebr as key and then search for active phone numbers
+		userDataLocalDatabase = {
+			0: UserData("Blaze", 0, 15135109110)
+			1: UserData("David", 1, 151)
+			2: UserData("Murali", 2, 19499759879)
+		}
+
+
+		if(source == AWS_DATABASE_SERIVCE):
 			print("TODOv2019.0 AWS DYNAMO DB API CALLS")
 		elif(source == USB_FLASHDRIVE):
-			errorCode = writeCSV('E:/')
+			errorCode = readCSV('E:/')
 		elif(source == PI_SD_CARD):
-			errorCode = writeCSV('TODO')
+			errorCode = readCSV('~/GitHub/CafeBeep/CafeBeepKiosk-0.1/static/UserData/')
 		else:
 			print("INVLAID SOURCE FOR USER DATABASE UPDATE: USE AWS, PI SD CARD, OR USB FLASHDRIVE")
 
@@ -201,7 +274,7 @@ class UserData:
 	###
 	def readCSV(filepath):
 		if(not filepath.endswith('/')):
-			debugPrint("HEY DUMB ASS END YOUR FILEPATH WITH A '/' CHARACTER!!!")
+			debugPrint("HEY YOU! END YOUR readCSV() FILEPATH PARAMETER WITH A '/' CHARACTER!!!")
 			return FILEPATH_ERROR
 
 		debugPrint("START READING CSV FILE FROM " + filepath + "UserDataDatabase1.csv")
@@ -245,6 +318,10 @@ class UserData:
 if __name__ == "__main__":
 
 	print("START USERDATA.PY MAIN")
+
+	debugPrint("TESTING DEBUG PRINT")
+
+	UserData("Elon", 42, 1-555-867-5309)
 
 	print("END USERDATA.PY MAIN")
 
