@@ -1,6 +1,16 @@
-.section {
-  padding: 1rem;
+.navbar-item img {
+    max-height: 2.75rem;
 }
-.large-section {
-  padding-bottom: 4rem;
+.menu.is-large {
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
+}
+.pad-section {
+    padding: 3.0rem 1.5rem;
+}
+.tile {
+    border-radius: 15px;
+}
+.field.has-addons .control:not(:last-child) {
+    margin-right: 20px;
 }

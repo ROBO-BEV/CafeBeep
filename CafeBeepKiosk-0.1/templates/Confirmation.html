@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "navbar.html" %}
 <p>We have sent you a SMS with a code to the number above.</p>
 <p>To complete your phone number verification, please enter the 6-digits activation code.</p>
 <form class="form-horizontal" action="{{ url_for('confirmation') }}" accept-charset="UTF-8" method="post">
@@ -5,3 +8,4 @@
       <input type="text" name="verification_code" id="verification_code" class="form-control" />
       <input type="submit" name="commit" value="Confirm" class="btn btn-success" />
 </form>
+{% endblock %}

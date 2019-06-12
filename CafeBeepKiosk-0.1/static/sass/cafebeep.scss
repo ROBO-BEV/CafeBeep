@@ -1,0 +1,20 @@
+@charset "utf-8";
+// Cafebeep brand colors
+// Red (0xB8191D), Tan (0xFEDFB3), White (0xFDFDFD) and/or Black (0x010306)
+$red: #B8191D;
+$tan: #FEDFB3;
+$white: #FDFDFD;
+$black: #010306;
+
+// Update Bulma's global variables
+$family-sans-serif: 'Open Sans', sans-serif;
+$primary: $red;
+$secondary: $tan;
+$control-border-width: 2px;
+$title-weight: 400;
+$control-padding-vertical: 5rem;
+$content-heading-color: $tan;
+// Import only what you need from Bulma
+@import "../node_modules/bulma/bulma.sass";
+// Import Bulma Slider
+@import "../node_modules/bulma-slider/dist/css/bulma-slider.sass";

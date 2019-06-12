@@ -1,41 +1,58 @@
 {% extends "base.html" %}
 {% block body %}
-{% include "navbar.html" %}
-    <section class="section large-section has-text-centered">
-        <h2 class="title is-3">Enjoy your personal drink</h2>
+<section class="hero is-white">
+    <nav class="navbar is-transparent is-spaced">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="">
+              <img src="{{ url_for('static', filename='Images/cafeBEEP_Menu_Logo_black.png') }}" width="153" height="35" alt="cafeBEEP Logo">
+        </a>
+        <div id="navbar-burger-id" class="navbar-burger burger" data-target="navbar-menu-id">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+  </section>
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-3 has-text-centered has-text-primary">Enjoy your personal drink.</h1>
+            </div>
+        </div>
     </section>
-   <section class="section">
+    <section class="section pad-section">
     <div class="tile is-ancestor">
        <div class="tile is-4 is-parent">
             <article class="tile is-child box">
-                <a href="{{ url_for('menu_screen_new') }}", method="GET">
+                <a href="{{ url_for('menu_screen_new', userselection='most_popular') }}", method="GET" >
                     <figure class="image is-3by3">
                         <img src="../static/images/cup.png">
                     </figure>
                     <hr>
-                    <p class="title has-text-centered">Most Popular</p>
+                    <p class="title is-5 has-text-centered">Most Popular</p>
                 </a>
            </article>
        </div>
        <div class="tile is-4 is-parent">
             <article class="tile is-child box">
-                <a href="{{ url_for('menu_screen_new') }}", method="GET">
+                <a href="{{ url_for('menu_screen_new', userselection='menu') }}", method="GET" >
                     <figure class="image is-3by3">
                         <img src="../static/images/cup.png">
                     </figure>
                     <hr>
-                    <p class="title has-text-centered">Menu</p>
+                    <p class="title is-5 has-text-centered">Menu</p>
                 </a>
            </article>
        </div>
        <div class="tile is-4 is-parent">
             <article class="tile is-child box">
-                <a href="{{ url_for('menu_screen_new') }}", method="GET">
+                <a href="{{ url_for('menu_screen_new', userselection='myfavorites') }}", method="GET" >
                     <figure class="image is-3by3">
                         <img src="../static/images/cup.png">
                     </figure>
                     <hr>
-                    <p class="title has-text-centered">My Favorites</p>
+                    <p class="title is-5 has-text-centered">My Favorites</p>
                 </a>
            </article>
        </div>

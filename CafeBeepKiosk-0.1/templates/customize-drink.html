@@ -1,26 +1,160 @@
 {% extends "base.html" %}
 {% block body %}
 {% include "navbar.html" %}
-    <main class="section">
-    <div class="columns">
-        <div class="container">
-            <div class="columns">
+    <script>
+    // Find output DOM associated to the DOM element passed as parameter
+        function findOutputForSlider( element ) {
+           var idVal = element.id;
+           outputs = document.getElementsByTagName( 'output' );
+           for( var i = 0; i < outputs.length; i++ ) {
+             if ( outputs[ i ].htmlFor == idVal )
+               return outputs[ i ];
+           }
+        }
+
+        function getSliderOutputPosition( slider ) {
+          // Update output position
+          var newPlace,
+              minValue;
+
+          var style = window.getComputedStyle( slider, null );
+          // Measure width of range input
+          sliderWidth = parseInt( style.getPropertyValue( 'width' ), 10 );
+
+          // Figure out placement percentage between left and right of input
+          if ( !slider.getAttribute( 'min' ) ) {
+            minValue = 0;
+          } else {
+            minValue = slider.getAttribute( 'min' );
+          }
+          var newPoint = ( slider.value - minValue ) / ( slider.getAttribute( 'max' ) - minValue );
+
+          // Prevent bubble from going beyond left or right (unsupported browsers)
+          if ( newPoint < 0 ) {
+            newPlace = 0;
+          } else if ( newPoint > 1 ) {
+            newPlace = sliderWidth;
+          } else {
+            newPlace = sliderWidth * newPoint;
+          }
+
+          return {
+            'position': newPlace + 'px'
+          }
+        }
+
+        document.addEventListener( 'DOMContentLoaded', function () {
+          // Get all document sliders
+          var sliders = document.querySelectorAll( 'input[type="range"].slider' );
+          [].forEach.call( sliders, function ( slider ) {
+            var output = findOutputForSlider( slider );
+            if ( output ) {
+              if ( slider.classList.contains( 'has-output-tooltip' ) ) {
+                // Get new output position
+                var newPosition = getSliderOutputPosition( slider );
+
+                // Set output position
+                output.style[ 'left' ] = newPosition.position;
+              }
+
+              // Add event listener to update output when slider value change
+              slider.addEventListener( 'input', function( event ) {
+                if ( event.target.classList.contains( 'has-output-tooltip' ) ) {
+                  // Get new output position
+                  var newPosition = getSliderOutputPosition( event.target );
+
+                  // Set output position
+                  output.style[ 'left' ] = newPosition.position;
+                }
+
+                // Update output with slider value
+                output.value = event.target.value;
+              } );
+            }
+          } );
+        } );
+    </script>
+    <section class="section pad-section">
+        <div class="columns">
                 <div class="column is-3 is-narrow is-sidebar">
                      <figure class="image is-2by2">
-                         <img src="../static/images/CustomCup.png">
+                         <img src="../static/images/ColdBrewLightCreamTopView.jpg">
                     </figure>
                 </div>
-                <div class="column">
-                <input id="sliderWithValue" class="slider has-output is-fullwidth" min="0" max="100" value="50" step="1" type="range">
-                    <output for="sliderWithValue">50</output>
+                <div class="column is-9">
+                    <div class="field is-horizontal">
+                                <div class="field-label is-medium">
+                                    <label class="label">Creamer</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field is-expanded">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                              <a class="button is-static">
+                                                  <output for="sliderWithValueCreamer">5</output>
+                                              </a>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input id="sliderWithValueCreamer" class="slider has-output is-fullwidth is-medium" min="0" max="10" value="5" step="1" type="range">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    <br>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-medium">
+                                    <label class="label">Base</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field is-expanded">
+                                      <div class="field has-addons">
+                                        <p class="control">
+                                          <a class="button is-static">
+                                              <output for="sliderWithValueBase">5</output>
+                                          </a>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input id="sliderWithValueBase" class="slider has-output is-fullwidth is-medium" min="0" max="10" value="5" step="1" type="range">
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                    </div>
+                    <br>
+                    <div class="field is-horizontal">
+                                <div class="field-label is-medium">
+                                    <label class="label">Sweetener</label>
+                                </div>
+                                <div class="field-body">
+                                <div class="field is-expanded">
+                                  <div class="field has-addons">
+                                    <p class="control">
+                                      <a class="button is-static">
+                                          <output for="sliderWithValueSweetener">5</output>
+                                      </a>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input id="sliderWithValueSweetener" class="slider has-output is-fullwidth is-medium" min="0" max="10" value="5" step="1" type="range">
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                    <br><br>
+                    <div class="field is-grouped is-grouped-centered">
+                      <p class="control">
+                        <a class="button is-info is-medium" href="/menu">
+                          Back
+                        </a>
+                      </p>
+                      <p class="control">
+                          <form action = "phonepage" method = "post">
+                                <input class ="button is-medium is-primary" type = "submit" value = "Confirm" />
+                          </form>
+                      </p>
+                    </div>
                 </div>
-            </div>
         </div>
-    </div>
-    </main>
-    <section class="section">
-        <form action = "phonepage" method = "post">
-         <p><input type = "submit" value = "submit" /></p>
-      </form>
     </section>
 {% endblock %}

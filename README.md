@@ -18,6 +18,24 @@ To run the code in CafeBeepKiosk-0.1 directory complete the following steps:
 4. Use "cd CafeBeep/CafeBeepKiosk-0.1" command to navigate to the main code directory 
 5. Finally run the command "python3 CafeBeep_GUI.py" to start kiosk software running
 6. NOTE: Use "python3" and NOT "python", in step 5 or you will get run time errors!!!
+7. Next run the command "python  CafeBeep_Driver.py" to start kiosk software running
+8. Enter terminal input as prompted and have fun
+
+
+[**Steps to manage front end packages:**]
+1) Install Node and NPM on your computer.
+2) Go to CafeBeep/CafeBeepKiosk-0.1/static folder 
+3) run 'npm run install'
+  [Note: This will install all dependencies mentioned in package.json dependencies folder. It doesn't harm even if they existing on your machine.]
+4) run 'npm run css-build'
+  [Note: This will compile the sass/cafebeep.scss into the css/cafebeep.css file, for more details look for css-build in package.json]
+5) run 'npm start'
+  [Note: This is just OPTIONAL STEP AND DONT NEED TO RUN ON PRODUCTION. 
+  This is for developement purpose only, to compile the changes you made to sass/cafebeep.scss into css/cafebeep.css.
+  If you are not making any changes to sass/cafebeep.scss, then dont run it, it is just running command in 4th step.]
+
+
+
 
 To Run the application on Docker, follow the steps.
 1. Download the docker for Desktop [Windows, *x, MAC OSX etc]
