@@ -10,8 +10,8 @@ __doc__ =     "Logic to run cafeBEEP Flask kiosk GUI front-end"
 # OLD DRIVER CODE https://github.com/ROBO-BEV/CafeBeep/blob/2d04e4e298290e4dc736326b1a889be227587155/CafeBeepKiosk-0.1/CafeBeepDriver.py
 
 # BEEP BEEP Technologies Inc code
-import Drink		# Store valid BEEP BEEP drink configurations
-import UserData 	# Store user name, ID, and drink preferences
+# import Drink		# Store valid BEEP BEEP drink configurations
+# import UserData 	# Store user name, ID, and drink preferences
 #TODO Blaze will fix issue raising when starting the app, until Murali, commenting in this code.
 #import Actuator		# Modular plug and play control of motors, servos, and relays
 #TODO Blaze will fix issue raising when starting the app, until Murali, commenting in this code.
@@ -35,6 +35,7 @@ from wtforms.validators import DataRequired
 #from flask_wtf.html5 import TelField
 from twilio.rest import Client
 from flask_wtf.html5 import TelField
+from twilio.twiml.messaging_response import MessagingResponse
 
 # Allow management of UserData.py objects in local database
 # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
@@ -94,9 +95,10 @@ with app.app_context():
 # @return 6-digit integer code.
 ###
 def send_confirmation_code(to_number):
+	# changing slightly this for now, we now sending a text message instead of code.
 	verification_code = generate_verification_code()
-	send_message(to_number, verification_code)
-	session['verification_code'] = verification_code
+	send_message(to_number, 'Hey, thank you for your order! Please reply as Y or y to confirm your order!')
+	#session['verification_code'] = verification_code
 	return verification_code
 
 ###
@@ -227,9 +229,29 @@ def phonepage():
 	if form.validate_on_submit():
 		print(repr(form.phone_number.data))
 		send_confirmation_code(repr(form.phone_number.data))
-		return redirect(url_for('confirmation'))
+		return render_template("notification.html")
 	return render_template('Phone_Page.html', form=form)
-
+###
+###
+# TODO Murali Document Function
+#
+# return TODO HTML and CSS file to display on screen???
+###
+@app.route("/sms", methods=['GET', 'POST'])
+def sms_reply():
+	"""Respond to incoming messages with a receipt SMS."""
+	# Get the message the user sent our Twilio number
+	body = request.values.get('Body', None)
+	print(body);
+	# Start our response
+	resp = MessagingResponse()
+	# Respond Propoerly
+	if(body == 'Y' or body =='y') :
+		resp.message("Thank you for confirming the order!");
+		#Tell KIOSK TO PREPARE FOR THE DRINK.
+	else:
+		resp.message("Sorry, we could not understand your response, Try Again!")
+	return str(resp)
 ###
 # TODO Murali Document Function
 #
