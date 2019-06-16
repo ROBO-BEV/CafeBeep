@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-21"
+__date__ =    "Late Updated: 2019-06-14"
 __doc__ =     "Class to operate at least 8 servos, 4 relays, and 4 motors at once with latency less then 100 ms"
 
 # Useful documentation:
@@ -18,6 +18,9 @@ __doc__ =     "Class to operate at least 8 servos, 4 relays, and 4 motors at onc
 # https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi/installing-software
 # https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/circuitpython-raspi
 # https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi
+
+# CircuitPython library for the DC & Stepper Motor Pi Hat kits using I2C interface
+from adafruit_motorkit import MotorKit
 
 # Allow control of input devices such as Buttons
 from gpiozero import Button
