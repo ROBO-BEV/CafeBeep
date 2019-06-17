@@ -10,8 +10,8 @@ __doc__ =     "Logic to run cafeBEEP Flask kiosk GUI front-end"
 # OLD DRIVER CODE https://github.com/ROBO-BEV/CafeBeep/blob/2d04e4e298290e4dc736326b1a889be227587155/CafeBeepKiosk-0.1/CafeBeepDriver.py
 
 # BEEP BEEP Technologies Inc code
-# import Drink		# Store valid BEEP BEEP drink configurations
-# import UserData 	# Store user name, ID, and drink preferences
+import Drink		# Store valid BEEP BEEP drink configurations
+#import UserData 	# Store user name, ID, and drink preferences
 #TODO Blaze will fix issue raising when starting the app, until Murali, commenting in this code.
 #import Actuator		# Modular plug and play control of motors, servos, and relays
 #TODO Blaze will fix issue raising when starting the app, until Murali, commenting in this code.
