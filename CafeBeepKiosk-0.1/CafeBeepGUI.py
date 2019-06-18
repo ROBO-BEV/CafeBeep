@@ -131,6 +131,10 @@ def send_message(toNumber, body):
 class PhoneForm(Form):
 	phone_number = TelField('phone_number', validators=[DataRequired()])
 	submit = SubmitField("Send")
+
+class CustomizedForm(Form):
+     submit = SubmitField("Confirm")
+
 ##
 # TODO Murali Document Function
 #
@@ -283,10 +287,19 @@ def menu_screen_new():
 ###
 @app.route('/customize-drink', methods=['GET', 'POST'])
 def customizedrink():
-	userSelection = request.args.get('userselection')
-	print('user selected option is:: ' + str(userSelection))
-	HTMLtoDisplay = "customize-drink.html"
-	return render_template(HTMLtoDisplay)
+	form = CustomizedForm()
+	if request.method == 'POST':
+		#TODO Blaze will send these arguments to KIOSK
+		baseSelection = request.form['sliderWithValueBase']
+		sweetenerSelection  = request.form['sliderWithValueSweetener']
+		creamerSelection = request.form['sliderWithValueCreamer']
+		return render_template("Phone_Page.html", form=form)
+	if request.method == 'GET':
+		userSelection = request.args.get('userselection')
+		print('user selected option is:: ' + str(userSelection))
+		HTMLtoDisplay = "customize-drink.html"
+		return render_template(HTMLtoDisplay, form=form)
+
 
 ###
 # Template function to create record in the Dynamo Table.
