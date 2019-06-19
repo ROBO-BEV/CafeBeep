@@ -4,7 +4,7 @@ __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
 __company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-21"
+__date__ =    "Late Updated: 2019-06-15"
 __doc__ =     "Logic to run cafeBEEP kiosk back-end"
 
 # Useful system jazz
@@ -213,6 +213,9 @@ if __name__ == "__main__":
 	cupSepServo2Pins = [VCC_5V, GND, 6]  		# GPIO6 = BOARD31 = DC_STEPPER_HAT???
 	cupSeparatorServo2 = Actuator("S", cupSepServo2Pins, "Cup Separator Servo 2: Seamuing MG996R", Actuator.CCW)
 
+	coldBrewCoffeePins = [PWR_12V, GND, ??]	#TODO GPIO?? = BOARD?? = DC_STEPPER_HAT???
+	coldBrewCoffeeMotor1 =  Actuator("R", coldBrewCoffeePins, "Cold Brew Coffee Motor: Zjchao 202", Actuator.CW)
+
 	simpleSyrupSugarPins = [PWR_12V, GND, 4]	#TODO GPIO4 = BOARD7 = DC_STEPPER_HAT???
 	simpleSyrupSugarMotor =  Actuator("R", simpleSyrupSugarPins, "Simple Syrup Sugar Motor: Zjchao 202", Actuator.CW)
 	carmelSugarPins = [PWR_12V, GND, 17]		#TODO GPIO17 = BOARD11 = DC_STEPPER_HAT???
@@ -249,13 +252,14 @@ if __name__ == "__main__":
 	powderServo3 = Actuator("S", powderServo3Pins, "Powder Servo 3: Seamuing MG996R")
 
 	# SEPARATE FULL LIST OF ACTUATOR OBJECTS INTO MORE SPECIFIC ARRAY GROUPINGS
-	actuatorObjects = [cupSeparatorServo1, cupSeparatorServo2, simpleSyrupSugarMotor, carmelSugarMotor, vanillaSugarMotor, chocolateSugarMotor, halfHalfMilkMotor, almondMilkMotor, oatlyMilkMotor, conveyorMotor1, conveyorMotor2, liftMotor1, lifeMotor2, powderServo1, powderServo2, powderServo3]
+	actuatorObjects = [cupSeparatorServo1, cupSeparatorServo2, simpleSyrupSugarMotor, carmelSugarMotor, vanillaSugarMotor, chocolateSugarMotor, halfHalfMilkMotor, almondMilkMotor, oatlyMilkMotor, conveyorMotor1, conveyorMotor2, liftMotor1, lifeMotor2, powderServo1, powderServo2, powderServo3, coldBrewCoffeeMotor1]
 	dropCupActuators = [actuatorObjects[0], actuatorObjects[1]]
 	sugarActuators = [actuatorObjects[2], actuatorObjects[3], actuatorObjects[4], actuatorObjects[5]]
 	milkActuators = [actuatorObjects[6], actuatorObjects[7], actuatorObjects[8]]
 	conveyorActuators = [actuatorObjects[9], actuatorObjects[10]]
 	liftActuators = [actuatorObjects[11], actuatorObjects[12]]
 	powderActuators = [actuatorObjects[13], actuatorObjects[14], actuatorObjects[15]]
+	coffeeActuators = [actuatorObjects[16]]
 
 	while(True):
 		for drinkNum in range(0, MAX_VEND_QUEUE_SIZE-1):
