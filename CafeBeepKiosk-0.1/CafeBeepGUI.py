@@ -27,16 +27,11 @@ from flask import Flask, render_template, session
 
 # TODO Murali Document Code
 from flask import request, redirect, url_for, flash
-
-# Allow users to input info into ??? TODO Murali
-from flask_wtf import Form
-from wtforms import validators, SubmitField
-from wtforms.validators import DataRequired
-#from flask_wtf.html5 import TelField
+from forms import PhoneForm, CustomizedForm
 from twilio.rest import Client
 from flask_wtf.html5 import TelField
 from twilio.twiml.messaging_response import MessagingResponse
-
+import TwillioUtilities
 # Allow management of UserData.py objects in local database
 # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
 from flask_dynamo import Dynamo
@@ -86,73 +81,6 @@ app.config['DYNAMO_TABLES'] = [{
 dynamo = Dynamo(app)
 with app.app_context():
 	dynamo.create_all()
-
-###
-# This function will generate verification code,
-# send to @input to_number using send_message method.
-# the phone number given
-# @to_number - 10 digit phone number, example +19499759879
-# @return 6-digit integer code.
-###
-def send_confirmation_code(to_number):
-	# changing slightly this for now, we now sending a text message instead of code.
-	verification_code = generate_verification_code()
-	send_message(to_number, 'Hey, thank you for your order! Please reply as Y or y to confirm your order!')
-	#session['verification_code'] = verification_code
-	return verification_code
-
-###
-# This function will generate the verification code
-# using the random function.
-# TODO Will code collisions with only 4 digit be a problem? See GitHub Issue #12
-# https://github.com/ROBO-BEV/CafeBeep/issues/12
-# return 6-digit integer code.
-###
-def generate_verification_code():
-	return str(random.randrange(1000, 9999)) #A 4 digit code is easier for users then a 6 digit code
-
-###
-# This function will send message to the @input toNumber
-# @toNumber - Cell phone number to send SMS message to
-# @body - SMS Content, in this case verficiation_code.
-# return NOTHING
-#TODO Twillio SID and AuthToken has to be read from the environment variables.
-###
-def send_message(toNumber, body):
-	twilio_sid = 'AC2384e9ca97db1b1b26ab9316ce6fb7be'  	#TODO Make TWILIO_SID CONSTANT in SMSsend.py Class
-	auth_token = 'af684eefa055d96468e26510a2d35f01'		#TODO Make AUTH_TOKEN CONSTANT in SMSsend.py Class
-	twilioPhoneNumber = '+19495776507'			#BEEP BEEP Technology Inc Twilio Cell Phone Number 
-	twilioClient = Client(twilio_sid, auth_token)		#TODO Use TWILIO_SID and AUTH_TOKEN CONSTANTS
-	twilioClient.api.messages.create(toNumber, from_=twilioPhoneNumber, body=body)
-
-###
-# TODO Murali Move to PhoneForm.py or Form.py file
-###
-class PhoneForm(Form):
-	phone_number = TelField('phone_number', validators=[DataRequired()])
-	submit = SubmitField("Send")
-
-class CustomizedForm(Form):
-     submit = SubmitField("Confirm")
-
-##
-# TODO Murali Document Function
-#
-# @self - Instance of object being called
-# @field -
-#
-# raise ???
-###
-def validate_phone_number(self, field):
-	error_message = "Invalid phone number. Example: +1-555-123-4567"
-	try:
-		data = phonenumbers.parse(field.data)
-	except:
-		raise validators.ValidationError(error_message)
-
-	if not phonenumbers.is_possible_number(data):
-		raise validators.ValidationError(error_message)
-
 ###
 # Adding @app.route('/') line on top of a function definition turns it into a “route.”
 # Basically, it means if you go to your website with a slash at the end and nothing else,
@@ -232,7 +160,7 @@ def phonepage():
 	form = PhoneForm()
 	if form.validate_on_submit():
 		print(repr(form.phone_number.data))
-		send_confirmation_code(repr(form.phone_number.data))
+		TwillioUtilities.send_confirmation_code(repr(form.phone_number.data))
 		return render_template("notification.html")
 	return render_template('Phone_Page.html', form=form)
 ###
@@ -346,8 +274,6 @@ def SearchConfigurationDatabase(configNum, drinkNum):
 		print("PRINT CONFIGURATION /#" + configNum + " DOES NOT EXIST IN BEEP BEEP FRANCHISE SYSTEM")
 
 	return configurationDatabase.get(drinkNum, "INVALID DRINK CONFIGURATION")
-
-
 
 ###
 # Code starts execution from here

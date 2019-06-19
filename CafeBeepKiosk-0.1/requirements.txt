@@ -6,3 +6,4 @@ Flask-Session
 Flask-WTF
 Flask-Script
 flask-dynamo
+phonenumbers
