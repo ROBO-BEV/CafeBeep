@@ -2,12 +2,12 @@
 
 __author__ =  "Blaze Sanders"
 __email__ =   "b@cafebeep.com"
-__company__ = "BEEP BEPP Technologies Inc"
+__company__ = "BEEP BEEP Technologies Inc"
 __status__ =  "Development"
-__date__ =    "Late Updated: 2019-05-13"
-__doc__ =     "Instsall script to setup run and dev enviroment"
+__date__ =    "Late Updated: 2019-06-15"
+__doc__ =     "Instsall script to setup run and dev enviroment for cafeBEEP kiosk V-1"
 
-CONFIG = "Pi3B+" # or "UnbuntuOnWindows" of "UbuntuMate"
+CONFIG = "Pi3B+" # or "UnbuntuOnWindows" of "UbuntuMateOnPC" or "NvidiaTX2" or "NvidiaNano"
 
 # Allow BASH command to be run inside Python3 code like this file
 import subprocess
@@ -20,8 +20,13 @@ if __name__ == "__main__":
 	# Check and update your system TODO: Only do "upgrade" since it also run update
 	check_call("sudo apt update", shell=True)
 	check_call("sudo apt upgrade", shell=True)
+	time.sleep(5) 			#Pause program to allow user to read upgrae info
+	check_call("clear",shell=True)  # Clear terminal
+
 
 	# Allow other computers to SSH into cafeBeep Pi (SSH not installed on Ubuntu)
+	# TODO Type to screen "Select option 3 - Interfacing Options > Then select Option P2 - SSH > Finally seclect Enable"
+	time.sleep(5) 			#Pause program to allow user to read upgrae info
 	check_call("sudo raspi-congig", shell=True) # Option 3 - Interfacing Options > Option P2 SSH Enable
 	check_call("sudo apt install openssh-server", shell=True)
 	check_call("sudo apt install sshguard", shell=True)
@@ -72,4 +77,5 @@ if __name__ == "__main__":
 		print("INVALID CONFIG SELECTED")
 
 	#IF GPIO ZERO FAILS AND IS NOT POWERFUL ENOUGH USE CIRCUIT PYTHON WHICH HAS TOO MANY DEPENCIES :)
-	#sudo pip3 install adafruit-circuitpython-motorkit
+	# https://github.com/adafruit/Adafruit_CircuitPython_MotorKit
+	#check_call("sudo pip3 install adafruit-circuitpython-motorkit", shell=True)
