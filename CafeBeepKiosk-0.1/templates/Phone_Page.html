@@ -74,6 +74,12 @@
                                       <input class="input" type="tel" placeholder="Your phone number" id="phone_number" name="phone_number">
                                     </p>
                                   </div>
+                                    {% for error in form.phone_number.errors %}
+                                        <p class="help is-danger">{{ error }}</p>
+                                        <script>
+                                       $( "input" ).addClass( "is-danger" );
+                                        </script>
+                                    {% endfor %}
                                   <p class="help">We will send you the text when your drink is ready.</p>
                                 </div>
                               </div>

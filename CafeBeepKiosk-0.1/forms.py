@@ -16,7 +16,7 @@ class CustomizedForm(Form):
      submit = SubmitField("Confirm")
 
 def validate_phone_number(self, field):
-	error_message = "Invalid phone number. Example: +1-555-123-4567"
+	error_message = "Invalid phone number. Example: 555-123-4567"
 	try:
 		data = phonenumbers.parse(field.data)
 	except:

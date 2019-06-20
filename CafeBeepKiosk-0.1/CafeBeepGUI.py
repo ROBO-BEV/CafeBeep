@@ -36,19 +36,12 @@ import TwillioUtilities
 # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
 from flask_dynamo import Dynamo
 
-# Allow for generation of 4 digit random SMS confirmation codes
-import random
-
 # Useful Global GUI CONSTANTS
-
 CONFIRMATION_CODE_LENGTH = 4
-
-# May 2019 plan is to build 4 different kiosk types 
+# May 2019 plan is to build 4 different kiosk types
 MAX_CONFIG_NUM = 4
-
 # No kiosk should sell more then 4 different drink type https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864034/
 MAX_DRINK_NUM = 4
-
 # Touchscreen display constants
 VEND_SCREEN = 0                 # Front screen to display ready orders and direct users on steps to vend
 ORDER_SCREEN_1 = 1              # Right side order screen use to order beverage on kiosk (i.e. Not on phone)
@@ -75,22 +68,11 @@ app.config['DYNAMO_TABLES'] = [{
 	"ProvisionedThroughput":dict(ReadCapacityUnits=5, WriteCapacityUnits=5)
 }]
 
-
 # Initializing the Dynamo App
 # Creating the tables if they dont exist already.
 dynamo = Dynamo(app)
 with app.app_context():
 	dynamo.create_all()
-###
-# Adding @app.route('/') line on top of a function definition turns it into a “route.”
-# Basically, it means if you go to your website with a slash at the end and nothing else,
-# the code in the HomeScreen() function will be run, and whatever is returned will be shown in your browser.
-###
-@app.route('/')
-def HomeScreen():
-    HTMLtoDisplay = "welcome.html"
-    return render_template(HTMLtoDisplay)
-
 ###
 # GUI for front facing vend screen that shows logo and location of cup pick up
 #
@@ -117,7 +99,6 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 	if(drinkConfiguration > MAX_CONFIG_NUM):
 		print("INVALID DRINK CONFIGURATION SELECTED - TRY A NUMBER LESS THAN 4.")
 		return
-
 	kioskConfig = [[0]*MAX_DRINK_NUM for _ in range(MAX_DRINK_NUM-1)] # Initialise 2D array with all ZEROs
 	for colNum in range(len(kioskConfig[drinkConfiguration])):	  # Load 2D array with data from Configuration Database dictionary
         	kioskConfig[drinkConfiguration][colNum] = SearchConfigurationDatabase(drinkConfiguration, colNum)
@@ -151,6 +132,47 @@ def MenuScreen(pageNum, drinkConfiguration, userID):
 
 	)
 ###
+# Adding @app.route('/') line on top of a function definition turns it into a “route.”
+# Basically, it means if you go to your website with a slash at the end and nothing else,
+# the code in the HomeScreen() function will be run, and whatever is returned will be shown in your browser.
+###
+@app.route('/')
+def HomeScreen():
+    HTMLtoDisplay = "welcome.html"
+    return render_template(HTMLtoDisplay)
+###
+# TODO Murali Document Function
+# TODO Rename to MenuScreen and get rid of Blaze function from above
+#
+# return TODO HTML and CSS file to display on screen???
+###
+@app.route('/menu', methods=['GET', 'POST'])
+def menu_screen_new():
+	userSelection = request.args.get('userselection')
+	print('userSelection:: ' + str(userSelection))
+	HTMLtoDisplay = "menu.html"
+	return render_template(HTMLtoDisplay)
+
+###
+# TODO Murali Document Function
+###
+@app.route('/customize-drink', methods=['GET', 'POST'])
+def customizedrink():
+	if request.method == 'GET':
+		form = CustomizedForm()
+		userSelection = request.args.get('userselection')
+		print('user selected option is:: ' + str(userSelection))
+		HTMLtoDisplay = "customize-drink.html"
+		return render_template(HTMLtoDisplay, form=form)
+	if request.method == 'POST':
+		form = PhoneForm()
+		#TODO Blaze will send these arguments to KIOSK
+		baseSelection = request.form['sliderWithValueBase']
+		sweetenerSelection  = request.form['sliderWithValueSweetener']
+		creamerSelection = request.form['sliderWithValueCreamer']
+		return render_template("Phone_Page.html", form=form)
+
+###
 # TODO Murali Document Function
 #
 # return TODO HTML and CSS file to display on screen???
@@ -180,7 +202,7 @@ def sms_reply():
 	# Respond Propoerly
 	if(body == 'Y' or body =='y') :
 		resp.message("Thank you for confirming the order!");
-		#Tell KIOSK TO PREPARE FOR THE DRINK.
+		#TODO Blaze will code here, KIOSK TO PREPARE FOR THE DRINK.
 	else:
 		resp.message("Sorry, we could not understand your response, Try Again!")
 	return str(resp)
@@ -188,6 +210,7 @@ def sms_reply():
 # TODO Murali Document Function
 #
 # return TODO HTML and CSS file to display on screen???
+# Currently not using this method.
 ###
 @app.route('/confirmation', methods=['GET', 'POST'])
 def confirmation():
@@ -197,36 +220,6 @@ def confirmation():
 		flash('Wrong code. Please try again.', 'error')
 	return render_template('confirmation.html')
 
-###
-# TODO Murali Document Function
-# TODO Rename to MenuScreen and get rid of Blaze function from above
-#
-# return TODO HTML and CSS file to display on screen???
-###
-@app.route('/menu', methods=['GET', 'POST'])
-def menu_screen_new():
-	userSelection = request.args.get('userselection')
-	print('userSelection:: ' + str(userSelection))
-	HTMLtoDisplay = "menu.html"
-	return render_template(HTMLtoDisplay)
-
-###
-# TODO Murali Document Function
-###
-@app.route('/customize-drink', methods=['GET', 'POST'])
-def customizedrink():
-	form = CustomizedForm()
-	if request.method == 'POST':
-		#TODO Blaze will send these arguments to KIOSK
-		baseSelection = request.form['sliderWithValueBase']
-		sweetenerSelection  = request.form['sliderWithValueSweetener']
-		creamerSelection = request.form['sliderWithValueCreamer']
-		return render_template("Phone_Page.html", form=form)
-	if request.method == 'GET':
-		userSelection = request.args.get('userselection')
-		print('user selected option is:: ' + str(userSelection))
-		HTMLtoDisplay = "customize-drink.html"
-		return render_template(HTMLtoDisplay, form=form)
 
 
 ###
