@@ -1,8 +1,8 @@
-# BEEP BEEP Technologies Inc cafeBEEP Kiosk Software 
+# Robotic Beverage Technologies Inc cafeBEEP Kiosk Software 
 
 Author(s): Blaze Sanders Email: b@cafebeep.com Skype: blaze.sanders Twitter: @BlazeDSanders
 
-Author(s): Murali Jeevan Email: j@cafebeep.com 
+Author(s): Murali Dulla Email: m@cafebeep.com 
 
 cafeBEEP kiosks are social, modular, and mobile self-contained autonomous cashless coffee kiosks connected to your smartphone. Check out https://www.cafeBEEP.com for more details in the coming months.
 
