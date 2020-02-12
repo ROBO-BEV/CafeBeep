@@ -1,13 +1,14 @@
-# Robotic Beverage Technologies Inc cafeBEEP Kiosk Software 
+# BEEP BEEP Technologies Inc cafeBEEP Kiosk Software 
 
-Author: Blaze Sanders Email: b@cafebeep.com Skype: blaze.sanders Twitter: @BlazeDSanders
+Author(s): Blaze Sanders Email: b@cafebeep.com Skype: blaze.sanders Twitter: @BlazeDSanders
+
+Author(s): Murali Jeevan Email: j@cafebeep.com 
 
 cafeBEEP kiosks are social, modular, and mobile self-contained autonomous cashless coffee kiosks connected to your smartphone. Check out https://www.cafeBEEP.com for more details in the coming months.
 
 This Git repo holds code for many open source libraries. It's broken down into the following directories (***MyQR-160906-2019.03.14, RPi.GPIO-0.5.11, raspap-webgui-2019-03-22, node_modules, CompressedLibraryCode, CafeBeepKiosk-0.1***). 
 
-Please use https://google.github.io/styleguide/javaguide.html as the coding standard :)
-Please use https://github.com/google/styleguide/blob/gh-pages/pyguide.md for v2020.0
+Style Guide: https://github.com/google/styleguide/blob/gh-pages/pyguide.md 
 
 ***
 CafeBeepKiosk-0.1:
