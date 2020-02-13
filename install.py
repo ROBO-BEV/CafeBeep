@@ -47,6 +47,9 @@ if __name__ == "__main__":
 
 	# Flask requires Python 3 to work
 	check_call("sudo apt install python3-pip", shell=True)
+	
+	# Use Python Virtual Environment Packaging Tool
+	check_call("pip install pipenv", shell=True)
 
 	# Flask is the GUI frontend to that runs in parallel with python backend controling pumps
 	# Remember to run flask with "python3" NOT "python" command, or you will get weird errors :)
