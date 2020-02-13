@@ -8,8 +8,10 @@ cafeBEEP kiosks are social, modular, and mobile self-contained autonomous cashle
 
 This Git repo holds code for many open source libraries. It's broken down into the following directories (***MyQR-160906-2019.03.14, RPi.GPIO-0.5.11, raspap-webgui-2019-03-22, node_modules, CompressedLibraryCode, CafeBeepKiosk-0.1***). 
 
-Style Guide: https://github.com/google/styleguide/blob/gh-pages/pyguide.md 
+Please use Style Guide: https://github.com/google/styleguide/blob/gh-pages/pyguide.md 
 
+Please use ***pipenv*** Virtual Enviroment software : https://realpython.com/pipenv-guide
+  
 ***
 CafeBeepKiosk-0.1:
 
