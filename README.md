@@ -11,6 +11,8 @@ This Git repo holds code for many open source libraries. It's broken down into t
 Please use Style Guide: https://github.com/google/styleguide/blob/gh-pages/pyguide.md 
 
 Please use ***pipenv*** Virtual Enviroment software : https://realpython.com/pipenv-guide
+
+Backend uses mySQL database: https://www.w3schools.com/python/python_mysql_getstarted.asp
   
 ***
 CafeBeepKiosk-0.1:
