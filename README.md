@@ -12,7 +12,10 @@ Please use Style Guide: https://github.com/google/styleguide/blob/gh-pages/pygui
 
 Please use ***pipenv*** Virtual Enviroment software : https://realpython.com/pipenv-guide
 
-Backend uses mySQL database: https://www.w3schools.com/python/python_mysql_getstarted.asp
+We plan to us RavenDB or mySQL for user data:
+https://ravendb.net/docs/article-page/4.2/csharp/start/getting-started
+https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites
+https://www.w3schools.com/python/python_mysql_getstarted.asp
   
 ***
 CafeBeepKiosk-0.1:
